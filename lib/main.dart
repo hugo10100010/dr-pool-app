@@ -275,7 +275,7 @@ class _RegistrarState extends State<Registrar> {
                           }
                         });
                       },
-                    ),
+                    ),  
                     ElevatedButton(
                       onPressed: () {/* */},
                       style: ElevatedButton.styleFrom(
@@ -319,7 +319,7 @@ class _UIState extends State<UI> {
     BottomNavigationBarItem(
       icon: Icon(Icons.attach_money_rounded),
       label: "Pagos",
-      backgroundColor: Color(0xFFed6464),
+      backgroundColor: Color(0xffed6464),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.info_rounded),
@@ -419,32 +419,19 @@ class Inicio extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    Text(
-                      "Bienvenido a",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.5,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
+                    TextoNormal(
+                      text: "Bienvenido a",
+                      fontSize: 16.5,
                       textAlign: TextAlign.end,
                     ),
-                    Text(
-                      "Smart Fit",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.5,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
+                    TextoNormal(
+                      text: "Smart Fit",
+                      fontSize: 16.5,
                       textAlign: TextAlign.end,
                     ),
-                    Text(
-                      "Entrena tu vida",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 7.4,
-                          fontFamily: 'Montserrat'),
+                    TextoNormal(
+                      text: "Entrena tu vida",
+                      fontSize: 7.4,
                       textAlign: TextAlign.end,
                     ),
                   ],
@@ -502,14 +489,9 @@ class Inicio extends StatelessWidget {
               radius: 4.2,
             ),
           ),
-          child: Text(
-            "Novedades",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Montserrat',
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+          child: TextoNormal(
+            text: "Novedades",
+            fontSize: 16,
           ),
         ),
         Container(
@@ -682,14 +664,9 @@ class Clases extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   alignment: Alignment.topLeft,
-                  child: Text(
-                    'Paquetes',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Montserrat',
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  child: TextoNormal(
+                    text: "Paquetes",
+                    fontSize: 18,
                   ),
                 ),
                 ClassTile(specifications: [Text("A")]),
@@ -717,15 +694,7 @@ class Pagos extends StatelessWidget {
             children: [
               Container(
                 width: double.infinity,
-                child: Text(
-                  'Historial de subscripciones',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Montserrat',
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: TextoNormal(text: "Historial de subscripciones: "),
               ),
               HistorialTile(specifications: [Text('data')])
             ],
@@ -744,14 +713,7 @@ class Pagos extends StatelessWidget {
                 height: 33,
                 alignment: Alignment.centerLeft,
                 color: Color(0xffc1a2c5),
-                child: Text(
-                  'Datos de cobro',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: TextoNormal(text: "Datos de cobro: "),
               ),
               Container(
                 width: double.infinity,
@@ -762,21 +724,13 @@ class Pagos extends StatelessWidget {
                     SizedBox(
                       height: 12,
                     ),
-                    Text(
-                      'Tarjeta registrada:',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    TextoNormal(
+                      text: "Tarjeta registrada: ",
+                      fontSize: 12,
                     ),
-                    Text(
-                      'No. de tarjeta: ',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    TextoNormal(
+                      text: "No. de tarjeta: ",
+                      fontSize: 12,
                     ),
                   ],
                 ),
@@ -797,36 +751,17 @@ class AcercaDe extends StatelessWidget {
       children: [
         CustomContainer(
           boxHeight: 150,
-          child: Text(
-            'Acerca de nosotros',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+          child: TextoNormal(
+            text: "Acerca de nosotros",
           ),
         ),
         CustomContainer(
           boxHeight: 100,
-          child: Text(
-            'Sede central',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: TextoNormal(text: "Sede central"),
         ),
         CustomContainer(
           boxHeight: 120,
-          child: Text(
-            'Contáctenos',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: TextoNormal(text: "Contáctenos"),
         ),
       ],
     );
@@ -852,46 +787,61 @@ class HorarioPage extends StatelessWidget {
           Container(
             width: double.infinity,
             alignment: Alignment.topLeft,
-            child: Text(
-              'División de',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            child: TextoNormal(
+              text: "División de",
+              fontSize: 18,
             ),
           ),
           Container(
             width: double.infinity,
             alignment: Alignment.topLeft,
-            child: Text(
-              'Entrenamiento',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            child: TextoNormal(
+              text: "Entrenamiento:",
+              fontSize: 18,
             ),
           ),
           ...division,
           Container(
             width: double.infinity,
             alignment: Alignment.topLeft,
-            child: Text(
-              'División Sugerida',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+            child: TextoNormal(
+              text: "División sugerida:",
+              fontSize: 18,
             ),
           ),
           ...sugerencia,
         ],
       ),
+    );
+  }
+}
+
+class TextoNormal extends StatelessWidget {
+  const TextoNormal({
+    super.key,
+    required this.text,
+    this.fontFamily = "Montserrat",
+    this.fontSize = 14,
+    this.fontWeight = FontWeight.bold,
+    this.textAlign,
+  });
+
+  final String text;
+  final String fontFamily;
+  final double fontSize;
+  final FontWeight fontWeight;
+  final TextAlign? textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      ),
+      textAlign: textAlign,
     );
   }
 }
@@ -924,25 +874,15 @@ class HistorialTile extends StatelessWidget {
         children: [
           Expanded(
             flex: 1,
-            child: Text(
-              'Fecha',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 14,
-              ),
+            child: TextoNormal(
+              text: "Fecha",
               textAlign: TextAlign.start,
             ),
           ),
           Expanded(
             flex: 1,
-            child: Text(
-              '\$Monto',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 14,
-              ),
+            child: TextoNormal(
+              text: "Monto \$",
               textAlign: TextAlign.end,
             ),
           ),
