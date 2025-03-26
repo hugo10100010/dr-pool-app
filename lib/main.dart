@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,6 +11,107 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Login(),
+      theme: ThemeData(
+        colorScheme: ColorScheme(
+          brightness: Brightness.dark,
+          primary: Colors.pinkAccent,
+          onPrimary: Colors.white,
+          secondary: Colors.white,
+          onSecondary: Colors.black,
+          tertiary: Colors.deepPurple,
+          onTertiary: Colors.white,
+          error: Colors.yellow,
+          onError: Colors.blue,
+          surface: Color(0xFFed6464),
+          onSurface: Colors.black,
+          primaryContainer: Color(0xFFbf6370),
+          onPrimaryContainer: Colors.black,
+          secondaryContainer: Colors.black,
+          onSecondaryContainer: Colors.white,
+        ),
+        textTheme: TextTheme(
+          displayMedium: TextStyle(
+              color: Colors.white,
+              fontFamily: "Montserrat",
+              fontSize: 48,
+              fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          titleMedium: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          titleSmall: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+          bodyLarge: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 22,
+          ),
+          bodyMedium: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 18,
+          ),
+          bodySmall: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 14,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.greenAccent,
+            foregroundColor: Colors.black,
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: Theme.of(context).textTheme.bodyMedium,
+          floatingLabelStyle: TextStyle(
+            color: Colors.white,
+            fontFamily: "Montserrat",
+            fontSize: 14,
+            fontStyle: FontStyle.italic,
+          ),
+          filled: true,
+          fillColor: Color.fromARGB(127, 255, 255, 255),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+        ),
+        splashColor: Colors.white.withAlpha(64),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            backgroundColor: Color(0xFFed6464),
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            selectedItemColor: Colors.greenAccent,
+            unselectedItemColor: Colors.white),
+        expansionTileTheme: ExpansionTileThemeData(
+          backgroundColor: Color(0xffffabcf),
+          collapsedBackgroundColor: Color(0xffffabcf),
+          collapsedShape: Border.all(
+            width: 2,
+            color: Colors.black,
+          ),
+          shape: Border.all(
+            width: 2,
+            color: Colors.black,
+          ),
+          expandedAlignment: Alignment.topCenter,
+        ),
+      ),
     );
   }
 }
@@ -22,7 +125,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFed6464),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -31,22 +133,21 @@ class _LoginState extends State<Login> {
             children: [
               Text(
                 "Login",
-                style: TextStyle(fontSize: 46.1, fontFamily: 'Poppins Medium'),
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               Text(
                 "Ingrese para continuar",
-                style: TextStyle(
-                    fontSize: 10.5, fontFamily: "DM Sans", color: Colors.white),
+                style: Theme.of(context).textTheme.bodySmall,
               ),
               Container(
                 width: 225,
                 decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black,
-                        width: 2.0,
-                        style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(45.0),
-                    color: Color(0xFFbf6370)),
+                  border: Border.all(
+                      color: Colors.black,
+                      width: 2.0,
+                      style: BorderStyle.solid),
+                  borderRadius: BorderRadius.circular(45.0),
+                ),
                 padding: EdgeInsets.fromLTRB(20, 50, 20, 80),
                 margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: Column(
@@ -55,32 +156,28 @@ class _LoginState extends State<Login> {
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Usuario',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                         filled: true,
-                        fillColor: Color.fromARGB(127, 255, 255, 255),
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Poppins Light",
-                          fontSize: 11),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Contraseña',
-                        labelStyle: TextStyle(color: Colors.white),
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                         filled: true,
-                        fillColor: Color.fromARGB(127, 255, 255, 255),
                         border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
                       ),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Poppins Light",
-                          fontSize: 11),
+                      style: Theme.of(context).textTheme.bodySmall,
                       obscureText: true,
                     ),
                     ElevatedButton(
@@ -91,9 +188,6 @@ class _LoginState extends State<Login> {
                               builder: (context) => UI(),
                             ));
                       },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.greenAccent,
-                          foregroundColor: Colors.black),
                       child: Text('Ingresar'),
                     ),
                     Column(
@@ -101,7 +195,6 @@ class _LoginState extends State<Login> {
                       children: [
                         Text(
                           "¿Tiene una cuenta?",
-                          style: TextStyle(color: Colors.white),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -114,7 +207,6 @@ class _LoginState extends State<Login> {
                           },
                           child: Text(
                             "Registrarse",
-                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ],
@@ -141,7 +233,6 @@ class _RegistrarState extends State<Registrar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFed6464),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -154,17 +245,11 @@ class _RegistrarState extends State<Registrar> {
                 children: [
                   Text(
                     "Crear Nueva",
-                    style: TextStyle(
-                      fontSize: 46.1,
-                      fontFamily: 'Poppins Medium',
-                    ),
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                   Text(
                     "Cuenta",
-                    style: TextStyle(
-                      fontSize: 46.1,
-                      fontFamily: 'Poppins Medium',
-                    ),
+                    style: Theme.of(context).textTheme.displayMedium,
                   ),
                 ],
               ),
@@ -174,21 +259,15 @@ class _RegistrarState extends State<Registrar> {
                 },
                 child: Text(
                   "¿Ya está registrado? Iniciar Sesión",
-                  style: TextStyle(
-                      fontSize: 10.5,
-                      fontFamily: "DM Sans",
-                      color: Colors.white),
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
               Container(
                 width: 225,
                 decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Colors.black,
-                        width: 2.0,
-                        style: BorderStyle.solid),
-                    borderRadius: BorderRadius.circular(45.0),
-                    color: Color(0xFFbf6370)),
+                  border: Border.all(width: 2.0, style: BorderStyle.solid),
+                  borderRadius: BorderRadius.circular(45.0),
+                ),
                 padding: EdgeInsets.fromLTRB(20, 50, 20, 80),
                 margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: Column(
@@ -196,65 +275,32 @@ class _RegistrarState extends State<Registrar> {
                   children: [
                     TextField(
                       decoration: InputDecoration(
-                        labelText: 'Usuario',
-                        labelStyle: TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Color.fromARGB(127, 255, 255, 255),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                      ),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Poppins Light",
-                          fontSize: 11),
+                          labelText: 'Usuario',
+                          labelStyle: Theme.of(context).textTheme.bodyMedium),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        labelStyle: TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Color.fromARGB(127, 255, 255, 255),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Poppins Light",
-                          fontSize: 11),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Contraseña',
-                        labelStyle: TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Color.fromARGB(127, 255, 255, 255),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Poppins Light",
-                          fontSize: 11),
+                      style: Theme.of(context).textTheme.bodySmall,
                       obscureText: true,
                     ),
                     TextFormField(
                       controller: _textEditingController,
                       decoration: InputDecoration(
                         labelText: 'Fecha de nacimiento',
-                        labelStyle: TextStyle(color: Colors.white),
-                        filled: true,
-                        fillColor: Color.fromARGB(127, 255, 255, 255),
-                        border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Poppins Light",
-                          fontSize: 11),
+                      style: Theme.of(context).textTheme.bodySmall,
                       onTap: () async {
                         selectedDate = await showDatePicker(
                           context: context,
@@ -278,9 +324,6 @@ class _RegistrarState extends State<Registrar> {
                     ),
                     ElevatedButton(
                       onPressed: () {/* */},
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.greenAccent,
-                          foregroundColor: Colors.black),
                       child: Text('Crear'),
                     ),
                   ],
@@ -304,27 +347,22 @@ class _UIState extends State<UI> {
     BottomNavigationBarItem(
       icon: Icon(Icons.access_time_filled_rounded),
       label: "Horario",
-      backgroundColor: Color(0xFFed6464),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.circle_notifications_rounded),
       label: "Clases",
-      backgroundColor: Color(0xFFed6464),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.home_rounded),
       label: "Inicio",
-      backgroundColor: Color(0xFFed6464),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.attach_money_rounded),
       label: "Pagos",
-      backgroundColor: Color(0xFFed6464),
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.info_rounded),
       label: "Acerca de",
-      backgroundColor: Color(0xFFed6464),
     ),
   ];
 
@@ -380,13 +418,10 @@ class _UIState extends State<UI> {
           ],
         ),
       ),
-      backgroundColor: Color(0xFFed6464),
       body: SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(30, 50, 30, 50),
           child: pages[selectedTab]),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xFFed6464),
-        showUnselectedLabels: true,
         items: items,
         currentIndex: selectedTab,
         onTap: (index) {
@@ -421,31 +456,20 @@ class Inicio extends StatelessWidget {
                   children: [
                     Text(
                       "Bienvenido a",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.5,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Text(
                       "Smart Fit",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.5,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Text(
                       "Entrena tu vida",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 7.4,
-                          fontFamily: 'Montserrat'),
-                      textAlign: TextAlign.end,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontSize: (Theme.of(context)
+                                  .textTheme
+                                  .bodySmall!
+                                  .fontSize! *
+                              (4 / 7))),
                     ),
                   ],
                 ),
@@ -504,12 +528,7 @@ class Inicio extends StatelessWidget {
           ),
           child: Text(
             "Novedades",
-            style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'Montserrat',
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         Container(
@@ -683,13 +702,8 @@ class Clases extends StatelessWidget {
                   width: double.infinity,
                   alignment: Alignment.topLeft,
                   child: Text(
-                    'Paquetes',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: 'Montserrat',
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    "Paquetes",
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
                 ClassTile(specifications: [Text("A")]),
@@ -718,16 +732,11 @@ class Pagos extends StatelessWidget {
               Container(
                 width: double.infinity,
                 child: Text(
-                  'Historial de subscripciones',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Montserrat',
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  "Historial de subscripciones ",
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
-              HistorialTile(specifications: [Text('data')])
+              HistorialTile(specifications: [Text('data',style: Theme.of(context).textTheme.bodySmall,)])
             ],
           ),
         ),
@@ -743,14 +752,9 @@ class Pagos extends StatelessWidget {
                 width: double.infinity,
                 height: 33,
                 alignment: Alignment.centerLeft,
-                color: Color(0xffc1a2c5),
                 child: Text(
-                  'Datos de cobro',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  "Datos de cobro",
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
               Container(
@@ -763,20 +767,12 @@ class Pagos extends StatelessWidget {
                       height: 12,
                     ),
                     Text(
-                      'Tarjeta registrada:',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      "Tarjeta registrada: ",
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                     Text(
-                      'No. de tarjeta: ',
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      "No. de tarjeta: ",
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -798,34 +794,22 @@ class AcercaDe extends StatelessWidget {
         CustomContainer(
           boxHeight: 150,
           child: Text(
-            'Acerca de nosotros',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            "Acerca de nosotros",
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
         CustomContainer(
           boxHeight: 100,
           child: Text(
-            'Sede central',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            "Sede central",
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
         CustomContainer(
           boxHeight: 120,
           child: Text(
-            'Contáctenos',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            "Contáctenos",
+            style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
       ],
@@ -853,26 +837,16 @@ class HorarioPage extends StatelessWidget {
             width: double.infinity,
             alignment: Alignment.topLeft,
             child: Text(
-              'División de',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              "División de",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           Container(
             width: double.infinity,
             alignment: Alignment.topLeft,
             child: Text(
-              'Entrenamiento',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              "Entrenamiento: ",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           ...division,
@@ -880,18 +854,43 @@ class HorarioPage extends StatelessWidget {
             width: double.infinity,
             alignment: Alignment.topLeft,
             child: Text(
-              'División Sugerida',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              "División sugerida:",
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           ...sugerencia,
         ],
       ),
+    );
+  }
+}
+
+class TextoNormal extends StatelessWidget {
+  const TextoNormal({
+    super.key,
+    required this.text,
+    this.fontFamily = "Montserrat",
+    this.fontSize,
+    this.fontWeight = FontWeight.bold,
+    this.textAlign,
+  });
+
+  final String text;
+  final String fontFamily;
+  final double? fontSize;
+  final FontWeight fontWeight;
+  final TextAlign? textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: fontFamily,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+      ),
+      textAlign: textAlign,
     );
   }
 }
@@ -907,8 +906,6 @@ class HistorialTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      backgroundColor: Color(0xffffabcf),
-      collapsedBackgroundColor: Color(0xffffabcf),
       collapsedShape: Border.all(
         width: 2,
         color: Colors.black,
@@ -925,24 +922,16 @@ class HistorialTile extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              'Fecha',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 14,
-              ),
+              "Fecha",
+              style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.start,
             ),
           ),
           Expanded(
             flex: 1,
             child: Text(
-              '\$Monto',
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'Montserrat',
-                fontSize: 14,
-              ),
+              "Monto \$",
+              style: Theme.of(context).textTheme.bodySmall,
               textAlign: TextAlign.end,
             ),
           ),
@@ -964,8 +953,6 @@ class ClassTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      backgroundColor: Color(0xffffabcf),
-      collapsedBackgroundColor: Color(0xffffabcf),
       collapsedShape: Border.all(
         width: 2,
         color: Colors.black,
@@ -976,7 +963,10 @@ class ClassTile extends StatelessWidget {
       ),
       leading: Icon(Icons.star),
       expandedAlignment: Alignment.topLeft,
-      title: Text('data'),
+      title: Text(
+        'data',
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -998,8 +988,6 @@ class TrainingTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      backgroundColor: Color(0xffffabcf),
-      collapsedBackgroundColor: Color(0xffffabcf),
       collapsedShape: Border.all(
         width: 2,
         color: Colors.black,
@@ -1010,7 +998,10 @@ class TrainingTile extends StatelessWidget {
       ),
       leading: Icon(Icons.star),
       expandedAlignment: Alignment.topLeft,
-      title: Text('data'),
+      title: Text(
+        "data",
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
       children: specifications,
     );
   }
@@ -1086,7 +1077,6 @@ class ImageContainerInicio extends StatelessWidget {
           color: Colors.black,
         ),
         borderRadius: BorderRadius.circular(15),
-        color: Color(0xFFc1a2c5),
       ),
       margin: EdgeInsets.all(boxMargin),
       child: Column(
