@@ -1,6 +1,8 @@
-import 'dart:ui';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'routes/app_routes.dart';
 
 void main() {
   runApp(MainApp());
@@ -85,11 +87,17 @@ class MainApp extends StatelessWidget {
           ),
           filled: true,
           fillColor: Color.fromARGB(127, 255, 255, 255),
-          border: OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(15),
             ),
+            borderSide: BorderSide(color: Colors.white),
           ),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(15),
+              ),
+              borderSide: BorderSide()),
         ),
         splashColor: Colors.white.withAlpha(64),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -121,7 +129,25 @@ class Login extends StatefulWidget {
   State<Login> createState() => _LoginState();
 }
 
+Future<List<dynamic>> fetchUsuarios() async {
+  final response = await http.get(Uri.parse("http://127.0.0.1:5000/usuario/"));
+  if (response.statusCode == 200) {
+    return json.decode(response.body);
+  } else {
+    throw Exception('Failed to load usuario');
+  }
+}
+
 class _LoginState extends State<Login> {
+  late Future<List<dynamic>> futureUsuario;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    futureUsuario = fetchUsuarios();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,26 +183,16 @@ class _LoginState extends State<Login> {
                       decoration: InputDecoration(
                         labelText: 'Usuario',
                         labelStyle: Theme.of(context).textTheme.bodyMedium,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
                       ),
+                      cursorColor: Colors.white,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextField(
                       decoration: InputDecoration(
                         labelText: 'Contraseña',
                         labelStyle: Theme.of(context).textTheme.bodyMedium,
-                        filled: true,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                        ),
                       ),
+                      cursorColor: Colors.white,
                       style: Theme.of(context).textTheme.bodySmall,
                       obscureText: true,
                     ),
@@ -209,6 +225,27 @@ class _LoginState extends State<Login> {
                             "Registrarse",
                           ),
                         ),
+                        Container(
+                          height: 100,
+                          child: FutureBuilder<List<dynamic>>(
+                            future: futureUsuario,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) {
+                                  return ListTile(
+                                    
+                                    title: Text(snapshot.data![index]["nombre"],style: TextStyle(fontSize: 10),),
+                                  );
+                                });
+                              } else if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
+                              }
+                              return const CircularProgressIndicator();
+                            },
+                          ),
+                        )
                       ],
                     ),
                   ],
@@ -275,8 +312,10 @@ class _RegistrarState extends State<Registrar> {
                   children: [
                     TextField(
                       decoration: InputDecoration(
-                          labelText: 'Usuario',
-                          labelStyle: Theme.of(context).textTheme.bodyMedium),
+                        labelText: 'Usuario',
+                        labelStyle: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      cursorColor: Colors.white,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextField(
@@ -284,6 +323,7 @@ class _RegistrarState extends State<Registrar> {
                         labelText: 'Email',
                         labelStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      cursorColor: Colors.white,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextField(
@@ -291,6 +331,7 @@ class _RegistrarState extends State<Registrar> {
                         labelText: 'Contraseña',
                         labelStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      cursorColor: Colors.white,
                       style: Theme.of(context).textTheme.bodySmall,
                       obscureText: true,
                     ),
@@ -300,6 +341,7 @@ class _RegistrarState extends State<Registrar> {
                         labelText: 'Fecha de nacimiento',
                         labelStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
+                      cursorColor: Colors.white,
                       style: Theme.of(context).textTheme.bodySmall,
                       onTap: () async {
                         selectedDate = await showDatePicker(
@@ -736,7 +778,12 @@ class Pagos extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
-              HistorialTile(specifications: [Text('data',style: Theme.of(context).textTheme.bodySmall,)])
+              HistorialTile(specifications: [
+                Text(
+                  'data',
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
+              ])
             ],
           ),
         ),
