@@ -1,9 +1,9 @@
 class Paquete {
-  final int id;
-  final double precio;
-  final String beneficios;
+  int id;
+  double precio;
+  String beneficios;
 
-  const Paquete({
+  Paquete({
     required this.id,
     required this.precio,
     required this.beneficios,
@@ -11,7 +11,13 @@ class Paquete {
 
   factory Paquete.fromJson(Map<String, dynamic> json) => Paquete(
         id: json['id'],
-        precio: json['precio'],
+        precio: double.parse(json['precio']),
         beneficios: json['beneficios'],
       );
+
+  Map<String,dynamic> toJson() => {
+    "id": id,
+    "precio": precio,
+    "beneficios": beneficios
+  };
 }

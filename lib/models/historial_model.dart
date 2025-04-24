@@ -1,12 +1,12 @@
 class Historial {
-  final int id;
-  final int idusuario;
-  final int idpaquete;
-  final DateTime fechaini;
-  final DateTime fechafin;
-  final String metodo;
+  int id;
+  int idusuario;
+  int idpaquete;
+  DateTime fechaini;
+  DateTime fechafin;
+  String metodo;
 
-  const Historial({
+  Historial({
     required this.id,
     required this.idusuario,
     required this.idpaquete,

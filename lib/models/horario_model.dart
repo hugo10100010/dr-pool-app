@@ -1,9 +1,9 @@
 class Horario {
-  final int id;
-  final int idusuario;
-  final String rutina;
+  int id;
+  int idusuario;
+  String rutina;
 
-  const Horario({
+  Horario({
     required this.id,
     required this.idusuario,
     required this.rutina,

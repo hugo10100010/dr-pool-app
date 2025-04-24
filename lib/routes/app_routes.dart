@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/screens/admin/pages/usuarios/pages/consultar/detallesusuario.dart';
+import 'package:proyecto/screens/admin/pages/usuarios/pages/modificar/detallesusuario.dart';
 import '../screens/login_screen.dart';
 import '../screens/registro_screen.dart';
 import '../screens/admin/home_screen.dart';
@@ -8,27 +10,19 @@ class AppRoutes {
   static const String registrar = '/registrar';
   static const String home = '/home';
   static const String adminhome = '/adminhome';
+  static const String placeholder = '/placeholder';
+  static const String detallesusuario = '/detallesusuario';
+  static const String detallesusuariomodif = '/detallesusuariomodif';
 
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case login:
-        return MaterialPageRoute(
-          builder: (_) => Placeholder(),
-        );
-      case registrar:
-        return MaterialPageRoute(
-          builder: (_) => Placeholder(),
-        );
-      case adminhome:
-        return MaterialPageRoute(builder: (_) => AdminHomePage());
-      default:
-        return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(
-              child: Text('No route defined for ${settings.name}'),
-            ),
-          ),
-        );
-    }
+  static Map<String, WidgetBuilder> getRoutes(RouteSettings settings) {
+    return {
+      adminhome: (context) => AdminHomePage(),
+      home: (context) => Placeholder(),
+      login: (context) => Login(),
+      registrar: (context) => RegisterForm(),
+      detallesusuario: (context) => Detallesusuario(),
+      detallesusuariomodif: (context) => Detallesusuariomodif(),
+      placeholder: (context) => Placeholder(),
+    };
   }
 }

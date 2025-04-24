@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:proyecto/services/usuario_service.dart';
 import 'routes/app_routes.dart';
 
 void main() {
@@ -139,6 +140,7 @@ Future<List<dynamic>> fetchUsuarios() async {
 }
 
 class _LoginState extends State<Login> {
+  final service = UsuarioService();
   late Future<List<dynamic>> futureUsuario;
 
   @override
@@ -150,6 +152,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final _usernameController = TextEditingController();
+    final _passwordController = TextEditingController();
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -180,6 +184,7 @@ class _LoginState extends State<Login> {
                   spacing: 20,
                   children: [
                     TextField(
+                      controller: _usernameController,
                       decoration: InputDecoration(
                         labelText: 'Usuario',
                         labelStyle: Theme.of(context).textTheme.bodyMedium,
@@ -188,6 +193,7 @@ class _LoginState extends State<Login> {
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                     TextField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         labelText: 'Contraseña',
                         labelStyle: Theme.of(context).textTheme.bodyMedium,
@@ -198,11 +204,12 @@ class _LoginState extends State<Login> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
+                        /*Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => UI(),
-                            ));
+                            ));*/
+                        print(service.login({"username":_usernameController.value.text,"password":_passwordController.value.text}).then((value) => {print(value)}));
                       },
                       child: Text('Ingresar'),
                     ),

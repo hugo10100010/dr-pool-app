@@ -1,12 +1,12 @@
 class Domicilio {
-  final int id;
-  final String calle;
-  final int numext;
-  final int numint;
-  final String asentamiento;
-  final int codigop;
+  int id;
+  String calle;
+  int numext;
+  int numint;
+  String asentamiento;
+  int codigop;
 
-  const Domicilio({
+  Domicilio({
     required this.id,
     required this.calle,
     required this.numext,
@@ -23,4 +23,13 @@ class Domicilio {
         asentamiento: json['asentamiento'],
         codigop: json['codigop'],
       );
+
+  Map<String,dynamic> toJson() => {
+    "id": id,
+    "calle": calle,
+    "numext": numext,
+    "numint": numint,
+    "asentamiento": asentamiento,
+    "codigop": codigop,
+  };
 }

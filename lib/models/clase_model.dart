@@ -1,22 +1,29 @@
 import 'dart:convert' as d;
 
 class Clase {
-  final int id;
-  final int idcoach;
-  final List<int> idcasillas;
-  final String descripcion;
+  int id;
+  int idcoach;
+  int idcasilla;
+  String descripcion;
 
-  const Clase({
+  Clase({
     required this.id,
     required this.idcoach,
-    required this.idcasillas,
+    required this.idcasilla,
     required this.descripcion,
   });
 
   factory Clase.fromJson(Map<String, dynamic> json) => Clase(
         id: json['id'],
         idcoach: json['idcoach'],
-        idcasillas: d.json.decode(json['idcasillas']),
+        idcasilla: json['idcasilla'],
         descripcion: json['descripcion'],
       );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "idcoach": idcoach,
+    "idcasilla": idcasilla,
+    "descripcion": descripcion
+  };
 }
