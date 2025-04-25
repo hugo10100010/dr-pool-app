@@ -1,26 +1,35 @@
 class Metricas {
-  final int id;
-  final double estatura;
-  final double peso;
-  final double maxcardio;
-  final int maxpulso;
-  final int frecuenciasemanal;
+  int id;
+  double? estatura;
+  double? peso;
+  double? maxcardio;
+  int? maxpulso;
+  int? frecuenciasemanal;
 
-  const Metricas({
+  Metricas({
     required this.id,
-    required this.estatura,
-    required this.peso,
-    required this.maxcardio,
-    required this.maxpulso,
-    required this.frecuenciasemanal,
+    this.estatura,
+    this.peso,
+    this.maxcardio,
+    this.maxpulso,
+    this.frecuenciasemanal,
   });
 
   factory Metricas.fromJson(Map<String, dynamic> json) => Metricas(
         id: json['id'],
-        estatura: json['estatura'],
-        peso: json['peso'],
-        maxcardio: json['maxcardio'],
+        estatura: json['estatura'] != null ? double.parse(json['estatura']) : null,
+        peso: json['peso'] != null ? double.parse(json['peso']) : null,
+        maxcardio: json['maxcardio'] != null ? double.parse(json['maxcardio']) : null,
         maxpulso: json['maxpulso'],
         frecuenciasemanal: json['frecuenciasemanal'],
       );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "estatura": estatura,
+    "peso": peso,
+    "maxcardio": maxcardio,
+    "maxpulso": maxpulso,
+    "frecuenciasemanal": frecuenciasemanal,
+  };
 }

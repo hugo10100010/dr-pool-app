@@ -1,13 +1,13 @@
 class Subscripcion {
-  final int id;
-  final int idusuario;
-  final int idpaquete;
-  final String estado;
-  final DateTime fechaini;
-  final DateTime fechafin;
-  final bool renovarauto;
+  int id;
+  int idusuario;
+  int idpaquete;
+  String estado;
+  DateTime fechaini;
+  DateTime fechafin;
+  bool renovarauto;
 
-  const Subscripcion({
+  Subscripcion({
     required this.id,
     required this.idusuario,
     required this.idpaquete,

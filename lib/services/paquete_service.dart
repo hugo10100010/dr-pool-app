@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:proyecto/constants/api_constants.dart';
 import 'package:proyecto/models/paquete_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:proyecto/services/auth_service.dart';
 
 class PaqueteService {
   final String uriString = "http://127.0.0.1:5000";
@@ -14,18 +16,36 @@ class PaqueteService {
     }
   }
 
-  Future<void> agregarPaquete(Paquete paquete) async {
-    final response = await http.post(Uri.parse("${uriString}/api/paquete/agregar"),body: paquete);
-
-    if(response.statusCode==201) {
-      print("Se ha agregado el paquete con éxito");
+  Future<List<Paquete>> getPaquetes() async {
+    final response = await AuthService.authorizedRequest(Uri.parse("$baseUrl/api/paquete/getall"));
+    if(response.statusCode==200) {
+      final List<dynamic> data = json.decode(response.body)['data'];
+      return data.map((json) => Paquete.fromJson(json)).toList();
     } else {
-      print("Algo falló al agregar el paquete.");
+      throw Exception('Failed to load paquetes');
     }
   }
 
-  Future<void> modificarPaquete(Paquete paquete) async {
-    final response = await http.put(Uri.parse("${uriString}/api/paquete/modificar"),body: paquete);
+  Future<bool> agregarPaquete(Map<String,dynamic> paquetedatos) async {
+    final response = await AuthService.authorizedRequest(
+      Uri.parse("$baseUrl/api/paquete/agregar"),
+      body: JsonEncoder().convert(paquetedatos),
+      method: "POST",
+    );
+
+    if(response.statusCode==200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> modificarPaquete(Map<String,dynamic> paquetedatos) async {
+    final response = await AuthService.authorizedRequest(
+      Uri.parse("$baseUrl/api/paquete/modificar/${paquetedatos['id']}"),
+      body: JsonEncoder().convert(paquetedatos),
+      method: "PUT"
+    );
 
     if(response.statusCode==200) {
       print("Se ha modificado el paquete con éxito");
@@ -34,13 +54,17 @@ class PaqueteService {
     }
   }
 
-  Future<void> eliminarPaquete(int idpaquete) async {
-    final response = await http.delete(Uri.parse("${uriString}/api/paquete/eliminar/${idpaquete}"));
+  Future<String> eliminarPaquete(int idpaquete) async {
+    final response = await AuthService.authorizedRequest(
+      Uri.parse("$baseUrl/api/paquete/eliminar/$idpaquete"),
+      method: 'DELETE'
+    );
 
-    if(response.statusCode==200) {
-      print("Se ha eliminado el paquete con éxito");
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['message'];
     } else {
-      print("Algo falló al eliminar el paquete.");
+      return "No se pudo eliminar";
     }
   }
 }

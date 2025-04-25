@@ -1,47 +1,73 @@
+import 'package:proyecto/constants/api_constants.dart';
 import 'package:proyecto/models/clase_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:proyecto/services/auth_service.dart';
+
 class ClaseServicio {
   final String uriString = "http://127.0.0.1:5000";
-
   Future<Clase> getClase(int idclase) async {
-    final response = await http.get(Uri.parse("${uriString}/api/clase/get/${idclase}"));
+    final response = await AuthService.authorizedRequest(
+      Uri.parse("${baseUrl}/api/clase/get/${idclase}")
+    );
 
     if(response.statusCode==200) {
       return json.decode(response.body);
     } else {
-      throw Exception("Fallo al cargar la clase.");
+      throw Exception("Fallo al cargar casilla.");
     }
   }
 
-  Future<void> agregarClase(Clase clase) async {
-    final response = await http.post(Uri.parse("${uriString}/api/clase/agregar"),body: clase);
-
-    if(response.statusCode==201) {
-      print("Se ha agregado la clase con éxito.");
+  Future<List<Clase>> getClases() async {
+    final response = await AuthService.authorizedRequest(Uri.parse("$baseUrl/api/clase/getall"));
+    if(response.statusCode==200) {
+      final List<dynamic> data = json.decode(response.body)['data'];
+      return data.map((json) => Clase.fromJson(json)).toList();
     } else {
-      print("Fallo al agregar la clase.");
+      throw Exception('Failed to load casillas');
     }
   }
 
-  Future<void> modificarClase(Clase clase) async {
-    final response = await http.put(Uri.parse("${uriString}/api/clase/modificar"),body: clase);
+  Future<bool> agregarClase(Map<String,dynamic> clasedatos) async {
+    final response = await AuthService.authorizedRequest(
+      Uri.parse("$baseUrl/api/clase/agregar"),
+      body: JsonEncoder().convert(clasedatos),
+      method: "POST",
+    );
 
     if(response.statusCode==200) {
-      print("Se ha modificado la clase con éxito.");
+      return true;
     } else {
-      print("Fallo al modificar la clase.");
+      return false;
     }
   }
 
-  Future<void> eliminarClase(int idclase) async {
-    final response = await http.delete(Uri.parse("${uriString}/api/clase/eliminar/${idclase}"));
+  Future<void> modificarClase(Map<String,dynamic> clasedatos) async {
+    final response = await AuthService.authorizedRequest(
+      Uri.parse("$baseUrl/api/clase/modificar/${clasedatos['id']}"),
+      body: JsonEncoder().convert(clasedatos),
+      method: "PUT"
+    );
 
     if(response.statusCode==200) {
-      print("Se ha eliminado la clase con éxito.");
+      print("Se ha modificado el paquete con éxito");
     } else {
-      print("Fallo al eliminar la clase.");
+      print("Algo falló al modificar el paquete.");
+    }
+  }
+
+  Future<String> eliminarClase(int idclase) async {
+    final response = await AuthService.authorizedRequest(
+      Uri.parse("$baseUrl/api/clase/eliminar/$idclase"),
+      method: 'DELETE'
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['message'];
+    } else {
+      return "No se pudo eliminar";
     }
   }
 }

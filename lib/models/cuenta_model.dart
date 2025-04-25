@@ -1,20 +1,33 @@
-class Cuenta {
-  final int id;
-  final String nombreusu;
-  final String password;
-  final String avatar;
+import 'dart:ffi';
+import 'dart:typed_data';
+import 'dart:convert';
+import 'dart:typed_data';
 
-  const Cuenta({
+class Cuenta {
+  int id;
+  String nombreusu;
+  String password;
+  Uint8List? avatar;
+
+  Cuenta({
     required this.id,
     required this.nombreusu,
     required this.password,
-    required this.avatar,
+    this.avatar,
   });
 
   factory Cuenta.fromJson(Map<String, dynamic> json) => Cuenta(
         id: json['id'],
         nombreusu: json['nombreusu'],
-        password: json['password'],
-        avatar: json['avatar'],
+        password: json['password_hashed'],
+        avatar: json['avatar'] != null ? base64Decode(json['avatar']) : null,
       );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nombreusu': nombreusu,
+      if (password.isNotEmpty) 'password': password,
+    };
+  }
 }

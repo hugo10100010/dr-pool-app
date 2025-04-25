@@ -1,14 +1,14 @@
 class Personales {
-  final int id;
-  final String nombre;
-  final String apellidop;
-  final String apellidom;
-  final String email;
-  final String telefono;
-  final String tipodocumento;
-  final String documento;
+  int id;
+  String nombre;
+  String apellidop;
+  String apellidom;
+  String email;
+  String telefono;
+  String tipodocumento;
+  String documento;
 
-  const Personales({
+  Personales({
     required this.id,
     required this.nombre,
     required this.apellidop,
@@ -29,4 +29,15 @@ class Personales {
         tipodocumento: json['tipodocumento'],
         documento: json['documento'],
       );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'nombre': nombre,
+        'apellidop': apellidop,
+        'apellidom': apellidom,
+        'email': email,
+        'telefono': telefono,
+        'tipodocumento': tipodocumento,
+        'documento': documento,
+      };
 }
