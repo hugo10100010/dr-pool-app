@@ -12,7 +12,8 @@ class Modificar extends StatelessWidget {
       futureItems: service.getPaquetes(),
       columnTitles: [
         'Precio',
-        'Beneficios',
+        'Clases',
+        'Flexible',
       ],
       buildEditableFields: (paquete) => [
         GenericEditableField(
@@ -24,9 +25,16 @@ class Modificar extends StatelessWidget {
           type: EditableFieldType.double,
         ),
         GenericEditableField(
-          controller: TextEditingController(text: paquete.beneficios),
+          controller: TextEditingController(text: paquete.clases.toString()),
           onSubmit: (val) {
-            paquete.beneficios = val;
+            paquete.clases = int.parse(val);
+            service.modificarPaquete(paquete.toJson());
+          },
+        ),
+        GenericEditableField(
+          controller: TextEditingController(text: paquete.flexible.toString()),
+          onSubmit: (val) {
+            paquete.flexible = bool.parse(val);
             service.modificarPaquete(paquete.toJson());
           },
         ),
