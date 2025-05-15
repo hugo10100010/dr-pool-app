@@ -14,9 +14,9 @@ class Consultar extends StatelessWidget {
         DataColumn(label: Text('Descripcion')),
       ],
       buildRow: (clase) => DataRow(cells: [
-        DataCell(Text(clase.idcoach.toString() ?? '')),
-        DataCell(Text(clase.idcasilla.toString() ?? '')),
-        DataCell(Text(clase.descripcion ?? '')),
+        DataCell(Text("${clase.coach.nombre} ${clase.coach.apellidop}" ?? '')),
+        DataCell(Text("${clase.casilla.dia} ${clase.casilla.horaini} ${clase.casilla.horafin}" ?? '')),
+        DataCell(Text(clase.curso.curso ?? '')),
       ]),
       onRowTap: (paquete) {
         

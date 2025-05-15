@@ -7,11 +7,33 @@ class AuthService {
   static final _storage = FlutterSecureStorage();
 
   static Future<String?> getAccessToken() async {
-    return await _storage.read(key: 'proyectom_access_token');
+    try {
+      return await _storage.read(key: 'proyectom_access_token');
+    } catch (e) {
+      print('Error al leer access token: $e');
+
+      // Opcional: eliminar todo el almacenamiento si está corrupto
+      await _storage.deleteAll();
+
+      return null;
+    }
+  }
+
+  static Future<String?> getRefreshToken() async {
+    try {
+      return await _storage.read(key: 'proyectom_refresh_token');
+    } catch (e) {
+      print('Error al leer refresh token: $e');
+
+      // Opcional: eliminar todo el almacenamiento si está corrupto
+      await _storage.deleteAll();
+
+      return null;
+    }
   }
 
   static Future<bool> refreshToken() async {
-    final refreshToken = await _storage.read(key: 'proyectom_refresh_token');
+    final refreshToken = await getRefreshToken();
     if (refreshToken == null) return false;
 
     final response = await http.post(

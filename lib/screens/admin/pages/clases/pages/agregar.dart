@@ -2,22 +2,25 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:proyecto/models/casillahorario_model.dart';
+import 'package:proyecto/models/curso_model.dart';
 import 'package:proyecto/models/field_config_model.dart';
 import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/screens/admin/pages/generic/agregar_form.dart';
 import 'package:proyecto/services/casillahorario_service.dart';
 import 'package:proyecto/services/clase_servicio.dart';
+import 'package:proyecto/services/curso_service.dart';
 import 'package:proyecto/services/usuario_service.dart';
 
 class Agregar extends StatelessWidget {
   final Future<List<Usuario>> usuarios = UsuarioService().getUsuarios();
   final Future<List<CasillaHorario>> casillas =
       CasillahorarioService().getCasillas();
+  final Future<List<Curso>> cursos = CursoServicio().getCursos();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([usuarios, casillas]),
+      future: Future.wait([usuarios, casillas, cursos]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
@@ -28,6 +31,7 @@ class Agregar extends StatelessWidget {
 
         final usuariosList = snapshot.data![0] as List<Usuario>;
         final casillasList = snapshot.data![1] as List<CasillaHorario>;
+        final cursosList = snapshot.data![2] as List<Curso>;
 
         final coachOptions = usuariosList
             .where((u) => u.tipousuario == 3)
@@ -42,6 +46,11 @@ class Agregar extends StatelessWidget {
                   value: c.id,
                   label: "${c.dia} - ${c.horaini}",
                 ))
+            .toList();
+
+        final cursosOptions = cursosList
+            .map<DropdownOption<int>>(
+                (c) => DropdownOption<int>(value: c.id, label: c.curso))
             .toList();
 
         return GenericAgregarForm(
@@ -59,14 +68,19 @@ class Agregar extends StatelessWidget {
                 type: FieldType.dropdown,
                 dropdownItems: casillaOptions,
               ),
-              FieldConfig(label: "Descripción", key: "descripcion"),
+              FieldConfig(
+                label: "Curso",
+                key: "idcurso",
+                type: FieldType.dropdown,
+                dropdownItems: cursosOptions,
+              ),
             ],
           ],
           onSubmit: (data) async {
             final payload = {
               "idcoach": int.parse(data['idcoach']),
               "idcasilla": int.parse(data['idcasilla']),
-              "descripcion": data['descripcion'],
+              "idcurso": int.parse(data['idcurso']),
             };
             final success = await ClaseServicio().agregarClase(payload);
             if (context.mounted) {

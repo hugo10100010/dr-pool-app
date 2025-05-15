@@ -10,11 +10,13 @@ class Consultar extends StatelessWidget {
       futureItems: PaqueteService().getPaquetes(),
       buildColumns: () => const [
         DataColumn(label: Text('Precio')),
-        DataColumn(label: Text('Beneficios')),
+        DataColumn(label: Text('Clases')),
+        DataColumn(label: Text('Flexible')),
       ],
       buildRow: (paquete) => DataRow(cells: [
         DataCell(Text(paquete.precio.toString() ?? '')),
-        DataCell(Text(paquete.beneficios ?? '')),
+        DataCell(Text(paquete.clases.toString() ?? '')),
+        DataCell(Text(paquete.flexible.toString() ?? '')),
       ]),
       onRowTap: (paquete) {
         

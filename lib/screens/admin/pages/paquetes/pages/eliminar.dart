@@ -12,11 +12,13 @@ class Eliminar extends StatelessWidget {
       futureItems: service.getPaquetes(),
       columnTitles: [
         'Precio',
-        'Beneficios',
+        'Clases',
+        'Flexible',
       ],
       displayValues: (paquete) => [
         paquete.precio.toString() ?? '',
-        paquete.beneficios ?? '',
+        paquete.clases.toString() ?? '',
+        paquete.flexible.toString() ?? '',
       ],
       getDeleteLabel: (paquete) => paquete.id.toString(),
       onDelete: (paquete) => service.eliminarPaquete(paquete.id),

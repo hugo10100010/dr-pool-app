@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
+import 'package:proyecto/routes/app_routes.dart';
 import '../services/usuario_service.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();
-}
-
-Future<List<dynamic>> fetchUsuarios() async {
-  final response = await http.get(Uri.parse("http://127.0.0.1:5000/usuario/"));
-  if (response.statusCode == 200) {
-    return json.decode(response.body);
-  } else {
-    throw Exception('Failed to load usuario');
-  }
 }
 
 class _LoginState extends State<Login> {
@@ -27,7 +17,6 @@ class _LoginState extends State<Login> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    futureUsuario = fetchUsuarios();
   }
 
   @override
@@ -96,7 +85,10 @@ class _LoginState extends State<Login> {
                         if (result["success"]) {
                           Provider.of<UsuarioProvider>(context,listen: false).setUsuario(result['usuario']);
                           if (result['rol'] == 1) {
-                            Navigator.pushNamed(context, '/adminhome');
+                            Navigator.pushNamed(context, AppRoutes.adminhome);
+                          }
+                          if(result['rol'] == 2) {
+                            Navigator.pushNamed(context, AppRoutes.clientehome);
                           }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login no válido")));
@@ -121,29 +113,6 @@ class _LoginState extends State<Login> {
                             "Registrarse",
                           ),
                         ),
-                        Container(
-                          height: 100,
-                          child: FutureBuilder<List<dynamic>>(
-                            future: futureUsuario,
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return ListView.builder(
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        title: Text(
-                                          snapshot.data![index]["nombre"],
-                                          style: TextStyle(fontSize: 10),
-                                        ),
-                                      );
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text('${snapshot.error}');
-                              }
-                              return const CircularProgressIndicator();
-                            },
-                          ),
-                        )
                       ],
                     ),
                   ],

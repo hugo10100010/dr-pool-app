@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import './pages/agregar.dart';
-import './pages/consultar/consultar.dart';
-import './pages/eliminar.dart';
-import './pages/modificar/modificar.dart';
+import 'pages/agregar.dart';
+import 'pages/consultar/consultar.dart';
+import 'pages/eliminar.dart';
+import 'pages/modificar/modificar.dart';
 
 class UsuariosPage extends StatefulWidget {
   @override
