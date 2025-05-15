@@ -16,6 +16,7 @@ class AppRoutes {
   static const String detallesusuario = '/detallesusuario';
   static const String detallesusuariomodif = '/detallesusuariomodif';
   static const String cuentacliente = '/cuentacliente';
+  static const String couchhome = '/couchhome';
 
   static Map<String, WidgetBuilder> getRoutes(RouteSettings settings) {
     return {
