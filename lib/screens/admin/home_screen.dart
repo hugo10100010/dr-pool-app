@@ -5,6 +5,7 @@ import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/routes/app_routes.dart';
 import 'package:proyecto/screens/admin/pages/casillas/casillashorario_page.dart';
 import 'package:proyecto/screens/admin/pages/clases/clases_page.dart';
+import 'package:proyecto/screens/admin/pages/cursos/cursos_page.dart';
 import 'package:proyecto/screens/admin/pages/home_page.dart';
 import 'package:proyecto/screens/admin/pages/paquetes/paquetes_page.dart';
 import 'package:proyecto/screens/admin/pages/usuarios/usuarios_page.dart';
@@ -21,6 +22,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
       PaquetesPage(),
       CasillashorarioPage(),
       ClasesPage(),
+      CursosPage(),
     ];
 
     int _selectedIndex = 0;
@@ -41,6 +43,7 @@ class _AdminHomePageState extends State<AdminHomePage> {
       ListTile(leading: Icon(Icons.abc),title: Text('Paquetes'),onTap: () => _onSelectPage(2),),
       ListTile(leading: Icon(Icons.calendar_month),title: Text('Casillas de horario'),onTap: () => _onSelectPage(3),),
       ListTile(leading: Icon(Icons.schedule),title: Text('Clases'),onTap: () => _onSelectPage(4),),
+      ListTile(leading: Icon(Icons.golf_course),title: Text('Cursos'),onTap: () => _onSelectPage(5),),
       ListTile(leading: Icon(Icons.turn_right),title: Text('Cerrar sesión'),onTap: () async {
         final storage = FlutterSecureStorage();
         await storage.delete(key: "proyectom_access_token");

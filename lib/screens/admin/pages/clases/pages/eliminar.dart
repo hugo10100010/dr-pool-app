@@ -16,9 +16,9 @@ class Eliminar extends StatelessWidget {
         'Descripcion',
       ],
       displayValues: (clase) => [
-        clase.idcoach.toString() ?? '',
-        clase.idcasilla.toString() ?? '',
-        clase.descripcion ?? '',
+        "${clase.coach.nombre} + ${clase.coach.apellidop}" ?? '',
+        "${clase.casilla.dia} ${clase.casilla.horaini} ${clase.casilla.horafin}" ?? '',
+        "${clase.curso.curso}" ?? '',
       ],
       getDeleteLabel: (clase) => clase.id.toString(),
       onDelete: (clase) => service.eliminarClase(clase.id),

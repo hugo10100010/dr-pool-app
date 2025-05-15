@@ -52,30 +52,42 @@ class GenericModificar<T> extends StatelessWidget {
               final fieldControllers = buildEditableFields(item);
               return DataRow(
                 cells: fieldControllers.map((field) {
-                  final selectedOption = field.dropdownItems?.firstWhere(
-                        (opt) => opt.value.toString() == field.controller.text,
-                        orElse: () =>
-                            field.dropdownItems?.first ??
-                            DropdownOption<dynamic>(
-                                value: "",
-                                label: "Default"), // Provide a default value
-                      ) ??
-                      DropdownOption<dynamic>(
-                          value: "", label: "Default"); // Fallback
+                  final selectedOption = (field.dropdownItems?.isNotEmpty ??
+                          false)
+                      ? field.dropdownItems!.firstWhere(
+                          (opt) =>
+                              opt.value?.toString() == field.controller.text &&
+                              field.controller.text.trim().isNotEmpty,
+                          orElse: () => field.dropdownItems!.first,
+                        )
+                      : DropdownOption<dynamic>(value: "", label: "Default");
+
 // Provide a default value
 
                   return DataCell(
-                    field.dropdownItems != null
+                    (field.dropdownItems != null &&
+                            field.dropdownItems!.isNotEmpty)
                         ? () {
-                            final items = field.dropdownItems!;
-                            final selectedOption = items.firstWhere(
-                              (opt) =>
-                                  opt.value.toString() == field.controller.text,
-                              orElse: () => items.first,
+                            final items = [
+                              DropdownOption<dynamic>(
+                                value: "__placeholder__",
+                                label: "Selecciona una opción...",
+                              ),
+                              ...field.dropdownItems!,
+                            ];
+
+                            final controllerValue =
+                                field.controller.text.trim();
+
+                            final hasMatch = items.any(
+                              (opt) => opt.value?.toString() == controllerValue,
                             );
 
+                            final selectedValue =
+                                hasMatch ? controllerValue : "__placeholder__";
+
                             return DropdownButtonFormField<dynamic>(
-                              value: selectedOption.value,
+                              value: selectedValue,
                               items: items
                                   .map((opt) => DropdownMenuItem<dynamic>(
                                         value: opt.value,
@@ -83,7 +95,8 @@ class GenericModificar<T> extends StatelessWidget {
                                       ))
                                   .toList(),
                               onChanged: (value) {
-                                if (value != null) {
+                                if (value != null &&
+                                    value != "__placeholder__") {
                                   field.controller.text = value.toString();
                                   field.onSubmit(value.toString());
                                 }
@@ -93,11 +106,11 @@ class GenericModificar<T> extends StatelessWidget {
                         : TextFormField(
                             controller: field.controller,
                             decoration:
-                                InputDecoration(border: InputBorder.none),
+                                const InputDecoration(border: InputBorder.none),
                             keyboardType: field.type == EditableFieldType.int
                                 ? TextInputType.number
                                 : field.type == EditableFieldType.double
-                                    ? TextInputType.numberWithOptions(
+                                    ? const TextInputType.numberWithOptions(
                                         decimal: true)
                                     : TextInputType.text,
                             onFieldSubmitted: (value) {
