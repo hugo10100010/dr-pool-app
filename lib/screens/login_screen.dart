@@ -90,6 +90,9 @@ class _LoginState extends State<Login> {
                           if(result['rol'] == 2) {
                             Navigator.pushNamed(context, AppRoutes.clientehome);
                           }
+                          if(result['rol'] == 3) {
+                            Navigator.pushNamed(context, AppRoutes.couchhome);
+                          }
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login no válido")));
                         }
