@@ -19,7 +19,7 @@ class Modificar extends StatelessWidget {
         'Email',
         'Telefono',
         'Tipo doc.',
-        'Documento'
+        'Documento',
       ],
       buildEditableFields: (usuario) => [
         GenericEditableField(

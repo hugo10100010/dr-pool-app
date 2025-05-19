@@ -3,15 +3,20 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/routes/app_routes.dart';
+import 'package:proyecto/screens/couch/pages/home_page.dart';
+import 'package:proyecto/screens/couch/pages/horario/horario_page.dart';
+import 'package:proyecto/screens/couch/pages/clases/clases_page.dart';
 
-class AdminHomePage extends StatefulWidget {
+class CouchHomePage extends StatefulWidget {
   @override
-  State<AdminHomePage> createState() => _AdminHomePageState();
+  State<CouchHomePage> createState() => _CouchHomePageState();
 }
 
-class _AdminHomePageState extends State<AdminHomePage> {
+class _CouchHomePageState extends State<CouchHomePage> {
     final _pages = [
-      
+      CoucheHome(),
+      ClasesPage(),
+      HorarioPage(),
     ];
 
     int _selectedIndex = 0;

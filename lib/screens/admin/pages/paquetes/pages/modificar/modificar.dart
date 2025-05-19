@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/models/field_config_model.dart';
 import 'package:proyecto/models/paquete_model.dart';
 import 'package:proyecto/screens/admin/pages/generic/modificar/modificar_form.dart';
 import 'package:proyecto/services/paquete_service.dart';
@@ -32,11 +33,16 @@ class Modificar extends StatelessWidget {
           },
         ),
         GenericEditableField(
-          controller: TextEditingController(text: paquete.flexible.toString()),
+          controller: TextEditingController(text: paquete.flexible ? 'Si' : 'No'),
           onSubmit: (val) {
             paquete.flexible = bool.parse(val);
             service.modificarPaquete(paquete.toJson());
           },
+          type: EditableFieldType.dropdown,
+          dropdownItems: [
+            DropdownOption(value: false, label: "No"),
+            DropdownOption(value: true, label: "Si"),
+          ]
         ),
       ],
       onRowTap: (paquete) {

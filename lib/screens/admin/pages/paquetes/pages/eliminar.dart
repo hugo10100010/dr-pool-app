@@ -18,7 +18,7 @@ class Eliminar extends StatelessWidget {
       displayValues: (paquete) => [
         paquete.precio.toString() ?? '',
         paquete.clases.toString() ?? '',
-        paquete.flexible.toString() ?? '',
+        paquete.flexible ? 'Si' : 'No' ?? '',
       ],
       getDeleteLabel: (paquete) => paquete.id.toString(),
       onDelete: (paquete) => service.eliminarPaquete(paquete.id),

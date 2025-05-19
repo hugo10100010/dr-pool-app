@@ -1,4 +1,11 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto/providers/usuario_provider.dart';
+import 'package:proyecto/services/usuario_service.dart';
+import 'package:proyecto/widgets/image_picker.dart';
 
 class CuentaPage extends StatefulWidget {
   @override
@@ -8,9 +15,21 @@ class CuentaPage extends StatefulWidget {
 class _CuentaPageState extends State<CuentaPage> {
   final TextEditingController _nombreUsuController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  String avatarb64 = "";
+
+  void escogerArchivo(String? base64Data) {
+    if (base64Data!.isEmpty) {
+      return;
+    } else {
+      avatarb64 = base64Data;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     //  _nombreUsuController.text="OAS";
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
+    _nombreUsuController.text = usuario!.cuenta.nombreusu;
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
@@ -31,15 +50,13 @@ class _CuentaPageState extends State<CuentaPage> {
                   enabled: true,
                   controller: _nombreUsuController,
                   decoration: InputDecoration(
-                    icon: Icon(Icons.person),
-                    labelText: 'Nombre de usuario'
-                  ),
-                  validator:(value) {
-                    if(value==null || value.isEmpty) {
+                      icon: Icon(Icons.person), labelText: 'Nombre de usuario'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
                       return 'El campo es obligatorio';
                     }
                     return null;
-                  },  
+                  },
                 ),
               ),
             ),
@@ -50,37 +67,39 @@ class _CuentaPageState extends State<CuentaPage> {
                   enabled: true,
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    icon: Icon(Icons.person),
-                    labelText: 'Contraseña'
-                  ),
-                  validator:(value) {
-                    if(value==null || value.isEmpty) {
+                      icon: Icon(Icons.person), labelText: 'Contraseña'),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
                       return 'El campo es obligatorio';
                     }
                     return null;
-                  },  
+                  },
                 ),
               ),
             ),
             Flexible(
               child: SizedBox(
-                width: 300,
-                child: TextFormField(
-                  enabled: true,
-                  controller: _nombreUsuController,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.person),
-                    labelText: 'Nombre de usuario'
-                  ),
-                  validator:(value) {
-                    if(value==null || value.isEmpty) {
-                      return 'El campo es obligatorio';
-                    }
-                    return null;
-                  },  
-                ),
-              ),
+                  width: 300,
+                  child: ImagePickerField(onImagePicked: escogerArchivo)),
             ),
+            Flexible(
+                child: SizedBox(
+              width: 300,
+              child: ElevatedButton(
+                  onPressed: () {
+                    Uint8List bytes = base64Decode(avatarb64);
+                    usuario.cuenta.avatar = bytes;
+                    UsuarioService().modificarUsuario({
+                      "id": usuario!.id,
+                      "cuenta": {
+                        "nombreusu": _nombreUsuController.text,
+                        "password": _passwordController.text,
+                        "avatar": bytes,
+                      }
+                    });
+                  },
+                  child: Text("Confirmar")),
+            ))
           ],
         ),
       ),

@@ -70,7 +70,7 @@ class GenericModificar<T> extends StatelessWidget {
                         ? () {
                             final items = [
                               DropdownOption<dynamic>(
-                                value: "__placeholder__",
+                                value: null,
                                 label: "Selecciona una opción...",
                               ),
                               ...field.dropdownItems!,
@@ -79,12 +79,14 @@ class GenericModificar<T> extends StatelessWidget {
                             final controllerValue =
                                 field.controller.text.trim();
 
-                            final hasMatch = items.any(
+// Intenta encontrar el valor original que coincide con el texto actual del controlador
+                            final matchedOption = items.firstWhere(
                               (opt) => opt.value?.toString() == controllerValue,
+                              orElse: () => DropdownOption(
+                                  value: null, label: ""),
                             );
 
-                            final selectedValue =
-                                hasMatch ? controllerValue : "__placeholder__";
+                            final selectedValue = matchedOption.value;
 
                             return DropdownButtonFormField<dynamic>(
                               value: selectedValue,
