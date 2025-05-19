@@ -16,12 +16,6 @@ class _ClasesPageState extends State<ClasesPage> {
     Tab(
       child: Text('Consultar'),
     ),
-    Tab(
-      child: Text('Eliminar'),
-    ),
-    Tab(
-      child: Text('Modificar'),
-    ),
   ];
 
   int selectedIndex = 0;
@@ -30,12 +24,10 @@ class _ClasesPageState extends State<ClasesPage> {
   Widget build(BuildContext context) {
     final pages = [
       SeleccionarCursoWidget(), // de agregar.dart
-      DropdownListExample(),   // de consultar.dart
-      Center(child: Text('Eliminar')), // Placeholder para Eliminar
-      Center(child: Text('Modificar')), // Placeholder para Modificar
+      DropdownListExample(),   // de consultar.dart/ Placeholder para Modificar
     ];
     return DefaultTabController(
-      length: 4,
+      length: 2,
       child: Column(
         children: [
           TabBar(

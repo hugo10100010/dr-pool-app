@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(HorarioApp());
-
-class HorarioApp extends StatelessWidget {
+class HorarioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -10,13 +10,18 @@ class Agregar extends StatelessWidget {
       pages: [
         [
           FieldConfig(label: "Precio", key: "precio", type: FieldType.double, inputType: TextInputType.numberWithOptions(decimal: true)),
-          FieldConfig(label: "Beneficios", key: "beneficios", inputType: TextInputType.multiline),
+          FieldConfig(label: "Clases", key: "clases", type: FieldType.int),
+          FieldConfig(label: "Flexible", key: "flexible", type: FieldType.dropdown, dropdownItems: [
+            DropdownOption(value: false, label: "No"),
+            DropdownOption(value: true, label: "Si")
+          ])
         ],
       ],
       onSubmit: (data) async {
         final payload = {
           "precio": double.parse(data['precio']),
-          "beneficios": data['beneficios']
+          "clases": data['clases'],
+          "flexible": data['flexible']
         };
         final success = await PaqueteService().agregarPaquete(payload); 
         if (context.mounted) {

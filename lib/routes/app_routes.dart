@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyecto/screens/admin/pages/usuarios/pages/consultar/detallesusuario.dart';
 import 'package:proyecto/screens/admin/pages/usuarios/pages/modificar/detallesusuario.dart';
 import 'package:proyecto/screens/cliente/home_screen.dart';
+import 'package:proyecto/screens/couch/home_screen.dart';
 import 'package:proyecto/screens/cliente/pages/drawer/cuenta/cuenta_page.dart';
 import '../screens/login_screen.dart';
 import '../screens/registro_screen.dart';
@@ -22,6 +23,7 @@ class AppRoutes {
     return {
       adminhome: (context) => AdminHomePage(),
       clientehome: (context) => ClienteHomePage(),
+      couchhome: (context) => CouchHomePage(),
       login: (context) => Login(),
       registrar: (context) => RegisterForm(),
       detallesusuario: (context) => Detallesusuario(),
