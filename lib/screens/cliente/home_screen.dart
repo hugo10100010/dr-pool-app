@@ -3,8 +3,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:proyecto/routes/app_routes.dart';
 import 'package:proyecto/screens/cliente/pages/inicio/inicio_page.dart';
 import 'package:proyecto/screens/cliente/pages/horario/horario_page.dart';
-import 'package:proyecto/screens/cliente/pages/clases/clases_page.dart';
-import 'package:proyecto/screens/cliente/pages/pagos/pagos_page.dart';
 import 'package:proyecto/screens/cliente/pages/acercade/acercade_page.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/providers/usuario_provider.dart';

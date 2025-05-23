@@ -1,17 +1,17 @@
 class Horario {
   int id;
   int idusuario;
-  String rutina;
+  int idclase;
 
   Horario({
     required this.id,
     required this.idusuario,
-    required this.rutina,
+    required this.idclase,
   });
 
   factory Horario.fromJson(Map<String, dynamic> json) => Horario(
         id: json['id'],
         idusuario: json['idusuario'],
-        rutina: json['rutina'],
+        idclase: json['idclase'],
       );
 }

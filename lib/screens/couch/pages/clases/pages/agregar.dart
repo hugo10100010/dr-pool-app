@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/models/casillahorario_model.dart';
+import 'package:proyecto/models/curso_model.dart';
+import 'package:proyecto/services/casillahorario_service.dart';
+import 'package:proyecto/services/curso_service.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,53 +41,82 @@ class SeleccionarCursoWidget extends StatefulWidget {
 }
 
 class _SeleccionarCursoWidgetState extends State<SeleccionarCursoWidget> {
-  String? selectTipoCurso;
-  String? selectCronograma;
+  int? selectCurso;
+  int? selectCasilla;
 
-  final List<String> tiposCursos = ['Presencial', 'En línea', 'Híbrido'];
-  final List<String> opcionesCronograma = ['Mañana', 'Tarde', 'Noche'];
+  final Future<List<Curso>> cursos = CursoServicio().getCursos();
+  final Future<List<CasillaHorario>> casillas =
+      CasillahorarioService().getCasillas();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Tipo de Curso', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-        DropdownButton<String>(
-          value: selectTipoCurso,
-          hint: Text('Seleccione el tipo de curso', style: TextStyle(color: Colors.red)),
-          dropdownColor: Colors.black,
-          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          iconEnabledColor: Colors.red,
-          items: tiposCursos.map((type) {
-            return DropdownMenuItem(
-              value: type,
-              child: Text(type, style: TextStyle(color: Colors.red)),
-            );
-          }).toList(),
-          onChanged: (value) {
-            setState(() => selectTipoCurso = value);
-          },
-        ),
-        SizedBox(height: 16),
-        Text('Casilla de Horario', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-        DropdownButton<String>(
-          value: selectCronograma,
-          hint: Text('Seleccione el horario', style: TextStyle(color: Colors.red)),
-          dropdownColor: Colors.black,
-          style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-          iconEnabledColor: Colors.red,
-          items: opcionesCronograma.map((cronograma) {
-            return DropdownMenuItem(
-              value: cronograma,
-              child: Text(cronograma, style: TextStyle(color: Colors.red)),
-            );
-          }).toList(),
-          onChanged: (value) {
-            setState(() => selectCronograma = value);
-          },
-        ),
-      ],
+    return FutureBuilder(
+      future: Future.wait([cursos, casillas]),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (snapshot.hasError) {
+          return Center(child: Text("Error: ${snapshot.error}"));
+        }
+
+        final cursosList = snapshot.data![0] as List<Curso>;
+        final casillasList = snapshot.data![1] as List<CasillaHorario>;
+
+        final cursosItems = cursosList
+            .map<DropdownMenuItem>(
+              (c) => DropdownMenuItem(
+                value: c.id.toString(),
+                child: Text(c.curso),
+              ),
+            )
+            .toList();
+        final casillasItems = casillasList
+            .map<DropdownMenuItem>(
+              (e) => DropdownMenuItem(
+                  value: e.id.toString(),
+                  child: Text(
+                      "${e.dia == 1 ? "Lunes" : e.dia == 2 ? "Martes" : e.dia == 3 ? "Miercoles" : e.dia == 4 ? "Jueves" : e.dia == 5 ? "Viernes" : e.dia == 6 ? "Sábado" : e.dia == 7 ? "Domingo" : "No"} - ${e.horaini} a ${e.horafin}")),
+            )
+            .toList();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Curso',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+            DropdownButton(
+              value: selectCurso,
+              hint: Text('Seleccione el tipo de curso',
+                  style: TextStyle(color: Colors.red)),
+              dropdownColor: Colors.black,
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              iconEnabledColor: Colors.red,
+              items: cursosItems,
+              onChanged: (value) {
+                setState(() => selectCurso = value);
+              },
+            ),
+            SizedBox(height: 16),
+            Text('Casilla de Horario',
+                style:
+                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+            DropdownButton(
+              value: selectCasilla,
+              hint: Text('Seleccione el horario',
+                  style: TextStyle(color: Colors.red)),
+              dropdownColor: Colors.black,
+              style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+              iconEnabledColor: Colors.red,
+              items: casillasItems,
+              onChanged: (value) {
+                setState(() => selectCasilla = value);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

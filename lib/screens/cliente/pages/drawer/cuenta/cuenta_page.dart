@@ -71,20 +71,23 @@ class _CuentaPageState extends State<CuentaPage> {
               child: SizedBox(
                 width: 300,
                 child: ElevatedButton(
-                    onPressed: () {
-                      Uint8List bytes = base64Decode(avatarb64);
-                      usuario.cuenta.avatar = bytes;
-                      UsuarioService().modificarUsuario({
+                  onPressed: () {
+                    Uint8List bytes = base64Decode(avatarb64);
+                    UsuarioService().modificarUsuario(
+                      {
                         "id": usuario!.id,
                         "cuenta": {
                           "nombreusu": _nombreUsuController.text,
                           "avatar": bytes,
                         }
-                      });
-                    },
-                    child: Text("Confirmar")),
+                      },
+                    );
+                    Provider.of<UsuarioProvider>(context, listen: false).actualizarAvatar(bytes);
+                  },
+                  child: Text("Confirmar"),
+                ),
               ),
-            )
+            ),
           ],
         ),
       ),
