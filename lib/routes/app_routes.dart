@@ -17,6 +17,10 @@ class AppRoutes {
   static const String detallesusuario = '/detallesusuario';
   static const String detallesusuariomodif = '/detallesusuariomodif';
   static const String cuentacliente = '/cuentacliente';
+  static const String personalescliente = '/personalescliente';
+  static const String metricascliente = '/metricascliente';
+  static const String domiciliocliente = '/domiciliocliente';
+  static const String subscripcioncliente = '/subscripcioncliente';
   static const String couchhome = '/couchhome';
 
   static Map<String, WidgetBuilder> getRoutes(RouteSettings settings) {
@@ -29,6 +33,10 @@ class AppRoutes {
       detallesusuario: (context) => Detallesusuario(),
       detallesusuariomodif: (context) => Detallesusuariomodif(),
       cuentacliente: (context) => CuentaPage(),
+      personalescliente: (context) => Placeholder(),
+      metricascliente: (context) => Placeholder(),
+      domiciliocliente: (context) => Placeholder(),
+      subscripcioncliente: (context) => Placeholder(),
       placeholder: (context) => Placeholder(),
     };
   }

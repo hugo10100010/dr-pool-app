@@ -6,20 +6,17 @@ import 'dart:typed_data';
 class Cuenta {
   int id;
   String nombreusu;
-  String password;
   Uint8List? avatar;
 
   Cuenta({
     required this.id,
     required this.nombreusu,
-    required this.password,
     this.avatar,
   });
 
   factory Cuenta.fromJson(Map<String, dynamic> json) => Cuenta(
         id: json['id'],
         nombreusu: json['nombreusu'],
-        password: json['password_hashed'],
         avatar: json['avatar'] != null ? base64Decode(json['avatar']) : null,
       );
 
@@ -27,7 +24,6 @@ class Cuenta {
     return {
       'id': id,
       'nombreusu': nombreusu,
-      if (password.isNotEmpty) 'password': password,
     };
   }
 }

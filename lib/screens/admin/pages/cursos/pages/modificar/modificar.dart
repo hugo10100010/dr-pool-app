@@ -16,7 +16,9 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: curso.curso),
           onSubmit: (val) {
             curso.curso = val;
-            service.modificarCurso(curso.toJson());
+            service.modificarCurso({
+              "curso": val,
+            });
           },
           type: EditableFieldType.text,
         ),
@@ -24,7 +26,9 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: curso.descripcion),
           onSubmit: (val) {
             curso.descripcion = val;
-            service.modificarCurso(curso.toJson());
+            service.modificarCurso({
+              "descripcion": val,
+            });
           },
           type: EditableFieldType.text,
         ),

@@ -17,20 +17,12 @@ class ClienteHomePage extends StatefulWidget {
 class _ClienteHomePageState extends State<ClienteHomePage> {
   List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
-      icon: Icon(Icons.access_time_filled_rounded),
-      label: "Horario",
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.circle_notifications_rounded),
-      label: "Clases",
-    ),
-    BottomNavigationBarItem(
       icon: Icon(Icons.home_rounded),
       label: "Inicio",
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.attach_money_rounded),
-      label: "Pagos",
+      icon: Icon(Icons.access_time_filled_rounded),
+      label: "Horario",
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.info_rounded),
@@ -65,18 +57,19 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
     )
   ];
 
-  List<Widget> pages = [Horario(), Clases(), Inicio(), Pagos(), AcercaDe()];
+  List<Widget> pages = [Inicio(), Horario(), AcercaDe()];
 
-  int selectedTab = 2;
+  int selectedTab = 0;
 
   @override
   Widget build(BuildContext context) {
     final usuario = Provider.of<UsuarioProvider>(context).usuario;
     final tabs = [
       ListTile(leading: Icon(Icons.account_box),title: Text('Cuenta'),onTap: () => Navigator.pushNamed(context, AppRoutes.cuentacliente),),
-      ListTile(leading: Icon(Icons.person_add),title: Text('Datos personales'),onTap: ()=>_onSelectPage(1),),
-      ListTile(leading: Icon(Icons.home),title: Text('Datos domiciliados'),onTap: () => _onSelectPage(2),),
-      ListTile(leading: Icon(Icons.subscriptions),title: Text('Subscripción'),onTap: () => _onSelectPage(3),),
+      ListTile(leading: Icon(Icons.person_add),title: Text('Datos personales'),onTap: ()=> Navigator.pushNamed(context, AppRoutes.personalescliente),),
+      ListTile(leading: Icon(Icons.home),title: Text('Datos domiciliados'),onTap: () => Navigator.pushNamed(context, AppRoutes.domiciliocliente),),
+      ListTile(leading: Icon(Icons.abc),title: Text('Metricas'),onTap: () => Navigator.pushNamed(context, AppRoutes.metricascliente),),
+      ListTile(leading: Icon(Icons.subscriptions),title: Text('Subscripción'),onTap: () => Navigator.pushNamed(context, AppRoutes.subscripcioncliente),),
       ListTile(leading: Icon(Icons.turn_right),title: Text('Cerrar sesión'),onTap: () async {
         final storage = FlutterSecureStorage();
         await storage.delete(key: "proyectom_access_token");
@@ -84,7 +77,7 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
         final usuarioProvider = Provider.of<UsuarioProvider>(context,listen: false);
         usuarioProvider.logout();
         Navigator.pushReplacementNamed(context, AppRoutes.login);
-      },)
+      },),
     ];
 
     return Scaffold(

@@ -66,7 +66,7 @@ class UsuarioService {
     }
   }
 
-  Future<void> modificarUsuario(Map<String, dynamic> usuariodatos) async {
+  Future<bool> modificarUsuario(Map<String, dynamic> usuariodatos) async {
     final response = await AuthService.authorizedRequest(
         Uri.parse("$baseUrl/api/usuario/modificar/${usuariodatos['id']}"),
         method: "PUT",
@@ -74,8 +74,10 @@ class UsuarioService {
 
     if (response.statusCode == 200) {
       print("La información del usuario fue actualizada con éxito");
+      return true;
     } else {
       print("No se actualizó la información");
+      return false;
     }
   }
 

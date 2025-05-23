@@ -17,7 +17,9 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: casilla.horaini),
           onSubmit: (val) {
             casilla.horaini = val;
-            service.modificarCasilla(casilla.toJson());
+            service.modificarCasilla({
+              "horaini": val,
+            });
           },
           type: EditableFieldType.dropdown,
           dropdownItems: [
@@ -39,7 +41,9 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: casilla.horafin),
           onSubmit: (val) {
             casilla.horafin = val;
-            service.modificarCasilla(casilla.toJson());
+            service.modificarCasilla({
+              "horafin": val,
+            });
           },
           type: EditableFieldType.dropdown,
           dropdownItems: [
@@ -61,7 +65,9 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: casilla.dia.toString()),
           onSubmit: (val) {
             casilla.dia = int.parse(val);
-            service.modificarCasilla(casilla.toJson());
+            service.modificarCasilla({
+              "dia": int.parse(val)
+            });
           },
           type: EditableFieldType.dropdown,
           dropdownItems: [
