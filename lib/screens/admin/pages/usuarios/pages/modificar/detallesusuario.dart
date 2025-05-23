@@ -7,7 +7,8 @@ import 'package:proyecto/services/usuario_service.dart';
 class Detallesusuariomodif extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final usuario = args['usuario'] as Usuario;
     final service = UsuarioService();
 
@@ -21,15 +22,9 @@ class Detallesusuariomodif extends StatelessWidget {
             controller: TextEditingController(text: usuario.cuenta.nombreusu),
             onSubmit: (val) {
               usuario.cuenta.nombreusu = val;
-              service.modificarUsuario(usuario.toJson());
-            },
-          ),
-          EditableField(
-            label: 'Password',
-            controller: TextEditingController(),
-            onSubmit: (val) {
-              usuario.cuenta.password = val;
-              service.modificarUsuario(usuario.toJson());
+              service.modificarUsuario({
+                "cuenta": {"nombreusu": val}
+              });
             },
           ),
         ],
@@ -40,82 +35,111 @@ class Detallesusuariomodif extends StatelessWidget {
             controller: TextEditingController(text: usuario.domicilio.calle),
             onSubmit: (val) {
               usuario.domicilio.calle = val;
-              service.modificarUsuario(usuario.toJson());
+              service.modificarUsuario({
+                "domicilio": {"calle": val}
+              });
             },
           ),
           EditableField(
             label: 'Num ext.',
-            controller: TextEditingController(text: usuario.domicilio.numext.toString()),
+            controller: TextEditingController(
+                text: usuario.domicilio.numext.toString()),
             onSubmit: (val) {
               usuario.domicilio.numext = int.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
-            }, 
+              service.modificarUsuario({
+                "domicilio": {"numext": val}
+              });
+            },
           ),
           EditableField(
             label: 'Num int.',
-            controller: TextEditingController(text: usuario.domicilio.numint.toString()),
+            controller: TextEditingController(
+                text: usuario.domicilio.numint.toString()),
             onSubmit: (val) {
               usuario.domicilio.numext = int.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
-            }, 
+              service.modificarUsuario({
+                "domicilio": {"numint": val}
+              });
+            },
           ),
           EditableField(
             label: 'Asentamiento',
-            controller: TextEditingController(text: usuario.domicilio.asentamiento),
+            controller:
+                TextEditingController(text: usuario.domicilio.asentamiento),
             onSubmit: (val) {
               usuario.domicilio.numext = int.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
-            }, 
+              service.modificarUsuario({
+                "domicilio": {"asentamiento": val}
+              });
+            },
           ),
           EditableField(
             label: 'Codigo p.',
-            controller: TextEditingController(text: usuario.domicilio.codigop.toString()),
+            controller: TextEditingController(
+                text: usuario.domicilio.codigop.toString()),
             onSubmit: (val) {
-              usuario.domicilio.numext = int.tryParse(val) ?? 0;  
-              service.modificarUsuario(usuario.toJson());
-            }, 
+              usuario.domicilio.numext = int.tryParse(val) ?? 0;
+              service.modificarUsuario({
+                "domicilio": {"codigop": val}
+              });
+            },
           ),
         ],
         // Metricas
         [
           EditableField(
             label: 'Estatura',
-            controller: TextEditingController(text: usuario.metricas.estatura.toString()),
+            controller: TextEditingController(
+                text: usuario.metricas.estatura.toString()),
             onSubmit: (val) {
               usuario.metricas.estatura = double.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
+              service.modificarUsuario({
+                "metricas": {"estatura": val}
+              });
             },
           ),
           EditableField(
             label: 'Peso',
-            controller: TextEditingController(text: usuario.metricas.peso.toString()),
+            controller:
+                TextEditingController(text: usuario.metricas.peso.toString()),
             onSubmit: (val) {
               usuario.metricas.peso = double.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
+              service.modificarUsuario({
+                "metricas": {"peso": val}
+              });
             },
           ),
           EditableField(
             label: 'Max. cardio.',
-            controller: TextEditingController(text: usuario.metricas.maxcardio.toString()),
+            controller: TextEditingController(
+                text: usuario.metricas.maxcardio.toString()),
             onSubmit: (val) {
               usuario.metricas.maxcardio = double.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
+              service.modificarUsuario({
+                "metricas": {"maxcardio": val}
+              });
             },
           ),
           EditableField(
             label: 'Max. pulso',
-            controller: TextEditingController(text: usuario.metricas.maxpulso.toString()),
+            controller: TextEditingController(
+                text: usuario.metricas.maxpulso.toString()),
             onSubmit: (val) {
               usuario.metricas.maxpulso = int.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
+              service.modificarUsuario({
+                "metricas": {"maxpulso": val}
+              });
             },
           ),
           EditableField(
             label: 'Frecuencia semanal',
-            controller: TextEditingController(text: usuario.metricas.frecuenciasemanal.toString()),
+            controller: TextEditingController(
+                text: usuario.metricas.frecuenciasemanal.toString()),
             onSubmit: (val) {
               usuario.metricas.frecuenciasemanal = int.tryParse(val) ?? 0;
-              service.modificarUsuario(usuario.toJson());
+              service.modificarUsuario({
+                "metricas": {"frecuenciasemanal": val}
+              });
             },
           ),
         ]

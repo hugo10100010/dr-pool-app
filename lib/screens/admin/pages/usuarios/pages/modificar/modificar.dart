@@ -26,35 +26,55 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: usuario.personales.nombre),
           onSubmit: (val) {
             usuario.personales.nombre = val;
-            service.modificarUsuario(usuario.toJson());
+            service.modificarUsuario({
+              "personales": {
+                "nombre": val
+              }
+            });
           },
         ),
         GenericEditableField(
           controller: TextEditingController(text: usuario.personales.apellidop),
           onSubmit: (val) {
             usuario.personales.apellidop = val;
-            service.modificarUsuario(usuario.toJson());
+            service.modificarUsuario({
+              "personales": {
+                "apellidop": val
+              }
+            });
           },
         ),
         GenericEditableField(
           controller: TextEditingController(text: usuario.personales.apellidom),
           onSubmit: (val) {
             usuario.personales.apellidom = val;
-            service.modificarUsuario(usuario.toJson());
+            service.modificarUsuario({
+              "personales": {
+                "apellidom": val
+              }
+            });
           },
         ),
         GenericEditableField(
           controller: TextEditingController(text: usuario.personales.email),
           onSubmit: (val) {
             usuario.personales.email = val;
-            service.modificarUsuario(usuario.toJson());
+            service.modificarUsuario({
+              "personales": {
+                "email": val
+              }
+            });
           },
         ),
         GenericEditableField(
           controller: TextEditingController(text: usuario.personales.telefono),
           onSubmit: (val) {
             usuario.personales.telefono = val;
-            service.modificarUsuario(usuario.toJson());
+            service.modificarUsuario({
+              "personales": {
+                "telefono": val
+              }
+            });
           },
           type: EditableFieldType.int
         ),
@@ -62,7 +82,11 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: usuario.personales.tipodocumento),
           onSubmit: (val) {
             usuario.personales.tipodocumento = val;
-            service.modificarUsuario(usuario.toJson());
+            service.modificarUsuario({
+              "personales": {
+                "tipodocumento": val
+              }
+            });
           },
           type: EditableFieldType.dropdown,
           dropdownItems: [
@@ -74,7 +98,11 @@ class Modificar extends StatelessWidget {
           controller: TextEditingController(text: usuario.personales.documento),
           onSubmit: (val) {
             usuario.personales.documento = val;
-            service.modificarUsuario(usuario.toJson());
+            service.modificarUsuario({
+              "personales": {
+                "documento": val
+              }
+            });
           },
         ),
       ],

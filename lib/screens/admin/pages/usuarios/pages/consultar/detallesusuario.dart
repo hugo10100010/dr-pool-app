@@ -21,11 +21,9 @@ class Detallesusuario extends StatelessWidget {
   Widget buildCuenta(Usuario usuario) => SingleChildScrollView(
         child: DataTable(columns: [
           DataColumn(label: Text('Usuario')),
-          DataColumn(label: Text('Password')),
         ], rows: [
           DataRow(cells: [
             DataCell(Text(usuario.cuenta.nombreusu)),
-            DataCell(Text(usuario.cuenta.password)),
           ]),
         ]),
       );

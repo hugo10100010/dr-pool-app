@@ -65,7 +65,9 @@ class Modificar extends StatelessWidget {
               controller: TextEditingController(text: "${clase.coach.nombre} ${clase.coach.apellidop}"),
               onSubmit: (val) {
                 clase.idcoach = int.parse(val);
-                service.modificarClase(clase.toJson());
+                service.modificarClase({
+                  "coach": int.parse(val),
+                });
               },
               type: EditableFieldType.dropdown,
               dropdownItems: opcionesCoach,
@@ -75,7 +77,9 @@ class Modificar extends StatelessWidget {
                   TextEditingController(text: "${clase.casilla.dia} ${clase.casilla.horaini} ${clase.casilla.horafin}"),
               onSubmit: (val) {
                 clase.idcasilla = int.parse(val);
-                service.modificarClase(clase.toJson());
+                service.modificarClase({
+                  "idcasilla": int.parse(val),
+                });
               },
               type: EditableFieldType.dropdown,
               dropdownItems: opcionesCasillas,
@@ -84,7 +88,9 @@ class Modificar extends StatelessWidget {
               controller: TextEditingController(text: clase.curso.curso),
               onSubmit: (val) {
                 clase.idcurso = int.parse(val);
-                service.modificarClase(clase.toJson());
+                service.modificarClase({
+                  "curso": int.parse(val),
+                });
               },
               type: EditableFieldType.dropdown,
               dropdownItems: opcionesCursos,

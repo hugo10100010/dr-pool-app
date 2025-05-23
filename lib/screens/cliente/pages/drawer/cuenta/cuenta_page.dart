@@ -18,10 +18,12 @@ class _CuentaPageState extends State<CuentaPage> {
   String avatarb64 = "";
 
   void escogerArchivo(String? base64Data) {
-    if (base64Data!.isEmpty) {
-      return;
-    } else {
-      avatarb64 = base64Data;
+    if (base64Data != null) {
+      if (base64Data.isEmpty) {
+        return;
+      } else {
+        avatarb64 = base64Data;
+      }
     }
   }
 
@@ -62,44 +64,27 @@ class _CuentaPageState extends State<CuentaPage> {
             ),
             Flexible(
               child: SizedBox(
-                width: 300,
-                child: TextFormField(
-                  enabled: true,
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.person), labelText: 'Contraseña'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'El campo es obligatorio';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-            ),
-            Flexible(
-              child: SizedBox(
                   width: 300,
                   child: ImagePickerField(onImagePicked: escogerArchivo)),
             ),
             Flexible(
-                child: SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                  onPressed: () {
-                    Uint8List bytes = base64Decode(avatarb64);
-                    usuario.cuenta.avatar = bytes;
-                    UsuarioService().modificarUsuario({
-                      "id": usuario!.id,
-                      "cuenta": {
-                        "nombreusu": _nombreUsuController.text,
-                        "password": _passwordController.text,
-                        "avatar": bytes,
-                      }
-                    });
-                  },
-                  child: Text("Confirmar")),
-            ))
+              child: SizedBox(
+                width: 300,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Uint8List bytes = base64Decode(avatarb64);
+                      usuario.cuenta.avatar = bytes;
+                      UsuarioService().modificarUsuario({
+                        "id": usuario!.id,
+                        "cuenta": {
+                          "nombreusu": _nombreUsuController.text,
+                          "avatar": bytes,
+                        }
+                      });
+                    },
+                    child: Text("Confirmar")),
+              ),
+            )
           ],
         ),
       ),
