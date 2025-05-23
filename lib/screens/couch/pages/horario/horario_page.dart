@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto/providers/usuario_provider.dart';
 
 class HorarioPage extends StatelessWidget {
   @override
@@ -12,8 +14,10 @@ class HorarioPage extends StatelessWidget {
 }
 
 class HorarioClases extends StatelessWidget {
-  final List<String> dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  
+  final List<int> dias = [1,2,3,4,5,6,7];
 
+  
   final List<String> horas = List.generate(12, (index) {
     int hora = 8 + index;
     String inicio = hora < 12 ? '$hora:00 AM' : '${hora == 12 ? 12 : hora - 12}:00 PM';
@@ -125,8 +129,11 @@ class HorarioClases extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
+    usuario!.clases!.sort((a, b) => a.casilla.horaini.compareTo(b.casilla.horaini));
+
     return DefaultTabController(
-      length: dias.length,
+      length: 7,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -145,7 +152,7 @@ class HorarioClases extends StatelessWidget {
                   return Tab(
                     child: Center(
                       child: Text(
-                        dia,
+                        dia == 1 ? "Lunes" : dia == 2 ? "Martes" : dia == 3 ? "Miercoles" : dia == 4 ? "Jueves" : dia == 5 ? "Viernes" : dia == 6 ? "Sábado" : dia == 7 ? "Domingo" : "No",
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -161,9 +168,9 @@ class HorarioClases extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         body: TabBarView(
           children: dias.map((dia) {
-            final clasesDelDia = horarioClases[dia] ?? List.generate(12, (_) => {'clase': '-', 'profe': '-'});
+            final clasesDelDia = usuario.clases!.where((e) => e.casilla.dia==dia).toList();
             return ListView.builder(
-              itemCount: horas.length,
+              itemCount: usuario!.clases!.where((e) => e.casilla.dia==dia).length,
               itemBuilder: (context, index) {
                 final claseInfo = clasesDelDia[index];
                 return Container(
@@ -177,7 +184,7 @@ class HorarioClases extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        horas[index],
+                        clasesDelDia[index].casilla.horaini,
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -186,7 +193,7 @@ class HorarioClases extends StatelessWidget {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        claseInfo!['clase'] ?? '-',
+                        clasesDelDia[index].curso.curso,
                         style: TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.w600,
@@ -195,7 +202,7 @@ class HorarioClases extends StatelessWidget {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        'Profe: ${claseInfo['profe'] ?? '-'}',
+                        "${clasesDelDia[index].coach.nombre} ${clasesDelDia[index].coach.apellidop} ${clasesDelDia[index].coach.apellidom}",
                         style: TextStyle(
                           color: Colors.black54,
                           fontSize: 14,

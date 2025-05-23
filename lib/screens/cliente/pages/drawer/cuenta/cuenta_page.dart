@@ -91,7 +91,6 @@ class _CuentaPageState extends State<CuentaPage> {
           onPressed: editando
               ? () {
                   Uint8List bytes = base64Decode(avatarb64);
-                  usuario?.cuenta?.avatar = bytes;
                   UsuarioService().modificarUsuario({
                     "id": usuario?.id,
                     "cuenta": {

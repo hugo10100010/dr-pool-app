@@ -32,7 +32,7 @@ class Agregar extends StatelessWidget {
         final usuariosList = snapshot.data![0] as List<Usuario>;
         final casillasList = snapshot.data![1] as List<CasillaHorario>;
         final cursosList = snapshot.data![2] as List<Curso>;
-
+        
         final coachOptions = usuariosList
             .where((u) => u.tipousuario == 3)
             .map<DropdownOption<int>>((u) => DropdownOption<int>(
