@@ -41,7 +41,7 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                             : usuario.subscripcion!.paquete!.clases == 3
                                 ? Colors.amber
                                 : usuario.subscripcion!.paquete!.clases >= 4
-                                    ? Colors.black87
+                                    ? const Color.fromARGB(255, 255, 90, 90)
                                     : Colors.white,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
@@ -53,7 +53,7 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                     children: [
                       Text(
                         'Suscripción actual',
-                        style: TextStyle(fontSize: 18, color: Colors.grey[700]),
+                        style: TextStyle(fontSize: 18, color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
                       SizedBox(height: 8),
                       Text(
@@ -64,7 +64,7 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                       SizedBox(height: 4),
                       Text(
                         "\$${usuario.subscripcion!.paquete!.precio.toString()}",
-                        style: TextStyle(fontSize: 20, color: Colors.grey[800]),
+                        style: TextStyle(fontSize: 20, color: const Color.fromARGB(255, 40, 40, 40)),
                       ),
                       AnimatedCrossFade(
                         firstChild: SizedBox.shrink(),
@@ -133,7 +133,7 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                     },
                     style: ElevatedButton.styleFrom(
                       textStyle: TextStyle(fontSize: 20),
-                      backgroundColor: Colors.blue,
+                      backgroundColor: const Color.fromARGB(255, 255, 90, 90),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),

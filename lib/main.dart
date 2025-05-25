@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme(
           brightness: Brightness.dark,
-          primary: Colors.pinkAccent,
+          primary: const Color.fromARGB(255, 255, 90, 90),
           onPrimary: Colors.white,
           secondary: Colors.white,
           onSecondary: Colors.black,
@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
           onTertiary: Colors.white,
           error: Colors.yellow,
           onError: Colors.blue,
-          surface: Color(0xFFed6464),
-          onSurface: Colors.black,
+          surface: Color.fromARGB(255, 30, 30, 30),//color de fondo
+          onSurface: const Color.fromARGB(255, 255, 255, 255),//color de texto superior
           primaryContainer: Color(0xFFbf6370),
           onPrimaryContainer: Colors.black,
           secondaryContainer: Colors.black,
@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.greenAccent,
+            backgroundColor: const Color.fromARGB(255, 255, 90, 90),
             foregroundColor: Colors.black,
           ),
         ),

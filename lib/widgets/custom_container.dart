@@ -7,7 +7,7 @@ class CustomContainer extends StatelessWidget {
     this.boxPadding = const EdgeInsets.fromLTRB(10, 5, 3, 5),
     this.boxMargin,
     this.alignContent,
-    this.boxBgColor = const Color(0xFFbf6370),
+    this.boxBgColor = const Color.fromARGB(255, 255, 90, 90),
     this.boxHeight,
     this.boxWidth = double.infinity,
   });
@@ -19,6 +19,7 @@ class CustomContainer extends StatelessWidget {
   final EdgeInsetsGeometry? boxMargin;
   final AlignmentGeometry? alignContent;
   final Color boxBgColor;
+  
 
   @override
   Widget build(BuildContext context) {

@@ -15,6 +15,7 @@ import '../screens/registro_screen.dart';
 import '../screens/admin/home_screen.dart';
 import '../screens/cliente/pages/drawer/subscripcion/contratar.dart';
 import '../screens/cliente/pages/drawer/subscripcion/carrito.dart';
+import '../screens/cliente/pages/drawer/metricas/metricas.dart';
 
 class AppRoutes {
   static const String login = '/login';
@@ -26,7 +27,7 @@ class AppRoutes {
   static const String detallesusuariomodif = '/detallesusuariomodif';
   static const String cuentacliente = '/cuentacliente';
   static const String personalescliente = '/personalescliente';
-  static const String metricascliente = '/metricascliente';
+  static const String metricascliente = '/metricas';
   static const String domiciliocliente = '/domiciliocliente';
   static const String subscripcioncliente = '/subscripcioncliente';
   static const String couchhome = '/couchhome';
@@ -45,7 +46,7 @@ class AppRoutes {
       detallesusuariomodif: (context) => Detallesusuariomodif(),
       cuentacliente: (context) => CuentaPage(),
       personalescliente: (context) => personalesclientePage(),
-      metricascliente: (context) => Placeholder(),
+      metricascliente: (context) => MetricasPage(),
       domiciliocliente: (context) => DomicilioPage(),
       subscripcioncliente: (context) => SubscripcionPage(),
       placeholder: (context) => Placeholder(),

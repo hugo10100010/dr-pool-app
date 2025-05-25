@@ -10,7 +10,9 @@ class ImageContainerInicio extends StatelessWidget {
     this.imageWidth = 130,
     this.imageHeight = 100,
     this.imageBorderWidth = 2.0,
+    this.backgroundColor = Colors.white,
     required this.image,
+    
   });
 
   final double boxMargin;
@@ -21,12 +23,14 @@ class ImageContainerInicio extends StatelessWidget {
   final double imageHeight;
   final double imageBorderWidth;
   final ImageProvider<Object> image;
+  final Color backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: boxPadding,
       decoration: BoxDecoration(
+        color: backgroundColor,
         border: Border.all(
           width: externalBorderWidth,
           color: Colors.black,
