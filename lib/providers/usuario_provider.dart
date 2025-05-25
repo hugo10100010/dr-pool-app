@@ -41,6 +41,18 @@ class UsuarioProvider extends ChangeNotifier{
     }
   }
 
+    void actualizarMetricas({required double estatura, required double peso, required double maxcardio, required int maxpulso, required int frecuenciasemanal,
+  }) {
+    if (_usuario != null) {
+      _usuario!.metricas.estatura = estatura;
+      _usuario!.metricas.peso = peso;
+      _usuario!.metricas.maxcardio = maxcardio;
+      _usuario!.metricas.maxpulso = maxpulso;
+      _usuario!.metricas.frecuenciasemanal = frecuenciasemanal;
+      notifyListeners();
+    }
+  }
+
   void logout() {
     _usuario = null;
     notifyListeners();

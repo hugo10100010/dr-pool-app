@@ -25,7 +25,7 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
       child: Column(
         children: [
           Container(
-            color: const Color.fromARGB(255, 223, 2, 2),
+            color: const Color.fromARGB(255, 255, 90, 90),
             child: TabBar(
               isScrollable: false,
               tabs: dias.map((dia) {

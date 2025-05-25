@@ -27,7 +27,7 @@ class Inicio extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Text(
-                      "Smart Fit",
+                      "Dr. Pool",
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Text(
@@ -57,6 +57,7 @@ class Inicio extends StatelessWidget {
                 children: [
                   ImageContainerInicio(
                     image: AssetImage('assets/inicio_2.jpg'),
+                    
                   ),
                   ImageContainerInicio(
                     image: AssetImage('assets/inicio_2.jpg'),
@@ -87,8 +88,8 @@ class Inicio extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             gradient: RadialGradient(
               colors: [
-                Color(0xFF75ff52),
-                Color(0xFF00a06a),
+                Color.fromARGB(255, 255, 82, 82),//novedades
+                Color.fromARGB(255, 160, 0, 0),//novedades
               ],
               center: Alignment.center,
               radius: 4.2,
