@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/models/clase_model.dart';
+import 'package:proyecto/models/paquete_model.dart';
 import 'package:proyecto/screens/admin/pages/usuarios/pages/consultar/detallesusuario.dart';
 import 'package:proyecto/screens/admin/pages/usuarios/pages/modificar/detallesusuario.dart';
 import 'package:proyecto/screens/cliente/home_screen.dart';
@@ -52,11 +54,11 @@ class AppRoutes {
       carrito: (context) {
   final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
 
-  final horarios = args?['horarios'] as List<String>? ?? [];
-  final paquete = args?['paquete'] as Map<String, dynamic>?;
+  final clases = args?['clases'] as List<Clase>? ?? [];
+  final paquete = args?['paquete'] as Paquete;
 
   return CarritoPage(
-    horarios: horarios,
+    clases: clases,
     paquete: paquete,
   );
 },

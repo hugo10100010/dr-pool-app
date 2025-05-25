@@ -20,6 +20,27 @@ class UsuarioProvider extends ChangeNotifier{
     }
   }
 
+  void actualizarPersonales(String nombre, String apellidop, String apellidom, String email, String telefono) {
+    if(usuario != null) {
+      _usuario!.personales.nombre =nombre;
+      _usuario!.personales.apellidop = apellidop;
+      _usuario!.personales.apellidom = apellidom;
+      _usuario!.personales.email = email;
+      _usuario!.personales.telefono = telefono;
+      notifyListeners();
+    }
+  }
+
+  void actualizarDomicilio(String calle, int numext, int numint, String asentamiento, int codigop) {
+    if(usuario != null) {
+      _usuario!.domicilio.calle = calle;
+      _usuario!.domicilio.numext = numext;
+      _usuario!.domicilio.numint = numint;
+      _usuario!.domicilio.asentamiento = asentamiento;
+      _usuario!.domicilio.codigop = codigop;
+    }
+  }
+
   void logout() {
     _usuario = null;
     notifyListeners();

@@ -1,10 +1,10 @@
 class Domicilio {
   int id;
-  String calle;
-  int numext;
-  int numint;
-  String asentamiento;
-  int codigop;
+  String? calle;
+  int? numext;
+  int? numint;
+  String? asentamiento;
+  int? codigop;
 
   Domicilio({
     required this.id,

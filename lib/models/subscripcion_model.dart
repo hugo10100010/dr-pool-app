@@ -1,20 +1,24 @@
+import 'package:proyecto/models/paquete_model.dart';
+
 class Subscripcion {
   int id;
   int idusuario;
-  int idpaquete;
+  int? idpaquete;
   String estado;
   DateTime fechaini;
   DateTime fechafin;
   bool renovarauto;
+  Paquete? paquete;
 
   Subscripcion({
     required this.id,
     required this.idusuario,
-    required this.idpaquete,
+    this.idpaquete,
     required this.estado,
     required this.fechaini,
     required this.fechafin,
     required this.renovarauto,
+    this.paquete,
   });
 
   factory Subscripcion.fromJson(Map<String, dynamic> json) => Subscripcion(
@@ -22,8 +26,9 @@ class Subscripcion {
         idusuario: json['idusuario'],
         idpaquete: json['idpaquete'],
         estado: json['estado'],
-        fechaini: json['fechaini'],
-        fechafin: json['fechafin'],
+        fechaini: DateTime.parse(json['fechaini']),
+        fechafin: DateTime.parse(json['fechafin']),
         renovarauto: json['renovarauto'],
+        paquete: Paquete.fromJson(json['paquete']),
       );
 }

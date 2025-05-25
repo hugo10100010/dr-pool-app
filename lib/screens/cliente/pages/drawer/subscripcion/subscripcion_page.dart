@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto/models/paquete_model.dart';
+import 'package:proyecto/models/usuario_model.dart';
+import 'package:proyecto/providers/usuario_provider.dart';
 
 class SubscripcionPage extends StatefulWidget {
   @override
@@ -7,30 +11,11 @@ class SubscripcionPage extends StatefulWidget {
 
 class _SubscripcionPageState extends State<SubscripcionPage> {
   // Simulación de datos
-  final Map<String, dynamic> suscripcionActual = {
-    'titulo': 'Estándar',
-      'precio': '\$199.90/mes',
-      'beneficios': ['4 Clases', 'Rutinas Personalizadas', 'Coach Personal'],
-    'color': Colors.green[100],
-  };
-
-  final List<Map<String, dynamic>> historial = [
-    {
-      'titulo': 'Básico',
-      'fecha': '01/2023 - 06/2023',
-      'precio': '\$99.90/mes',
-    },
-    {
-      'titulo': 'Estándar',
-      'fecha': '07/2023 - Actual',
-      'precio': '\$199.90/mes',
-    },
-  ];
-
   bool mostrarBeneficios = false;
 
   @override
   Widget build(BuildContext context) {
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
     return Scaffold(
       appBar: AppBar(title: Text('Suscripción')),
       body: SingleChildScrollView(
@@ -49,9 +34,19 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                   width: double.infinity,
                   padding: EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: suscripcionActual['color'],
+                    color: usuario!.subscripcion!.paquete == null
+                        ? Colors.grey
+                        : usuario!.subscripcion!.paquete!.clases == 2
+                            ? Colors.green
+                            : usuario.subscripcion!.paquete!.clases == 3
+                                ? Colors.amber
+                                : usuario.subscripcion!.paquete!.clases >= 4
+                                    ? Colors.black87
+                                    : Colors.white,
                     borderRadius: BorderRadius.circular(16),
-                    boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
+                    boxShadow: [
+                      BoxShadow(color: Colors.black12, blurRadius: 4)
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,13 +57,13 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                       ),
                       SizedBox(height: 8),
                       Text(
-                        suscripcionActual['titulo'],
+                        "Vigencia: ${usuario.subscripcion!.fechaini.year}/${usuario.subscripcion!.fechaini.month}/${usuario.subscripcion!.fechaini.day} - ${usuario.subscripcion!.fechafin.year}/${usuario.subscripcion!.fechafin.month}/${usuario.subscripcion!.fechafin.day}",
                         style: TextStyle(
                             fontSize: 26, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 4),
                       Text(
-                        suscripcionActual['precio'],
+                        "\$${usuario.subscripcion!.paquete!.precio.toString()}",
                         style: TextStyle(fontSize: 20, color: Colors.grey[800]),
                       ),
                       AnimatedCrossFade(
@@ -79,15 +74,22 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                             SizedBox(height: 16),
                             Text('Beneficios:',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
-                            ...suscripcionActual['beneficios']
-                                .map<Widget>((b) => Row(
-                                      children: [
-                                        Icon(Icons.check,
-                                            color: Colors.green, size: 20),
-                                        SizedBox(width: 6),
-                                        Text(b),
-                                      ],
-                                    )),
+                            Row(
+                              children: [
+                                Icon(Icons.check,
+                                    color: Colors.green, size: 20),
+                                SizedBox(width: 6),
+                                Text("${usuario.subscripcion!.paquete!.clases} clases"),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(usuario.subscripcion!.paquete!.flexible ? Icons.check : Icons.close,
+                                    color: usuario.subscripcion!.paquete!.flexible ? Colors.green : Colors.red, size: 20),
+                                SizedBox(width: 6),
+                                Text("Flexible"),
+                              ],
+                            ),
                           ],
                         ),
                         crossFadeState: mostrarBeneficios
@@ -109,15 +111,15 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                 ),
               ),
               SizedBox(height: 12),
-              ...historial.map((item) => Card(
+              ...usuario.historial!.map((item) => Card(
                     margin: EdgeInsets.symmetric(vertical: 6),
                     child: ListTile(
                       leading: Icon(Icons.history),
-                      title: Text(item['titulo']),
-                      subtitle: Text(item['fecha']),
-                      trailing: Text(item['precio']),
+                      title: Text("${item.paquete.clases} clases - ${item.paquete.flexible ? "Flexible" : "No flexible"}"),
+                      subtitle: Text("${item.fechaini.year}/${item.fechaini.month}/${item.fechaini.day} - ${item.fechafin.year}/${item.fechafin.month}/${item.fechafin.day}"),
+                      trailing: Text("\$${item.paquete.precio}"),
                     ),
-                  )),
+                  )).toList(),
               SizedBox(height: 40),
               // Botón grande de contratar
               Center(

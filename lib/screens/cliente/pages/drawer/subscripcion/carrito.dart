@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/models/clase_model.dart';
+import 'package:proyecto/models/paquete_model.dart';
 
 class CarritoPage extends StatelessWidget {
-  final List<String> horarios;
-  final Map<String, dynamic>? paquete;
+  final List<Clase> clases;
+  final Paquete? paquete;
 
-  const CarritoPage({Key? key, required this.horarios, this.paquete}) : super(key: key);
+  const CarritoPage({Key? key, required this.clases, this.paquete})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class CarritoPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: horarios.isEmpty
+        child: clases.isEmpty
             ? Center(child: Text('No hay clases en el carrito.'))
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,23 +25,37 @@ class CarritoPage extends StatelessWidget {
                   if (paquete != null) ...[
                     Text(
                       'Paquete seleccionado:',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     ListTile(
-                      title: Text(paquete!['titulo'] ?? ''),
+                      title: Text("Paquete ${paquete!.id}" ?? ''),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(paquete!['precio'] ?? ''),
+                          Text("\$${paquete!.precio.toString()}" ?? ''),
                           SizedBox(height: 4),
-                          Text('Beneficios:', style: TextStyle(fontWeight: FontWeight.bold)),
-                          ...((paquete!['beneficios'] as List<dynamic>? ?? []).map((b) => Row(
-                                children: [
-                                  Icon(Icons.check, color: Colors.green, size: 18),
-                                  SizedBox(width: 6),
-                                  Text(b.toString()),
-                                ],
-                              ))),
+                          Text('Beneficios:',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          Row(
+                            children: [
+                              Icon(Icons.check, color: Colors.green, size: 20),
+                              SizedBox(width: 6),
+                              Text("${paquete!.clases} clases"),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                  paquete!.flexible ? Icons.check : Icons.close,
+                                  color: paquete!.flexible
+                                      ? Colors.green
+                                      : Colors.red,
+                                  size: 20),
+                              SizedBox(width: 6),
+                              Text("Flexible"),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -50,21 +67,23 @@ class CarritoPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      itemCount: horarios.length,
+                      itemCount: clases.length,
                       itemBuilder: (context, index) {
                         return Card(
                           margin: EdgeInsets.symmetric(vertical: 8),
                           child: ListTile(
                             leading: Icon(Icons.class_),
                             title: Text(
-                              horarios[index],
+                              "${clases[index].casilla.dia == 1 ? "Lunes" : clases[index].casilla.dia == 2 ? "Martes" : clases[index].casilla.dia == 3 ? "Miercoles" : clases[index].casilla.dia == 4 ? "Jueves" : clases[index].casilla.dia == 5 ? "Viernes" : clases[index].casilla.dia == 6 ? "Sabado" : clases[index].casilla.dia == 7 ? "Domingo" : "Error"} - ${clases[index].casilla.horaini} a ${clases[index].casilla.horafin} - ${clases[index].curso.curso}",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             trailing: IconButton(
                               icon: Icon(Icons.delete, color: Colors.red),
                               onPressed: () {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Función de eliminar no implementada')),
+                                  SnackBar(
+                                      content: Text(
+                                          'Función de eliminar no implementada')),
                                 );
                               },
                             ),
@@ -76,7 +95,7 @@ class CarritoPage extends StatelessWidget {
                 ],
               ),
       ),
-      bottomNavigationBar: horarios.isNotEmpty
+      bottomNavigationBar: clases.isNotEmpty
           ? Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
@@ -94,8 +113,9 @@ class CarritoPage extends StatelessWidget {
                       ],
                     ),
                   ).then((_) {
-    Navigator.pushReplacementNamed(context, '/subscripcioncliente');
-  });
+                    Navigator.pushReplacementNamed(
+                        context, '/subscripcioncliente');
+                  });
                 },
                 child: Text('Pagar'),
               ),
