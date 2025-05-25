@@ -23,20 +23,22 @@ class Clase {
     required this.curso,
   });
 
-  factory Clase.fromJson(Map<String, dynamic> json) => Clase(
-        id: json['id'],
-        idcoach: json['idcoach'],
-        idcasilla: json['idcasilla'],
-        idcurso: json['idcurso'],
-        coach: Personales.fromJson(json['coach']['personales']),
-        casilla: CasillaHorario.fromJson(json['casillahorario']),
-        curso: Curso.fromJson(json['curso']),
-      );
+  factory Clase.fromJson(Map<String, dynamic> json) {
+    return Clase(
+      id: json['id'],
+      idcoach: json['idcoach'],
+      idcasilla: json['idcasilla'],
+      idcurso: json['idcurso'],
+      coach: Personales.fromJson(json['coach']['personales']),
+      casilla: CasillaHorario.fromJson(json['casillahorario']),
+      curso: Curso.fromJson(json['curso']),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "idcoach": idcoach,
-    "idcasilla": idcasilla,
-    "idcurso": idcurso,
-  };
+        "id": id,
+        "idcoach": idcoach,
+        "idcasilla": idcasilla,
+        "idcurso": idcurso,
+      };
 }

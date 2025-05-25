@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:proyecto/providers/usuario_provider.dart';
+import 'package:proyecto/services/usuario_service.dart';
 
 class DomicilioPage extends StatefulWidget {
   @override
@@ -8,10 +11,9 @@ class DomicilioPage extends StatefulWidget {
 class _DomicilioPageState extends State<DomicilioPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _calleController = TextEditingController();
-  final TextEditingController _numeroController = TextEditingController();
-  final TextEditingController _coloniaController = TextEditingController(text: 'El Carmen 2');
-  final TextEditingController _ciudadController = TextEditingController(text: 'Tuxtla Gutiérrez');
-  final TextEditingController _estadoController = TextEditingController(text: 'Chiapas');
+  final TextEditingController _numeroextController = TextEditingController();
+  final TextEditingController _numerointController = TextEditingController();
+  final TextEditingController _asentamientoController = TextEditingController(text: 'El Carmen 2');
   final TextEditingController _cpController = TextEditingController();
 
   bool editable = false;
@@ -19,16 +21,25 @@ class _DomicilioPageState extends State<DomicilioPage> {
   @override
   void dispose() {
     _calleController.dispose();
-    _numeroController.dispose();
-    _coloniaController.dispose();
-    _ciudadController.dispose();
-    _estadoController.dispose();
+    _numeroextController.dispose();
+    _numerointController.dispose();
+    _asentamientoController.dispose();
     _cpController.dispose();
     super.dispose();
   }
 
-  void _guardarDomicilio() {
+  void _guardarDomicilio(int id, String calle, int numext, int numint, String asentamiento, int codigop) {
     if (_formKey.currentState!.validate()) {
+      UsuarioService().modificarUsuario({
+        "id": id,
+        "domicilio": {
+          "calle": calle,
+          "numext": numext,
+          "numint": numint,
+          "asentamiento": asentamiento,
+          "codigop": codigop,
+        }
+      });
       setState(() {
         editable = false;
       });
@@ -40,6 +51,12 @@ class _DomicilioPageState extends State<DomicilioPage> {
 
   @override
   Widget build(BuildContext context) {
+    final usuario = Provider.of<UsuarioProvider>(context).usuario!;
+    _calleController.text = usuario!.domicilio.calle ?? '';
+    _numeroextController.text = usuario!.domicilio.numext?.toString() ?? '';
+    _numerointController.text = usuario!.domicilio.numint?.toString() ?? '';
+    _asentamientoController.text = usuario!.domicilio.asentamiento ?? '';
+    _cpController.text = usuario!.domicilio.codigop?.toString() ?? '';
     return Scaffold(
       appBar: AppBar(title: Text('Domicilio')),
       body: Padding(
@@ -55,24 +72,20 @@ class _DomicilioPageState extends State<DomicilioPage> {
                 enabled: editable,
               ),
               TextFormField(
-                controller: _numeroController,
-                decoration: InputDecoration(labelText: 'Número'),
-                validator: (value) => value == null || value.isEmpty ? 'Ingrese el número' : null,
+                controller: _numeroextController,
+                decoration: InputDecoration(labelText: 'Número ext.'),
+                validator: (value) => value == null || value.isEmpty ? 'Ingrese el número exterior' : null,
                 enabled: editable,
               ),
               TextFormField(
-                controller: _coloniaController,
-                decoration: InputDecoration(labelText: 'Colonia'),
+                controller: _numerointController,
+                decoration: InputDecoration(labelText: 'Número int.'),
+                validator: (value) => value == null || value.isEmpty ? 'Ingrese el número exterior' : null,
                 enabled: editable,
               ),
               TextFormField(
-                controller: _ciudadController,
-                decoration: InputDecoration(labelText: 'Ciudad'),
-                enabled: editable,
-              ),
-              TextFormField(
-                controller: _estadoController,
-                decoration: InputDecoration(labelText: 'Estado'),
+                controller: _asentamientoController,
+                decoration: InputDecoration(labelText: 'Asentamiento'),
                 enabled: editable,
               ),
               TextFormField(
@@ -99,7 +112,9 @@ class _DomicilioPageState extends State<DomicilioPage> {
               ElevatedButton(
                 onPressed: editable
                     ? () {
-                        _guardarDomicilio();
+                        Provider.of<UsuarioProvider>(context, listen: false).actualizarDomicilio(_calleController.text, int.parse(_numeroextController.text), int.parse(_numerointController.text), _asentamientoController.text, int.parse(_cpController.text));
+                        _guardarDomicilio(usuario.id,_calleController.text,int.parse(_numeroextController.text), int.parse(_numerointController.text), _asentamientoController.text, int.parse(_cpController.text));
+                        
                       }
                     : null,
                 child: Text('Guardar'),

@@ -1,3 +1,5 @@
+import 'package:proyecto/models/paquete_model.dart';
+
 class Historial {
   int id;
   int idusuario;
@@ -5,6 +7,7 @@ class Historial {
   DateTime fechaini;
   DateTime fechafin;
   String metodo;
+  Paquete paquete;
 
   Historial({
     required this.id,
@@ -13,14 +16,16 @@ class Historial {
     required this.fechaini,
     required this.fechafin,
     required this.metodo,
+    required this.paquete,
   });
 
   factory Historial.fromJson(Map<String, dynamic> json) => Historial(
         id: json['id'],
         idusuario: json['idusuario'],
         idpaquete: json['idpaquete'],
-        fechaini: json['fechaini'],
-        fechafin: json['fechafin'],
+        fechaini: DateTime.parse(json['fechaini']),
+        fechafin: DateTime.parse(json['fechafin']),
         metodo: json['metodo'],
+        paquete: Paquete.fromJson(json['paquete']),
       );
 }

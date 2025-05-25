@@ -37,11 +37,11 @@ class Detallesusuario extends StatelessWidget {
           DataColumn(label: Text('Codigo p.')),
         ], rows: [
           DataRow(cells: [
-            DataCell(Text(usuario.domicilio.calle)),
-            DataCell(Text('${usuario.domicilio.numext}')),
-            DataCell(Text('${usuario.domicilio.numint}')),
-            DataCell(Text(usuario.domicilio.asentamiento)),
-            DataCell(Text('${usuario.domicilio.codigop}')),
+            DataCell(Text(usuario.domicilio.calle ?? '')),
+            DataCell(Text('${usuario.domicilio.numext ?? ''}')),
+            DataCell(Text('${usuario.domicilio.numint ?? ''}')),
+            DataCell(Text(usuario.domicilio.asentamiento ?? '')),
+            DataCell(Text('${usuario.domicilio.codigop ?? ''}')),
           ]),
         ]),
       );
@@ -55,11 +55,11 @@ class Detallesusuario extends StatelessWidget {
           DataColumn(label: Text('Frecuencia semanal')),
         ], rows: [
           DataRow(cells: [
-            DataCell(Text('${usuario.metricas.estatura}')),
-            DataCell(Text('${usuario.metricas.peso}')),
-            DataCell(Text('${usuario.metricas.maxcardio}')),
-            DataCell(Text('${usuario.metricas.maxpulso}')),
-            DataCell(Text('${usuario.metricas.frecuenciasemanal}')),
+            DataCell(Text('${usuario.metricas.estatura ?? ''}')),
+            DataCell(Text('${usuario.metricas.peso ?? ''}')),
+            DataCell(Text('${usuario.metricas.maxcardio ?? ''}')),
+            DataCell(Text('${usuario.metricas.maxpulso ?? ''}')),
+            DataCell(Text('${usuario.metricas.frecuenciasemanal ?? ''}')),
           ]),
         ]),
       );
