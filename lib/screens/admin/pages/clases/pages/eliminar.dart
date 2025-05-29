@@ -17,7 +17,7 @@ class Eliminar extends StatelessWidget {
       ],
       displayValues: (clase) => [
         "${clase.coach.nombre} + ${clase.coach.apellidop}" ?? '',
-        "${clase.casilla.dia} ${clase.casilla.horaini} ${clase.casilla.horafin}" ?? '',
+        "${clase.casilla.dia == 1 ? "Lunes" : clase.casilla.dia == 2 ? "Martes" : clase.casilla.dia == 3 ? "Miercoles" : clase.casilla.dia == 4 ? "Jueves" : clase.casilla.dia == 5 ? "Viernes" : clase.casilla.dia == 6 ? "Sabado" : clase.casilla.dia == 7 ? "Domingo" : "NO"} ${clase.casilla.horaini} a ${clase.casilla.horafin}" ?? '',
         "${clase.curso.curso}" ?? '',
       ],
       getDeleteLabel: (clase) => clase.id.toString(),

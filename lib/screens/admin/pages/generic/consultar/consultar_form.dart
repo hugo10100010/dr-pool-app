@@ -15,27 +15,45 @@ class GenericConsultar<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<T>>(
-      future: futureItems,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
-          return Center(child: CircularProgressIndicator());
-        if (snapshot.hasError)
-          return Center(child: Text('Error: ${snapshot.error}'));
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return FutureBuilder<List<T>>(
+          future: futureItems,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-        final items = snapshot.data!;
-        return SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: DataTable(
-            columns: buildColumns(),
-            rows: items.map((item) {
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
+            final items = snapshot.data!;
+            final columns = buildColumns();
+            final rows = items.map((item) {
               final row = buildRow(item);
               return DataRow(
                 cells: row.cells,
                 onLongPress: () => onRowTap?.call(item),
               );
-            }).toList(),
-          ),
+            }).toList();
+
+            // Responsive threshold
+            final isNarrow = constraints.maxWidth < 600;
+
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: isNarrow
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(columns: columns, rows: rows),
+                    )
+                  : SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: DataTable(columns: columns, rows: rows),
+                    ),
+            );
+          },
         );
       },
     );

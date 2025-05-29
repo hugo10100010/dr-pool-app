@@ -6,12 +6,14 @@ import 'package:file_picker/file_picker.dart';
 
 class ImagePickerField extends StatefulWidget {
   final void Function(String? base64Data)? onImagePicked;
-  final String label;
+  final Icon? icon;
+  final String? label;
 
   const ImagePickerField({
     super.key,
     required this.onImagePicked,
     this.label = 'Seleccionar imagen',
+    this.icon,
   });
 
   @override
@@ -50,6 +52,7 @@ class _ImagePickerFieldState extends State<ImagePickerField> {
       child: InputDecorator(
         decoration: InputDecoration(
           labelText: widget.label,
+          icon: widget.icon,
           border: const OutlineInputBorder(),
           suffixIcon: const Icon(Icons.image),
         ),

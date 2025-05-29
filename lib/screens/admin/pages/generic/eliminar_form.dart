@@ -28,42 +28,44 @@ class GenericEliminar<T> extends StatelessWidget {
         final items = snapshot.data!;
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: DataTable(
-            columns: columnTitles.map((title) => DataColumn(label: Text(title))).toList(),
-            rows: items.map((item) {
-              final values = displayValues(item);
-              return DataRow(
-                cells: values.map((val) => DataCell(Text(val))).toList(),
-                onLongPress: () async {
-                  final result = await showDialog<Map<String, dynamic>>(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: Text("Eliminar"),
-                      content: Text("¿Deseas eliminar: ${getDeleteLabel(item)}?"),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, {"action": false}),
-                          child: Text("Cancelar"),
-                        ),
-                        TextButton(
-                          onPressed: () async {
-                            final message = await onDelete(item);
-                            Navigator.pop(context, {"action": true, "message": message});
-                          },
-                          child: Text("Confirmar"),
-                        ),
-                      ],
-                    ),
-                  );
-
-                  if (result?['action'] == true) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(result?['message'] ?? 'Eliminado')),
+          child: SingleChildScrollView(
+            child: DataTable(
+              columns: columnTitles.map((title) => DataColumn(label: Text(title))).toList(),
+              rows: items.map((item) {
+                final values = displayValues(item);
+                return DataRow(
+                  cells: values.map((val) => DataCell(Text(val))).toList(),
+                  onLongPress: () async {
+                    final result = await showDialog<Map<String, dynamic>>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Eliminar"),
+                        content: Text("¿Deseas eliminar: ${getDeleteLabel(item)}?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, {"action": false}),
+                            child: Text("Cancelar"),
+                          ),
+                          TextButton(
+                            onPressed: () async {
+                              final message = await onDelete(item);
+                              Navigator.pop(context, {"action": true, "message": message});
+                            },
+                            child: Text("Confirmar"),
+                          ),
+                        ],
+                      ),
                     );
-                  }
-                },
-              );
-            }).toList(),
+            
+                    if (result?['action'] == true) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(result?['message'] ?? 'Eliminado')),
+                      );
+                    }
+                  },
+                );
+              }).toList(),
+            ),
           ),
         );
       },

@@ -16,6 +16,10 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
   @override
   Widget build(BuildContext context) {
     final usuario = Provider.of<UsuarioProvider>(context).usuario;
+    if(usuario==null) {
+      return Center(child: Text("Nada que ver aquí..."),);
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text('Suscripción')),
       body: SingleChildScrollView(
@@ -36,13 +40,15 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                   decoration: BoxDecoration(
                     color: usuario!.subscripcion!.paquete == null
                         ? Colors.grey
-                        : usuario!.subscripcion!.paquete!.clases == 2
-                            ? Colors.green
-                            : usuario.subscripcion!.paquete!.clases == 3
-                                ? Colors.amber
-                                : usuario.subscripcion!.paquete!.clases >= 4
-                                    ? const Color.fromARGB(255, 255, 90, 90)
-                                    : Colors.white,
+                        : usuario!.subscripcion!.estado != "Activa"
+                            ? Colors.grey
+                            : usuario!.subscripcion!.paquete!.clases == 2
+                                ? Colors.green
+                                : usuario.subscripcion!.paquete!.clases == 3
+                                    ? Colors.amber
+                                    : usuario.subscripcion!.paquete!.clases >= 4
+                                        ? const Color.fromARGB(255, 255, 90, 90)
+                                        : Colors.white,
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(color: Colors.black12, blurRadius: 4)
@@ -53,7 +59,9 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                     children: [
                       Text(
                         'Suscripción actual',
-                        style: TextStyle(fontSize: 18, color: const Color.fromARGB(255, 0, 0, 0)),
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: const Color.fromARGB(255, 0, 0, 0)),
                       ),
                       SizedBox(height: 8),
                       Text(
@@ -63,8 +71,19 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "\$${usuario.subscripcion!.paquete!.precio.toString()}",
-                        style: TextStyle(fontSize: 20, color: const Color.fromARGB(255, 40, 40, 40)),
+                        "\$${usuario.subscripcion?.paquete?.precio.toString() ?? "N/A"}",
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: const Color.fromARGB(255, 40, 40, 40)),
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        usuario.subscripcion!.estado,
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: const Color.fromARGB(255, 40, 40, 40)),
                       ),
                       AnimatedCrossFade(
                         firstChild: SizedBox.shrink(),
@@ -76,16 +95,36 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                                 style: TextStyle(fontWeight: FontWeight.bold)),
                             Row(
                               children: [
-                                Icon(Icons.check,
-                                    color: Colors.green, size: 20),
+                                Icon(
+                                    usuario.subscripcion!.paquete == null
+                                        ? Icons.question_mark
+                                        : Icons.check,
+                                    color: usuario.subscripcion!.paquete == null
+                                        ? Colors.yellow
+                                        : Colors.green,
+                                    size: 20),
                                 SizedBox(width: 6),
-                                Text("${usuario.subscripcion!.paquete!.clases} clases"),
+                                Text(usuario.subscripcion!.paquete == null
+                                    ? "N/A"
+                                    : "${usuario.subscripcion!.paquete!.clases} clases"),
                               ],
                             ),
                             Row(
                               children: [
-                                Icon(usuario.subscripcion!.paquete!.flexible ? Icons.check : Icons.close,
-                                    color: usuario.subscripcion!.paquete!.flexible ? Colors.green : Colors.red, size: 20),
+                                Icon(
+                                    usuario.subscripcion!.paquete == null
+                                        ? Icons.question_mark
+                                        : usuario
+                                                .subscripcion!.paquete!.flexible
+                                            ? Icons.check
+                                            : Icons.close,
+                                    color: usuario.subscripcion!.paquete == null
+                                        ? Colors.yellow
+                                        : usuario
+                                                .subscripcion!.paquete!.flexible
+                                            ? Colors.green
+                                            : Colors.red,
+                                    size: 20),
                                 SizedBox(width: 6),
                                 Text("Flexible"),
                               ],
@@ -111,15 +150,19 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                 ),
               ),
               SizedBox(height: 12),
-              ...usuario.historial!.map((item) => Card(
-                    margin: EdgeInsets.symmetric(vertical: 6),
-                    child: ListTile(
-                      leading: Icon(Icons.history),
-                      title: Text("${item.paquete.clases} clases - ${item.paquete.flexible ? "Flexible" : "No flexible"}"),
-                      subtitle: Text("${item.fechaini.year}/${item.fechaini.month}/${item.fechaini.day} - ${item.fechafin.year}/${item.fechafin.month}/${item.fechafin.day}"),
-                      trailing: Text("\$${item.paquete.precio}"),
-                    ),
-                  )).toList(),
+              ...usuario.historial!
+                  .map((item) => Card(
+                        margin: EdgeInsets.symmetric(vertical: 6),
+                        child: ListTile(
+                          leading: Icon(Icons.history),
+                          title: Text(
+                              "${item.paquete.clases} clases - ${item.paquete.flexible ? "Flexible" : "No flexible"}"),
+                          subtitle: Text(
+                              "${item.fechaini.year}/${item.fechaini.month}/${item.fechaini.day} - ${item.fechafin.year}/${item.fechafin.month}/${item.fechafin.day}"),
+                          trailing: Text("\$${item.paquete.precio}"),
+                        ),
+                      ))
+                  .toList(),
               SizedBox(height: 40),
               // Botón grande de contratar
               Center(

@@ -20,8 +20,8 @@ class Metricas {
         estatura: json['estatura'] != null ? double.parse(json['estatura']) : null,
         peso: json['peso'] != null ? double.parse(json['peso']) : null,
         maxcardio: json['maxcardio'] != null ? double.parse(json['maxcardio']) : null,
-        maxpulso: json['maxpulso'],
-        frecuenciasemanal: json['frecuenciasemanal'],
+        maxpulso: json['maxpulso'] != null ? json['maxpulso'] : null,
+        frecuenciasemanal: json['frecuenciasemanal'] != null ? json['frecuenciasemanal'] : null,
       );
 
   Map<String, dynamic> toJson() => {

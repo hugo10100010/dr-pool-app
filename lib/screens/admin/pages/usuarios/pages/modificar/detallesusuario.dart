@@ -19,9 +19,9 @@ class Detallesusuariomodif extends StatelessWidget {
         [
           EditableField(
             label: 'Usuario',
-            controller: TextEditingController(text: usuario.cuenta.nombreusu),
+            controller: TextEditingController(text: usuario.cuenta?.nombreusu),
             onSubmit: (val) {
-              usuario.cuenta.nombreusu = val;
+              usuario.cuenta?.nombreusu = val;
               service.modificarUsuario({
                 "cuenta": {"nombreusu": val}
               });
@@ -32,9 +32,9 @@ class Detallesusuariomodif extends StatelessWidget {
         [
           EditableField(
             label: 'Calle',
-            controller: TextEditingController(text: usuario.domicilio.calle),
+            controller: TextEditingController(text: usuario.domicilio?.calle),
             onSubmit: (val) {
-              usuario.domicilio.calle = val;
+              usuario.domicilio?.calle = val;
               service.modificarUsuario({
                 "domicilio": {"calle": val}
               });
@@ -43,9 +43,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Num ext.',
             controller: TextEditingController(
-                text: usuario.domicilio.numext.toString()),
+                text: usuario.domicilio?.numext.toString()),
             onSubmit: (val) {
-              usuario.domicilio.numext = int.tryParse(val) ?? 0;
+              usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "domicilio": {"numext": val}
               });
@@ -54,9 +54,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Num int.',
             controller: TextEditingController(
-                text: usuario.domicilio.numint.toString()),
+                text: usuario.domicilio?.numint.toString()),
             onSubmit: (val) {
-              usuario.domicilio.numext = int.tryParse(val) ?? 0;
+              usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "domicilio": {"numint": val}
               });
@@ -65,9 +65,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Asentamiento',
             controller:
-                TextEditingController(text: usuario.domicilio.asentamiento),
+                TextEditingController(text: usuario.domicilio?.asentamiento),
             onSubmit: (val) {
-              usuario.domicilio.numext = int.tryParse(val) ?? 0;
+              usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "domicilio": {"asentamiento": val}
               });
@@ -76,9 +76,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Codigo p.',
             controller: TextEditingController(
-                text: usuario.domicilio.codigop.toString()),
+                text: usuario.domicilio?.codigop.toString()),
             onSubmit: (val) {
-              usuario.domicilio.numext = int.tryParse(val) ?? 0;
+              usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "domicilio": {"codigop": val}
               });
@@ -90,9 +90,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Estatura',
             controller: TextEditingController(
-                text: usuario.metricas.estatura.toString()),
+                text: usuario.metricas?.estatura.toString()),
             onSubmit: (val) {
-              usuario.metricas.estatura = double.tryParse(val) ?? 0;
+              usuario.metricas?.estatura = double.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "metricas": {"estatura": val}
               });
@@ -101,9 +101,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Peso',
             controller:
-                TextEditingController(text: usuario.metricas.peso.toString()),
+                TextEditingController(text: usuario.metricas?.peso.toString()),
             onSubmit: (val) {
-              usuario.metricas.peso = double.tryParse(val) ?? 0;
+              usuario.metricas?.peso = double.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "metricas": {"peso": val}
               });
@@ -112,9 +112,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Max. cardio.',
             controller: TextEditingController(
-                text: usuario.metricas.maxcardio.toString()),
+                text: usuario.metricas?.maxcardio.toString()),
             onSubmit: (val) {
-              usuario.metricas.maxcardio = double.tryParse(val) ?? 0;
+              usuario.metricas?.maxcardio = double.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "metricas": {"maxcardio": val}
               });
@@ -123,9 +123,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Max. pulso',
             controller: TextEditingController(
-                text: usuario.metricas.maxpulso.toString()),
+                text: usuario.metricas?.maxpulso.toString()),
             onSubmit: (val) {
-              usuario.metricas.maxpulso = int.tryParse(val) ?? 0;
+              usuario.metricas?.maxpulso = int.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "metricas": {"maxpulso": val}
               });
@@ -134,9 +134,9 @@ class Detallesusuariomodif extends StatelessWidget {
           EditableField(
             label: 'Frecuencia semanal',
             controller: TextEditingController(
-                text: usuario.metricas.frecuenciasemanal.toString()),
+                text: usuario.metricas?.frecuenciasemanal.toString()),
             onSubmit: (val) {
-              usuario.metricas.frecuenciasemanal = int.tryParse(val) ?? 0;
+              usuario.metricas?.frecuenciasemanal = int.tryParse(val) ?? 0;
               service.modificarUsuario({
                 "metricas": {"frecuenciasemanal": val}
               });

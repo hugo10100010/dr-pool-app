@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:proyecto/screens/admin/pages/generic/modificar/editablefield.dart';
 import './editablefield.dart';
 
@@ -28,19 +29,23 @@ class _GenericDetallesModificablesState extends State<GenericDetallesModificable
   Widget buildTab(List<EditableField> fields) {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
-      child: DataTable(
-        columns: fields.map((f) => DataColumn(label: Text(f.label))).toList(),
-        rows: [
-          DataRow(
-            cells: fields.map((f) {
-              return DataCell(TextField(
-                controller: f.controller,
-                decoration: InputDecoration(border: InputBorder.none),
-                onSubmitted: f.onSubmit,
-              ));
-            }).toList(),
-          )
-        ],
+      scrollDirection: Axis.horizontal,
+      child: SingleChildScrollView(
+        
+        child: DataTable(
+          columns: fields.map((f) => DataColumn(label: Text(f.label))).toList(),
+          rows: [
+            DataRow(
+              cells: fields.map((f) {
+                return DataCell(TextField(
+                  controller: f.controller,
+                  decoration: InputDecoration(border: InputBorder.none),
+                  onSubmitted: f.onSubmit,
+                ));
+              }).toList(),
+            )
+          ],
+        ),
       ),
     );
   }

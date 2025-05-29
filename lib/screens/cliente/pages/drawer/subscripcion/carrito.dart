@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:proyecto/models/clase_model.dart';
 import 'package:proyecto/models/paquete_model.dart';
+import 'package:proyecto/models/usuario_model.dart';
+import 'package:proyecto/providers/usuario_provider.dart';
+import 'package:proyecto/routes/app_routes.dart';
+import 'package:proyecto/services/usuario_service.dart';
 
 class CarritoPage extends StatelessWidget {
   final List<Clase> clases;
@@ -11,6 +16,7 @@ class CarritoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Usuario usuario = Provider.of<UsuarioProvider>(context).usuario!;
     return Scaffold(
       appBar: AppBar(
         title: Text('Carrito de Compras'),
@@ -100,6 +106,12 @@ class CarritoPage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
                 onPressed: () {
+                  UsuarioService().modificarUsuario({
+                    "id":usuario.id,
+                    "subscripcion": {
+                      "idpaquete": paquete?.id,
+                    }
+                  });
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
@@ -114,7 +126,7 @@ class CarritoPage extends StatelessWidget {
                     ),
                   ).then((_) {
                     Navigator.pushReplacementNamed(
-                        context, '/subscripcioncliente');
+                        context, AppRoutes.clientehome);
                   });
                 },
                 child: Text('Pagar'),

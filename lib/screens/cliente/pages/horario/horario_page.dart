@@ -31,7 +31,7 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
               tabs: dias.map((dia) {
                 return Tab(
                   child: Center(
-                    child: Text(
+                    child: MediaQuery.of(context).size.width > 600 ? Text(
                       dia == 1
                           ? "Lunes"
                           : dia == 2
@@ -46,6 +46,23 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
                                               ? "Sábado"
                                               : dia == 7
                                                   ? "Domingo"
+                                                  : "No",
+                      textAlign: TextAlign.center,
+                    ) : Text(
+                      dia == 1
+                          ? "L"
+                          : dia == 2
+                              ? "M"
+                              : dia == 3
+                                  ? "M"
+                                  : dia == 4
+                                      ? "J"
+                                      : dia == 5
+                                          ? "V"
+                                          : dia == 6
+                                              ? "S"
+                                              : dia == 7
+                                                  ? "D"
                                                   : "No",
                       textAlign: TextAlign.center,
                     ),

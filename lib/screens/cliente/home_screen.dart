@@ -96,10 +96,10 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: usuario != null ? Text(usuario.cuenta.nombreusu) : Text(""),
+              accountName: usuario != null ? Text(usuario.cuenta!.nombreusu) : Text(""),
               accountEmail: usuario != null ? Text(usuario.personales.email) : Text(""),
               currentAccountPicture: usuario != null ? CircleAvatar(
-                backgroundImage: usuario.cuenta.avatar != null ? MemoryImage(usuario.cuenta.avatar!) : AssetImage('assets/avatar.gif') as ImageProvider,
+                backgroundImage: usuario.cuenta?.avatar != null ? MemoryImage(usuario.cuenta!.avatar!) : AssetImage('assets/avatar.gif') as ImageProvider,
               ) : null,
             ),
             ...tabs

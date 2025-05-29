@@ -27,6 +27,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             usuario.personales.nombre = val;
             service.modificarUsuario({
+              "id": usuario.id,
               "personales": {
                 "nombre": val
               }
@@ -38,6 +39,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             usuario.personales.apellidop = val;
             service.modificarUsuario({
+              "id": usuario.id,
               "personales": {
                 "apellidop": val
               }
@@ -49,6 +51,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             usuario.personales.apellidom = val;
             service.modificarUsuario({
+              "id": usuario.id,
               "personales": {
                 "apellidom": val
               }
@@ -60,6 +63,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             usuario.personales.email = val;
             service.modificarUsuario({
+              "id": usuario.id,
               "personales": {
                 "email": val
               }
@@ -71,6 +75,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             usuario.personales.telefono = val;
             service.modificarUsuario({
+              "id": usuario.id,
               "personales": {
                 "telefono": val
               }
@@ -83,6 +88,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             usuario.personales.tipodocumento = val;
             service.modificarUsuario({
+              "id": usuario.id,
               "personales": {
                 "tipodocumento": val
               }
@@ -99,6 +105,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             usuario.personales.documento = val;
             service.modificarUsuario({
+              "id": usuario.id,
               "personales": {
                 "documento": val
               }

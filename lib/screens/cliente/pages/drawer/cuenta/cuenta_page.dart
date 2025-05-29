@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/usuario_service.dart';
 import 'package:proyecto/widgets/image_picker.dart';
@@ -39,94 +38,123 @@ class _CuentaPageState extends State<CuentaPage> {
       ),
       body: Form(
         key: formKey,
-        child: Column(
-          children: [
-            Flexible(
-              child: SizedBox(
-                width: 300,
-                child: TextFormField(
-                  enabled: editando,
-                  controller: _nombreUsuController,
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.person), labelText: 'Nombre de usuario'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'El campo es obligatorio';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-            ),
-            Flexible(
-              child: SizedBox(
-                width: 300,
-                child: AbsorbPointer(
-                  absorbing: !editando,
-                  child: Opacity(
-                    opacity: editando ? 1.0 : 0.5,
-                    child: ImagePickerField(onImagePicked: escogerArchivo),
+        child: Center(
+          child: Column(
+            children: [
+              Flexible(
+                child: SizedBox(
+                  width: 300,
+                  child: TextFormField(
+                    enabled: editando,
+                    controller: _nombreUsuController,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.person),
+                        labelText: 'Nombre de usuario'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'El campo es obligatorio';
+                      }
+                      return null;
+                    },
                   ),
                 ),
               ),
-            ),
-            Flexible(
-  child: SizedBox(
-    width: 300,
-    child: Column(
-      children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: ElevatedButton.icon(
-            icon: Icon(editando ? Icons.lock_open : Icons.lock),
-            label: Text(editando ? 'Bloquear edición' : 'Editar'),
-            onPressed: () {
-              setState(() {
-                editando = !editando;
-              });
-            },
+              Flexible(
+                child: SizedBox(
+                  width: 300,
+                  child: AbsorbPointer(
+                    absorbing: !editando,
+                    child: Opacity(
+                      opacity: editando ? 1.0 : 0.5,
+                      child: ImagePickerField(
+                        onImagePicked: escogerArchivo,
+                        icon: Icon(Icons.person),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Flexible(
+                child: SizedBox(
+                  width: 300,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton.icon(
+                          icon: Icon(editando ? Icons.lock_open : Icons.lock),
+                          label: Text(editando ? 'Bloquear edición' : 'Editar'),
+                          onPressed: () {
+                            setState(() {
+                              editando = !editando;
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: editando
+                            ? () async {
+                                Map<String, dynamic> data = {
+                                  "id": usuario?.id,
+                                };
+
+                                Map<String, dynamic> cuenta = {};
+
+                                if (_nombreUsuController.text.isNotEmpty) {
+                                  cuenta["nombreusu"] =
+                                      _nombreUsuController.text;
+                                }
+
+                                Uint8List bytes = base64Decode(avatarb64);
+                                if (bytes.isNotEmpty) {
+                                  cuenta["avatar"] = bytes;
+                                }
+
+                                if (cuenta.isNotEmpty) {
+                                  data["cuenta"] = cuenta;
+                                }
+
+                                bool success = await UsuarioService()
+                                    .modificarUsuario(data);
+                                if (success) {
+                                  Provider.of<UsuarioProvider>(context,
+                                          listen: false)
+                                      .actualizarCuenta(
+                                    cuenta["nombreusu"],
+                                    cuenta["avatar"],
+                                  );
+                                }
+
+                                setState(() {
+                                  editando = false;
+                                });
+                              }
+                            : null,
+                        child: Text("Confirmar"),
+                      ),
+                      if (editando)
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              // Restaurar valores originales
+                              _nombreUsuController.text =
+                                  usuario?.cuenta?.nombreusu ?? '';
+                              avatarb64 = "";
+                              editando = false;
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          child: Text("Cancelar"),
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-        SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: editando
-              ? () {
-                  Uint8List bytes = base64Decode(avatarb64);
-                  UsuarioService().modificarUsuario({
-                    "id": usuario?.id,
-                    "cuenta": {
-                      "nombreusu": _nombreUsuController.text,
-                      "avatar": bytes,
-                    }
-                  });
-                  Provider.of<UsuarioProvider>(context, listen: false).actualizarAvatar(bytes);
-                  setState(() {
-                    editando = false;
-                  });
-                }
-              : null,
-          child: Text("Confirmar"),
-        ),
-        if (editando)
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                // Restaurar valores originales
-                _nombreUsuController.text = usuario?.cuenta?.nombreusu ?? '';
-                avatarb64 = "";
-                editando = false;
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Text("Cancelar"),
-          ),
-      ],
-    ),
-  ),
-),
-          ],
         ),
       ),
     );
