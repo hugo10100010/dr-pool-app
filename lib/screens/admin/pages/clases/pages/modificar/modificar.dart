@@ -36,7 +36,7 @@ class Modificar extends StatelessWidget {
             .where((u) => u.tipousuario == 3)
             .map<DropdownOption>(
               (u) => DropdownOption(
-                value: u.id, // ✅ integer id
+                value: u.id,
                 label: "${u.personales.nombre} ${u.personales.apellidop}",
               ),
             )
@@ -45,8 +45,8 @@ class Modificar extends StatelessWidget {
         final opcionesCasillas = casillasList
             .map<DropdownOption>(
               (c) => DropdownOption(
-                value: c.id, // ✅ integer id
-                label: "${c.horaini} ${c.dia}",
+                value: c.id,
+                label: "${c.horaini} ${c.dia == 1 ? "Lunes" : c.dia == 2 ? "Martes" : c.dia == 3 ? "Miercoles" : c.dia == 4 ? "Jueves" : c.dia == 5 ? "Viernes" : c.dia == 6 ? "Sabado" : c.dia == 7 ? "Domingo" : "NO"}",
               ),
             )
             .toList();
@@ -62,11 +62,12 @@ class Modificar extends StatelessWidget {
           columnTitles: ['Coach', 'Casilla', 'Curso'],
           buildEditableFields: (clase) => [
             GenericEditableField<dynamic>(
-              controller: TextEditingController(text: "${clase.coach.nombre} ${clase.coach.apellidop}"),
+              controller: TextEditingController(text: clase.idcoach.toString()),
               onSubmit: (val) {
                 clase.idcoach = int.parse(val);
                 service.modificarClase({
-                  "coach": int.parse(val),
+                  "id": clase.id,
+                  "idcoach": int.parse(val),
                 });
               },
               type: EditableFieldType.dropdown,
@@ -74,10 +75,11 @@ class Modificar extends StatelessWidget {
             ),
             GenericEditableField<dynamic>(
               controller:
-                  TextEditingController(text: "${clase.casilla.dia} ${clase.casilla.horaini} ${clase.casilla.horafin}"),
+                  TextEditingController(text: clase.idcasilla.toString()),
               onSubmit: (val) {
                 clase.idcasilla = int.parse(val);
                 service.modificarClase({
+                  "id": clase.id,
                   "idcasilla": int.parse(val),
                 });
               },
@@ -85,11 +87,12 @@ class Modificar extends StatelessWidget {
               dropdownItems: opcionesCasillas,
             ),
             GenericEditableField(
-              controller: TextEditingController(text: clase.curso.curso),
+              controller: TextEditingController(text: clase.idcurso.toString()),
               onSubmit: (val) {
                 clase.idcurso = int.parse(val);
                 service.modificarClase({
-                  "curso": int.parse(val),
+                  "id": clase.id,
+                  "idcurso": int.parse(val),
                 });
               },
               type: EditableFieldType.dropdown,

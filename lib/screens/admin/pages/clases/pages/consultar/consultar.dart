@@ -15,12 +15,12 @@ class Consultar extends StatelessWidget {
       ],
       buildRow: (clase) => DataRow(cells: [
         DataCell(Text("${clase.coach.nombre} ${clase.coach.apellidop}" ?? '')),
-        DataCell(Text("${clase.casilla.dia} ${clase.casilla.horaini} ${clase.casilla.horafin}" ?? '')),
+        DataCell(Text(
+            "${clase.casilla.dia == 1 ? "Lunes" : clase.casilla.dia == 2 ? "Martes" : clase.casilla.dia == 3 ? "Miercoles" : clase.casilla.dia == 4 ? "Jueves" : clase.casilla.dia == 5 ? "Viernes" : clase.casilla.dia == 6 ? "Sabado" : clase.casilla.dia == 7 ? "Domingo" : "NO"} ${clase.casilla.horaini} a ${clase.casilla.horafin}" ??
+                '')),
         DataCell(Text(clase.curso.curso ?? '')),
       ]),
-      onRowTap: (paquete) {
-        
-      },
+      onRowTap: (paquete) {},
     );
   }
 }

@@ -29,6 +29,6 @@ class Subscripcion {
         fechaini: DateTime.parse(json['fechaini']),
         fechafin: DateTime.parse(json['fechafin']),
         renovarauto: json['renovarauto'],
-        paquete: Paquete.fromJson(json['paquete']),
+        paquete: json['paquete'] == null ? null : Paquete.fromJson(json['paquete']),
       );
 }

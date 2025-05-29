@@ -1,49 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart'; 
+import 'package:provider/provider.dart';
+import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
+import 'package:proyecto/services/usuario_service.dart';
 
 class MetricasPage extends StatelessWidget {
-  final Map<String, dynamic>? initialData;
-  final Future<void> Function(Map<String, dynamic>)? onSubmit;
-
-  const MetricasPage({Key? key, this.initialData, this.onSubmit})
-      : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Métricas')),
-      body: MetricasForm(
-        initialData: initialData ?? {},
-        onSubmit: onSubmit ??
-            (data) async {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Métricas guardadas')),
-              );
-            },
-      ),
+      body: MetricasForm(),
     );
   }
 }
 
 class MetricasForm extends StatefulWidget {
-  final Map<String, dynamic>? initialData;
-  final Future<void> Function(Map<String, dynamic>) onSubmit;
-
-  const MetricasForm({Key? key, this.initialData, required this.onSubmit})
-      : super(key: key);
-
   @override
   State<MetricasForm> createState() => _MetricasFormState();
 }
 
 class _MetricasFormState extends State<MetricasForm> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _estaturaController;
-  late TextEditingController _pesoController;
-  late TextEditingController _maxCardioController;
-  late TextEditingController _maxPulsoController;
-  late TextEditingController _frecuenciaSemanalController;
 
   bool editando = false;
   late Map<String, dynamic> _originalData;
@@ -51,74 +28,21 @@ class _MetricasFormState extends State<MetricasForm> {
   @override
   void initState() {
     super.initState();
-    _estaturaController = TextEditingController(
-        text: widget.initialData?['estatura']?.toString() ?? '');
-    _pesoController = TextEditingController(
-        text: widget.initialData?['peso']?.toString() ?? '');
-    _maxCardioController = TextEditingController(
-        text: widget.initialData?['maxcardio']?.toString() ?? '');
-    _maxPulsoController = TextEditingController(
-        text: widget.initialData?['maxpulso']?.toString() ?? '');
-    _frecuenciaSemanalController = TextEditingController(
-        text: widget.initialData?['frecuenciasemanal']?.toString() ?? '');
-    _originalData = Map<String, dynamic>.from(widget.initialData ?? {});
   }
 
   @override
   void dispose() {
-    _estaturaController.dispose();
-    _pesoController.dispose();
-    _maxCardioController.dispose();
-    _maxPulsoController.dispose();
-    _frecuenciaSemanalController.dispose();
     super.dispose();
-  }
-
-  void _submit() {
-    if (_formKey.currentState!.validate()) {
-      // Actualiza el estado global del usuario
-      Provider.of<UsuarioProvider>(context, listen: false).actualizarMetricas(
-        estatura: double.tryParse(_estaturaController.text) ?? 0.0,
-        peso: double.tryParse(_pesoController.text) ?? 0.0,
-        maxcardio: double.tryParse(_maxCardioController.text) ?? 0.0,
-        maxpulso: int.tryParse(_maxPulsoController.text) ?? 0,
-        frecuenciasemanal: int.tryParse(_frecuenciaSemanalController.text) ?? 0,
-      );
-
-      widget.onSubmit({
-        'estatura': double.tryParse(_estaturaController.text),
-        'peso': double.tryParse(_pesoController.text),
-        'maxcardio': double.tryParse(_maxCardioController.text),
-        'maxpulso': int.tryParse(_maxPulsoController.text),
-        'frecuenciasemanal': int.tryParse(_frecuenciaSemanalController.text),
-      });
-      setState(() {
-        editando = false;
-        _originalData = {
-          'estatura': _estaturaController.text,
-          'peso': _pesoController.text,
-          'maxcardio': _maxCardioController.text,
-          'maxpulso': _maxPulsoController.text,
-          'frecuenciasemanal': _frecuenciaSemanalController.text,
-        };
-      });
-    }
-  }
-
-  void _cancelar() {
-    setState(() {
-      _estaturaController.text = _originalData['estatura']?.toString() ?? '';
-      _pesoController.text = _originalData['peso']?.toString() ?? '';
-      _maxCardioController.text = _originalData['maxcardio']?.toString() ?? '';
-      _maxPulsoController.text = _originalData['maxpulso']?.toString() ?? '';
-      _frecuenciaSemanalController.text =
-          _originalData['frecuenciasemanal']?.toString() ?? '';
-      editando = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    Usuario usuario = Provider.of<UsuarioProvider>(context).usuario!;
+    TextEditingController _estaturaController = TextEditingController(text: usuario.metricas?.estatura?.toString() ?? '');
+    TextEditingController _pesoController = TextEditingController(text: usuario.metricas?.peso?.toString() ?? '');
+    TextEditingController _maxCardioController = TextEditingController(text: usuario.metricas?.maxcardio?.toString() ?? '');
+    TextEditingController _maxPulsoController = TextEditingController(text: usuario.metricas?.maxpulso?.toString() ?? '');
+    TextEditingController _frecuenciaSemanalController = TextEditingController(text: usuario.metricas?.frecuenciasemanal?.toString() ?? '');
     return Form(
       key: _formKey,
       child: ListView(
@@ -149,6 +73,7 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
+          SizedBox(height: 12,),
           TextFormField(
             controller: _pesoController,
             decoration: const InputDecoration(labelText: 'Peso (kg)'),
@@ -161,6 +86,7 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
+          SizedBox(height: 12,),
           TextFormField(
             controller: _maxCardioController,
             decoration: const InputDecoration(labelText: 'Max Cardio'),
@@ -173,6 +99,7 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
+          SizedBox(height: 12,),
           TextFormField(
             controller: _maxPulsoController,
             decoration: const InputDecoration(labelText: 'Max Pulso'),
@@ -184,6 +111,7 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
+          SizedBox(height: 12,),
           TextFormField(
             controller: _frecuenciaSemanalController,
             decoration: const InputDecoration(labelText: 'Frecuencia Semanal'),
@@ -202,7 +130,52 @@ class _MetricasFormState extends State<MetricasForm> {
               SizedBox(
                 width: 120,
                 child: ElevatedButton(
-                  onPressed: editando ? _submit : null,
+                  onPressed: editando
+                      ? () async {
+                          Map<String, dynamic> data = {
+                            "id": usuario.id,
+                          };
+                          Map<String,dynamic> metricas = {};
+
+                          if (_estaturaController.text.isNotEmpty) {
+                            metricas["estatura"] = double.parse(_estaturaController.text);
+                          }
+                          if (_pesoController.text.isNotEmpty) {
+                            metricas["peso"] = double.parse(_pesoController.text);
+                          }
+                          if (_maxCardioController.text.isNotEmpty) {
+                            metricas["maxcardio"] = double.parse(_maxCardioController.text);
+                          }
+                          if (_maxPulsoController.text.isNotEmpty) {
+                            metricas["maxpulso"] = int.parse(_maxPulsoController.text);
+                          }
+                          if (_frecuenciaSemanalController.text.isNotEmpty) {
+                            metricas["frecuenciasemanal"] = int.parse(_frecuenciaSemanalController.text);
+                          }
+                          if(metricas.isNotEmpty) {
+                            data["metricas"] = metricas;
+                          }
+                          bool success =
+                              await UsuarioService().modificarUsuario(data);
+                          if (success) {
+                            Provider.of<UsuarioProvider>(context,listen: false)
+                                .actualizarMetricas(
+                              metricas["estatura"],
+                              metricas["peso"],
+                              metricas["maxcardio"],
+                              metricas["maxpulso"],
+                              metricas["frecuenciasemanal"],
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Datos guardados')),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Error al guardar')),
+                          );
+                          }
+                        }
+                      : null,
                   child: const Text('Guardar'),
                 ),
               ),
@@ -211,7 +184,18 @@ class _MetricasFormState extends State<MetricasForm> {
                 SizedBox(
                   width: 120,
                   child: ElevatedButton(
-                    onPressed: _cancelar,
+                    onPressed: () {
+                      _estaturaController.text =
+                          usuario.metricas?.estatura.toString() ?? '';
+                      _pesoController.text =
+                          usuario.metricas?.peso.toString() ?? '';
+                      _maxCardioController.text =
+                          usuario.metricas?.maxcardio.toString() ?? '';
+                      _maxPulsoController.text =
+                          usuario.metricas?.maxpulso.toString() ?? '';
+                      _frecuenciaSemanalController.text =
+                          usuario.metricas?.frecuenciasemanal.toString() ?? '';
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),

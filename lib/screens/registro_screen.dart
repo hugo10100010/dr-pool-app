@@ -9,7 +9,7 @@ class RegisterForm extends StatefulWidget {
 class _RegisterFormState extends State<RegisterForm> {
   final _pageController = PageController();
 
-  // Controllers for personal data
+  // Controllers info personal
   final _nombreController = TextEditingController();
   final _apellidopController = TextEditingController();
   final _apellidomController = TextEditingController();
@@ -18,16 +18,9 @@ class _RegisterFormState extends State<RegisterForm> {
   final _tipodocumentoController = TextEditingController();
   final _documentoController = TextEditingController();
 
-  // Controllers for account data
+  // Controllers para la cuenta
   final _nombreusuController = TextEditingController();
   final _passwordController = TextEditingController();
-
-  // Controllers for address data
-  final _calleController = TextEditingController();
-  final _numextController = TextEditingController();
-  final _numintController = TextEditingController();
-  final _asentamientoController = TextEditingController();
-  final _codigopController = TextEditingController();
 
   int _currentPage = 0;
 
@@ -68,13 +61,6 @@ class _RegisterFormState extends State<RegisterForm> {
         "nombreusu": _nombreusuController.text,
         "password": _passwordController.text,
       },
-      "domicilio": {
-        "calle": _calleController.text,
-        "numext": int.parse(_numextController.text),
-        "numint": int.parse(_numintController.text),
-        "asentamiento": _asentamientoController.text,
-        "codigop": _codigopController.text
-      },
       "tipousuario": 2,
     };
     var resultado = await UsuarioService().agregarUsuario(data);
@@ -95,7 +81,6 @@ class _RegisterFormState extends State<RegisterForm> {
         children: [
           _buildPersonalForm(),
           _buildAccountForm(),
-          _buildAddressForm(),
         ],
       ),
       bottomNavigationBar: Row(
@@ -105,7 +90,7 @@ class _RegisterFormState extends State<RegisterForm> {
             TextButton(onPressed: _prevPage, child: Text("Back")),
           TextButton(
             onPressed: _nextPage,
-            child: Text(_currentPage < 2 ? "Next" : "Submit"),
+            child: Text(_currentPage < 1 ? "Next" : "Submit"),
           ),
         ],
       ),
@@ -155,31 +140,6 @@ class _RegisterFormState extends State<RegisterForm> {
               controller: _passwordController,
               decoration: InputDecoration(labelText: "Contraseña"),
               obscureText: true),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAddressForm() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          TextField(
-              controller: _calleController,
-              decoration: InputDecoration(labelText: "Calle")),
-          TextField(
-              controller: _numextController,
-              decoration: InputDecoration(labelText: "Num. ext.")),
-          TextField(
-              controller: _numintController,
-              decoration: InputDecoration(labelText: "Num. int.")),
-          TextField(
-              controller: _asentamientoController,
-              decoration: InputDecoration(labelText: "Asentamiento")),
-          TextField(
-              controller: _codigopController,
-              decoration: InputDecoration(labelText: "Codigo postal")),
         ],
       ),
     );

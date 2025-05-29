@@ -53,17 +53,17 @@ class AppRoutes {
       contratar: (context) => ContratarPage(),
       horarios: (context) => HorariosPage(),
       carrito: (context) {
-  final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
+        final args =
+            ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
 
-  final clases = args?['clases'] as List<Clase>? ?? [];
-  final paquete = args?['paquete'] as Paquete;
+        final clases = args?['clases'] as List<Clase>? ?? [];
+        final paquete = args?['paquete'] as Paquete;
 
-  return CarritoPage(
-    clases: clases,
-    paquete: paquete,
-  );
-},
-
+        return CarritoPage(
+          clases: clases,
+          paquete: paquete,
+        );
+      },
     };
   }
 }

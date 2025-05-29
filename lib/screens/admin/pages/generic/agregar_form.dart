@@ -87,6 +87,7 @@ class _GenericAgregarFormState extends State<GenericAgregarForm> {
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
+                          spacing: 12,
                           children: page.map((field) {
                             if (field.type == FieldType.dropdown &&
                                 field.dropdownItems != null) {

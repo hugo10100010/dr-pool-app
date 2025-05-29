@@ -110,147 +110,150 @@ class _HorariosPageState extends State<HorariosPage> {
 
         return Scaffold(
           appBar: AppBar(title: Text('Selecciona tus horarios')),
-          body: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: SizedBox(
-                    width: 60 + cols * 108, // Width = label + columns
-                    child: Column(
-                      children: [
-                        // Header row
-                        Row(
-                          children: [
-                            Container(
-                              width: 60,
-                              alignment: Alignment.center,
-                            ),
-                            ...dias.map((d) => Container(
-                                  width: 100,
-                                  padding: EdgeInsets.all(8),
-                                  alignment: Alignment.center,
-                                  child: Text(d,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                )),
-                          ],
-                        ),
-                        // Grid rows
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: rows,
-                            itemBuilder: (context, row) {
-                              return Row(
-                                children: [
-                                  Container(
-                                    width: 60,
-                                    height: 60,
+          body: Center(
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SizedBox(
+                      width: 60 + cols * 108, // Width = label + columns
+                      child: Column(
+                        children: [
+                          // Header row
+                          Row(
+                            children: [
+                              Container(
+                                width: 60,
+                                alignment: Alignment.center,
+                              ),
+                              ...dias.map((d) => Container(
+                                    width: 100,
+                                    padding: EdgeInsets.all(8),
                                     alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      border: Border.all(color: Colors.black12),
-                                    ),
-                                    child: Text(
-                                      "${(row + 8).toString().padLeft(2, '0')}:00",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  ...List.generate(cols, (col) {
-                                    var clase = clasesLista
-                                        .where((element) =>
-                                            element.casilla.dia == col &&
-                                            int.parse(element.casilla.horaini
-                                                    .substring(0, 2)) ==
-                                                (row + 8))
-                                        .toList();
-
-                                    return Container(
-                                      width: 100,
-                                      height: 60,
-                                      margin: EdgeInsets.all(4),
-                                      child: GestureDetector(
-                                        onTap: clase.isEmpty
-                                            ? null
-                                            : () => _onCellTap(row, col),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: selected[row][col]
-                                                ? Colors.red
-                                                : Colors.grey[300],
-                                            border: Border.all(
-                                                color: Colors.black12),
-                                            borderRadius:
-                                                BorderRadius.circular(6),
-                                          ),
-                                          child: clase.isEmpty
-                                              ? SizedBox.shrink()
-                                              : Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      clase[0].curso.curso,
-                                                      style: TextStyle(
-                                                        color: selected[row]
-                                                                [col]
-                                                            ? Colors.white
-                                                            : Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                    Text(
-                                                      "${clase[0].casilla.horaini} - ${clase[0].casilla.horafin}",
-                                                      style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: selected[row]
-                                                                [col]
-                                                            ? Colors.white
-                                                            : Colors.black,
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                    Text(
-                                                      clase[0].coach.nombre,
-                                                      style: TextStyle(
-                                                        fontSize: 10,
-                                                        color: selected[row]
-                                                                [col]
-                                                            ? Colors.white
-                                                            : Colors.black,
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ],
-                                                ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                ],
-                              );
-                            },
+                                    child: Text(d,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                  )),
+                            ],
                           ),
-                        ),
-                      ],
+                          // Grid rows
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: rows,
+                              itemBuilder: (context, row) {
+                                return Row(
+                                  children: [
+                                    Container(
+                                      width: 60,
+                                      height: 60,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        border: Border.all(color: Colors.black12),
+                                      ),
+                                      child: Text(
+                                        "${(row + 8).toString().padLeft(2, '0')}:00",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    ...List.generate(cols, (col) {
+                                      var clase = clasesLista
+                                          .where((element) =>
+                                              element.casilla.dia == col &&
+                                              int.parse(element.casilla.horaini
+                                                      .substring(0, 2)) ==
+                                                  (row + 8))
+                                          .toList();
+            
+                                      return Container(
+                                        width: 100,
+                                        height: 60,
+                                        margin: EdgeInsets.all(4),
+                                        child: GestureDetector(
+                                          onTap: clase.isEmpty
+                                              ? null
+                                              : () => _onCellTap(row, col),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: selected[row][col]
+                                                  ? Colors.red
+                                                  : Colors.grey[300],
+                                              border: Border.all(
+                                                  color: Colors.black12),
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            child: clase.isEmpty
+                                                ? SizedBox.shrink()
+                                                : Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    children: [
+                                                      Text(
+                                                        clase[0].curso.curso,
+                                                        style: TextStyle(
+                                                          color: selected[row]
+                                                                  [col]
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 10,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      Text(
+                                                        "${clase[0].casilla.horaini} - ${clase[0].casilla.horafin}",
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: selected[row]
+                                                                  [col]
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                      Text(
+                                                        clase[0].coach.nombre,
+                                                        style: TextStyle(
+                                                          fontSize: 10,
+                                                          color: selected[row]
+                                                                  [col]
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ],
+                                                  ),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: _contratar,
-                  child: Text('Contratar'),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ElevatedButton(
+                    onPressed: _contratar,
+                    child: Text('Contratar'),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:proyecto/services/clase_servicio.dart';
 import '../models/usuario_model.dart';
 
 class UsuarioProvider extends ChangeNotifier{
@@ -13,42 +14,50 @@ class UsuarioProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void actualizarAvatar(Uint8List nuevoAvatar) {
+  void actualizarCuenta(String? nombreusu, Uint8List? nuevoAvatar) {
     if(usuario != null) {
-      _usuario!.cuenta.avatar = nuevoAvatar;
+      nombreusu == null ? true : _usuario!.cuenta?.nombreusu = nombreusu;
+      nuevoAvatar == null ? true : _usuario!.cuenta?.avatar = nuevoAvatar;
       notifyListeners();
     }
   }
 
-  void actualizarPersonales(String nombre, String apellidop, String apellidom, String email, String telefono) {
+  void actualizarPersonales(String? nombre, String? apellidop, String? apellidom, String? email, String? telefono) {
     if(usuario != null) {
-      _usuario!.personales.nombre =nombre;
-      _usuario!.personales.apellidop = apellidop;
-      _usuario!.personales.apellidom = apellidom;
-      _usuario!.personales.email = email;
-      _usuario!.personales.telefono = telefono;
+      nombre == null ? true : _usuario!.personales.nombre =nombre;
+      apellidop == null ? true : _usuario!.personales.apellidop = apellidop;
+      apellidom == null ? true : _usuario!.personales.apellidom = apellidom;
+      email == null ? true : _usuario!.personales.email = email;
+      telefono == null ? true : _usuario!.personales.telefono = telefono;
       notifyListeners();
     }
   }
 
-  void actualizarDomicilio(String calle, int numext, int numint, String asentamiento, int codigop) {
+  void actualizarDomicilio(String? calle, int? numext, int? numint, String? asentamiento, int? codigop) {
     if(usuario != null) {
-      _usuario!.domicilio.calle = calle;
-      _usuario!.domicilio.numext = numext;
-      _usuario!.domicilio.numint = numint;
-      _usuario!.domicilio.asentamiento = asentamiento;
-      _usuario!.domicilio.codigop = codigop;
+      calle == null ? true : _usuario!.domicilio?.calle = calle;
+      numext == null ? true : _usuario!.domicilio?.numext = numext;
+      numint == null ? true : _usuario!.domicilio?.numint = numint;
+      asentamiento == null ? true : _usuario!.domicilio?.asentamiento = asentamiento;
+      codigop == null ? true : _usuario!.domicilio?.codigop = codigop;
+      notifyListeners();
     }
   }
 
-    void actualizarMetricas({required double estatura, required double peso, required double maxcardio, required int maxpulso, required int frecuenciasemanal,
-  }) {
+  void actualizarMetricas(double? estatura, double? peso, double? maxcardio, int? maxpulso, int? frecuenciasemanal) {
     if (_usuario != null) {
-      _usuario!.metricas.estatura = estatura;
-      _usuario!.metricas.peso = peso;
-      _usuario!.metricas.maxcardio = maxcardio;
-      _usuario!.metricas.maxpulso = maxpulso;
-      _usuario!.metricas.frecuenciasemanal = frecuenciasemanal;
+      estatura == null ? true : _usuario!.metricas?.estatura = estatura;
+      peso == null ? true : _usuario!.metricas?.peso = peso;
+      maxcardio == null ? true : _usuario!.metricas?.maxcardio = maxcardio;
+      maxpulso == null ? true : _usuario!.metricas?.maxpulso = maxpulso;
+      frecuenciasemanal == null ? true : _usuario!.metricas?.frecuenciasemanal = frecuenciasemanal;
+      notifyListeners();
+    }
+  }
+
+  Future<void> actualizarClases() async {
+    if(_usuario != null) {
+      _usuario!.clases = await ClaseServicio().getClases();
       notifyListeners();
     }
   }

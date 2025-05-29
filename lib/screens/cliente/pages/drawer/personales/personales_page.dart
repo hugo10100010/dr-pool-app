@@ -124,26 +124,43 @@ class _PersonalesPageState extends State<personalesclientePage> {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: editable
-                    ? () {
+                    ? () async {
+                        Map<String, dynamic> data = {
+                          "id": usuario.id,
+                        };
+                        Map<String,dynamic> personales = {};
+                        if (_nombreController.text.isNotEmpty) {
+                          personales["nombre"] = _nombreController.text;
+                        }
+                        if (_apellidopController.text.isNotEmpty) {
+                          personales["apellidop"] = _apellidopController.text;
+                        }
+                        if (_apellidomController.text.isNotEmpty) {
+                          personales["apellidom"] = _apellidomController.text;
+                        }
+                        if (_emailController.text.isNotEmpty) {
+                          personales["email"] = _emailController.text;
+                        }
+                        if (_telefonoController.text.isNotEmpty) {
+                          personales["telefono"] = _telefonoController.text;
+                        }
+                        if(personales.isNotEmpty) {
+                          data["personales"] = personales;
+                        }
+
                         if (_formKey.currentState!.validate()) {
-                          UsuarioService().modificarUsuario({
-                            "id": usuario.id,
-                            "personales": {
-                              "nombre": _nombreController.text,
-                              "apellidop": _apellidopController.text,
-                              "apellidom": _apellidomController.text,
-                              "email": _emailController.text,
-                              "telefono": _telefonoController.text,
-                            }
-                          });
-                          Provider.of<UsuarioProvider>(context, listen: false)
-                              .actualizarPersonales(
-                            _nombreController.text,
-                            _apellidopController.text,
-                            _apellidomController.text,
-                            _emailController.text,
-                            _telefonoController.text,
-                          );
+                          bool success =
+                              await UsuarioService().modificarUsuario(data);
+                          if (success) {
+                            Provider.of<UsuarioProvider>(context, listen: false)
+                                .actualizarPersonales(
+                              personales["nombre"],
+                              personales["apellidop"],
+                              personales["apellidom"],
+                              personales["email"],
+                              personales["telefono"],
+                            );
+                          }
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('Datos guardados')),
                           );

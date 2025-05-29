@@ -18,13 +18,14 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             casilla.horaini = val;
             service.modificarCasilla({
+              "id": casilla.id,
               "horaini": val,
             });
           },
           type: EditableFieldType.dropdown,
           dropdownItems: [
-            DropdownOption(value: "8:00", label: "8:00"),
-            DropdownOption(value: "9:00", label: "9:00"),
+            DropdownOption(value: "08:00", label: "08:00"),
+            DropdownOption(value: "09:00", label: "09:00"),
             DropdownOption(value: "10:00", label: "10:00"),
             DropdownOption(value: "11:00", label: "11:00"),
             DropdownOption(value: "12:00", label: "12:00"),
@@ -42,12 +43,13 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             casilla.horafin = val;
             service.modificarCasilla({
+              "id": casilla.id,
               "horafin": val,
             });
           },
           type: EditableFieldType.dropdown,
           dropdownItems: [
-            DropdownOption(value: "9:00", label: "9:00"),
+            DropdownOption(value: "09:00", label: "09:00"),
             DropdownOption(value: "10:00", label: "10:00"),
             DropdownOption(value: "11:00", label: "11:00"),
             DropdownOption(value: "12:00", label: "12:00"),
@@ -66,6 +68,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             casilla.dia = int.parse(val);
             service.modificarCasilla({
+              "id": casilla.id,
               "dia": int.parse(val)
             });
           },

@@ -17,6 +17,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             curso.curso = val;
             service.modificarCurso({
+              "id": curso.id,
               "curso": val,
             });
           },
@@ -27,6 +28,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             curso.descripcion = val;
             service.modificarCurso({
+              "id": curso.id,
               "descripcion": val,
             });
           },

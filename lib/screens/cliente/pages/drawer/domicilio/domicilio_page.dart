@@ -13,7 +13,7 @@ class _DomicilioPageState extends State<DomicilioPage> {
   final TextEditingController _calleController = TextEditingController();
   final TextEditingController _numeroextController = TextEditingController();
   final TextEditingController _numerointController = TextEditingController();
-  final TextEditingController _asentamientoController = TextEditingController(text: 'El Carmen 2');
+  final TextEditingController _asentamientoController = TextEditingController();
   final TextEditingController _cpController = TextEditingController();
 
   bool editable = false;
@@ -28,35 +28,14 @@ class _DomicilioPageState extends State<DomicilioPage> {
     super.dispose();
   }
 
-  void _guardarDomicilio(int id, String calle, int numext, int numint, String asentamiento, int codigop) {
-    if (_formKey.currentState!.validate()) {
-      UsuarioService().modificarUsuario({
-        "id": id,
-        "domicilio": {
-          "calle": calle,
-          "numext": numext,
-          "numint": numint,
-          "asentamiento": asentamiento,
-          "codigop": codigop,
-        }
-      });
-      setState(() {
-        editable = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Domicilio guardado')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final usuario = Provider.of<UsuarioProvider>(context).usuario!;
-    _calleController.text = usuario!.domicilio.calle ?? '';
-    _numeroextController.text = usuario!.domicilio.numext?.toString() ?? '';
-    _numerointController.text = usuario!.domicilio.numint?.toString() ?? '';
-    _asentamientoController.text = usuario!.domicilio.asentamiento ?? '';
-    _cpController.text = usuario!.domicilio.codigop?.toString() ?? '';
+    final usuario = Provider.of<UsuarioProvider>(context).usuario;
+    _calleController.text = usuario!.domicilio?.calle ?? '';
+    _numeroextController.text = usuario.domicilio?.numext?.toString() ?? '';
+    _numerointController.text = usuario.domicilio?.numint?.toString() ?? '';
+    _asentamientoController.text = usuario.domicilio?.asentamiento ?? '';
+    _cpController.text = usuario.domicilio?.codigop?.toString() ?? '';
     return Scaffold(
       appBar: AppBar(title: Text('Domicilio')),
       body: Padding(
@@ -68,31 +47,42 @@ class _DomicilioPageState extends State<DomicilioPage> {
               TextFormField(
                 controller: _calleController,
                 decoration: InputDecoration(labelText: 'Calle'),
-                validator: (value) => value == null || value.isEmpty ? 'Ingrese la calle' : null,
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Ingrese la calle' : null,
                 enabled: editable,
               ),
+              SizedBox(height: 12),
               TextFormField(
                 controller: _numeroextController,
                 decoration: InputDecoration(labelText: 'Número ext.'),
-                validator: (value) => value == null || value.isEmpty ? 'Ingrese el número exterior' : null,
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Ingrese el número exterior'
+                    : null,
                 enabled: editable,
               ),
+              SizedBox(height: 12),
               TextFormField(
                 controller: _numerointController,
                 decoration: InputDecoration(labelText: 'Número int.'),
-                validator: (value) => value == null || value.isEmpty ? 'Ingrese el número exterior' : null,
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Ingrese el número exterior'
+                    : null,
                 enabled: editable,
               ),
+              SizedBox(height: 12),
               TextFormField(
                 controller: _asentamientoController,
                 decoration: InputDecoration(labelText: 'Asentamiento'),
                 enabled: editable,
               ),
+              SizedBox(height: 12),
               TextFormField(
                 controller: _cpController,
                 decoration: InputDecoration(labelText: 'Código Postal'),
                 keyboardType: TextInputType.number,
-                validator: (value) => value == null || value.isEmpty ? 'Ingrese el código postal' : null,
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Ingrese el código postal'
+                    : null,
                 enabled: editable,
               ),
               SizedBox(height: 24),
@@ -111,10 +101,59 @@ class _DomicilioPageState extends State<DomicilioPage> {
               SizedBox(height: 16),
               ElevatedButton(
                 onPressed: editable
-                    ? () {
-                        Provider.of<UsuarioProvider>(context, listen: false).actualizarDomicilio(_calleController.text, int.parse(_numeroextController.text), int.parse(_numerointController.text), _asentamientoController.text, int.parse(_cpController.text));
-                        _guardarDomicilio(usuario.id,_calleController.text,int.parse(_numeroextController.text), int.parse(_numerointController.text), _asentamientoController.text, int.parse(_cpController.text));
-                        
+                    ? () async {
+                        if (_formKey.currentState!.validate()) {
+                          Map<String, dynamic> data = {
+                            "id": usuario.id,
+                          };
+
+                          Map<String, dynamic> domicilio = {};
+
+                          if (_calleController.text.isNotEmpty) {
+                            domicilio["calle"] = _calleController.text;
+                          }
+                          if (_numeroextController.text.isNotEmpty) {
+                            domicilio["numext"] =
+                                int.parse(_numeroextController.text);
+                          }
+                          if (_numerointController.text.isNotEmpty) {
+                            domicilio["numint"] =
+                                int.parse(_numerointController.text);
+                          }
+                          if (_asentamientoController.text.isNotEmpty) {
+                            domicilio["asentamiento"] =
+                                _asentamientoController.text;
+                          }
+                          if (_cpController.text.isNotEmpty) {
+                            domicilio["codigop"] =
+                                int.parse(_cpController.text);
+                          }
+
+                          if (domicilio.isNotEmpty) {
+                            data["domicilio"] = domicilio;
+                          }
+
+                          bool success =
+                              await UsuarioService().modificarUsuario(data);
+                          if (success) {
+                            Provider.of<UsuarioProvider>(context, listen: false)
+                                .actualizarDomicilio(
+                              domicilio["calle"],
+                              domicilio["numext"],
+                              domicilio["numint"],
+                              domicilio["asentamiento"],
+                              domicilio["codigop"],
+                            );
+                          }
+
+                          setState(() {
+                            editable = false;
+                          });
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Domicilio guardado')),
+                          );
+                        }
                       }
                     : null,
                 child: Text('Guardar'),

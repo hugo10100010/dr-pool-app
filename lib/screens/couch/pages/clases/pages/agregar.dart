@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:proyecto/models/casillahorario_model.dart';
+import 'package:proyecto/models/clase_model.dart';
 import 'package:proyecto/models/curso_model.dart';
+import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/casillahorario_service.dart';
+import 'package:proyecto/services/clase_servicio.dart';
 import 'package:proyecto/services/curso_service.dart';
 
 void main() => runApp(MyApp());
@@ -41,8 +45,8 @@ class SeleccionarCursoWidget extends StatefulWidget {
 }
 
 class _SeleccionarCursoWidgetState extends State<SeleccionarCursoWidget> {
-  int? selectCurso;
-  int? selectCasilla;
+  Curso? selectCurso;
+  CasillaHorario? selectCasilla;
 
   final Future<List<Curso>> cursos = CursoServicio().getCursos();
   final Future<List<CasillaHorario>> casillas =
@@ -66,7 +70,7 @@ class _SeleccionarCursoWidgetState extends State<SeleccionarCursoWidget> {
         final cursosItems = cursosList
             .map<DropdownMenuItem>(
               (c) => DropdownMenuItem(
-                value: c.id.toString(),
+                value: c,
                 child: Text(c.curso),
               ),
             )
@@ -74,7 +78,7 @@ class _SeleccionarCursoWidgetState extends State<SeleccionarCursoWidget> {
         final casillasItems = casillasList
             .map<DropdownMenuItem>(
               (e) => DropdownMenuItem(
-                  value: e.id.toString(),
+                  value: e,
                   child: Text(
                       "${e.dia == 1 ? "Lunes" : e.dia == 2 ? "Martes" : e.dia == 3 ? "Miercoles" : e.dia == 4 ? "Jueves" : e.dia == 5 ? "Viernes" : e.dia == 6 ? "Sábado" : e.dia == 7 ? "Domingo" : "No"} - ${e.horaini} a ${e.horafin}")),
             )
@@ -114,6 +118,19 @@ class _SeleccionarCursoWidgetState extends State<SeleccionarCursoWidget> {
                 setState(() => selectCasilla = value);
               },
             ),
+            SizedBox(
+              height: 16,
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  ClaseServicio().agregarClase({
+                    "idcurso": selectCurso?.id,
+                    "idcasilla": selectCasilla?.id,
+                    "idcoach": Provider.of<UsuarioProvider>(context, listen: false).usuario!.id,
+                  });
+                  await Provider.of<UsuarioProvider>(context,listen: false).actualizarClases();
+                },
+                child: Text("Agregar"))
           ],
         );
       },

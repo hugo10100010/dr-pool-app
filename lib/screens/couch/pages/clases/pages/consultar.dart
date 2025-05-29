@@ -49,7 +49,7 @@ class _DropdownListExampleState extends State<DropdownListExample> {
 
         clasesList.sort((a, b) => a.casilla.dia.compareTo(b.casilla.dia));
 
-        var usuariosList = snapshot.data![1] as List<Usuario>;
+        final usuariosList = snapshot.data![1] as List<Usuario>;
 
         final clasesItems = clasesList
             .map<DropdownMenuItem<int>>(
@@ -61,19 +61,17 @@ class _DropdownListExampleState extends State<DropdownListExample> {
             )
             .toList();
 
-        usuariosList = usuariosList.where(
-          (e) =>
-              e.horario?.any((h) => h.idclase == clasesItems[0].value) ?? false,
-        ).toList();
+        var updatableList = usuariosList
+            .where(
+              (e) =>
+                  e.horario?.any(
+                      (h) {print(h.idclase); print(selectedClase ?? ''); return h.idclase == (selectedClase ?? 0);}) ??
+                  false,
+            )
+            .toList();
 
         return Scaffold(
           backgroundColor: Colors.black,
-          appBar: AppBar(
-            title: Text('Consultar Clases'),
-            backgroundColor: Colors.red[900],
-            foregroundColor: Colors.white,
-            elevation: 0,
-          ),
           body: Column(
             children: [
               SizedBox(height: 20),
@@ -99,7 +97,7 @@ class _DropdownListExampleState extends State<DropdownListExample> {
                   ),
                   margin: EdgeInsets.symmetric(horizontal: 16),
                   child: ListView.builder(
-                    itemCount: usuariosList.length,
+                    itemCount: updatableList.length,
                     itemBuilder: (context, index) {
                       return Card(
                         color: Colors.black,
@@ -109,7 +107,7 @@ class _DropdownListExampleState extends State<DropdownListExample> {
                         ),
                         child: ListTile(
                           title: Text(
-                            "${usuariosList[index].personales.nombre} ${usuariosList[index].personales.apellidop} ${usuariosList[index].personales.apellidom}",
+                            "${updatableList[index].personales.nombre} ${updatableList[index].personales.apellidop} ${updatableList[index].personales.apellidom}",
                             style: TextStyle(
                                 color: Colors.red, fontWeight: FontWeight.bold),
                           ),

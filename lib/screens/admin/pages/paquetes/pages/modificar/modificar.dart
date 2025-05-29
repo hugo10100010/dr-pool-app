@@ -22,6 +22,7 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             paquete.precio = double.parse(val);
             service.modificarPaquete({
+              "id": paquete.id,
               "precio": val,
             });
           },
@@ -32,16 +33,18 @@ class Modificar extends StatelessWidget {
           onSubmit: (val) {
             paquete.clases = int.parse(val);
             service.modificarPaquete({
+              "id": paquete.id,
               "clases": int.parse(val),
             });
           },
         ),
         GenericEditableField(
             controller:
-                TextEditingController(text: paquete.flexible ? 'Si' : 'No'),
+                TextEditingController(text: paquete.flexible ? true.toString() : false.toString()),
             onSubmit: (val) {
               paquete.flexible = bool.parse(val);
               service.modificarPaquete({
+                "id": paquete.id,
                 "flexible": bool.parse(val),
               });
             },

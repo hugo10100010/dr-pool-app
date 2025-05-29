@@ -51,6 +51,11 @@ class _ContratarPageState extends State<ContratarPage> {
                 SizedBox(height: 20),
                 if (paqueteSeleccionado != null) ...[
                   Text(
+                    'Precio: \$${paqueteSeleccionado!.precio}',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  SizedBox(height: 12,),
+                  Text(
                     'Beneficios:',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),

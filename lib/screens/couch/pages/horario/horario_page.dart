@@ -14,16 +14,18 @@ class HorarioPage extends StatelessWidget {
 }
 
 class HorarioClases extends StatelessWidget {
-  
-  final List<int> dias = [1,2,3,4,5,6,7];
+  final List<int> dias = [1, 2, 3, 4, 5, 6, 7];
 
   @override
   Widget build(BuildContext context) {
     final usuario = Provider.of<UsuarioProvider>(context).usuario;
-    if(usuario == null) {
-      return Center(child: Text("Nada que ver aquí..."),);
+    if (usuario == null) {
+      return Center(
+        child: Text("Nada que ver aquí..."),
+      );
     }
-    usuario!.clases!.sort((a, b) => a.casilla.horaini.compareTo(b.casilla.horaini));
+    usuario!.clases!
+        .sort((a, b) => a.casilla.horaini.compareTo(b.casilla.horaini));
 
     return DefaultTabController(
       length: 7,
@@ -44,10 +46,43 @@ class HorarioClases extends StatelessWidget {
                 tabs: dias.map((dia) {
                   return Tab(
                     child: Center(
-                      child: Text(
-                        dia == 1 ? "Lunes" : dia == 2 ? "Martes" : dia == 3 ? "Miercoles" : dia == 4 ? "Jueves" : dia == 5 ? "Viernes" : dia == 6 ? "Sábado" : dia == 7 ? "Domingo" : "No",
-                        textAlign: TextAlign.center,
-                      ),
+                      child: MediaQuery.of(context).size.width > 600
+                          ? Text(
+                              dia == 1
+                                  ? "Lunes"
+                                  : dia == 2
+                                      ? "Martes"
+                                      : dia == 3
+                                          ? "Miercoles"
+                                          : dia == 4
+                                              ? "Jueves"
+                                              : dia == 5
+                                                  ? "Viernes"
+                                                  : dia == 6
+                                                      ? "Sábado"
+                                                      : dia == 7
+                                                          ? "Domingo"
+                                                          : "No",
+                              textAlign: TextAlign.center,
+                            )
+                          : Text(
+                              dia == 1
+                                  ? "L"
+                                  : dia == 2
+                                      ? "M"
+                                      : dia == 3
+                                          ? "M"
+                                          : dia == 4
+                                              ? "J"
+                                              : dia == 5
+                                                  ? "V"
+                                                  : dia == 6
+                                                      ? "S"
+                                                      : dia == 7
+                                                          ? "D"
+                                                          : "No",
+                              textAlign: TextAlign.center,
+                            ),
                     ),
                   );
                 }).toList(),
@@ -61,9 +96,11 @@ class HorarioClases extends StatelessWidget {
         backgroundColor: Colors.grey[900],
         body: TabBarView(
           children: dias.map((dia) {
-            final clasesDelDia = usuario.clases!.where((e) => e.casilla.dia==dia).toList();
+            final clasesDelDia =
+                usuario.clases!.where((e) => e.casilla.dia == dia).toList();
             return ListView.builder(
-              itemCount: usuario.clases!.where((e) => e.casilla.dia==dia).length,
+              itemCount:
+                  usuario.clases!.where((e) => e.casilla.dia == dia).length,
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -90,14 +127,6 @@ class HorarioClases extends StatelessWidget {
                           color: Colors.black87,
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
-                        ),
-                      ),
-                      SizedBox(height: 4),
-                      Text(
-                        "${clasesDelDia[index].coach.nombre} ${clasesDelDia[index].coach.apellidop} ${clasesDelDia[index].coach.apellidom}",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 14,
                         ),
                       ),
                     ],

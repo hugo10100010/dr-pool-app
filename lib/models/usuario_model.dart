@@ -1,13 +1,10 @@
 import 'dart:convert';
 
-import 'package:proyecto/models/casillahorario_model.dart';
 import 'package:proyecto/models/clase_model.dart';
 import 'package:proyecto/models/cuenta_model.dart';
-import 'package:proyecto/models/curso_model.dart';
 import 'package:proyecto/models/domicilio_model.dart';
 import 'package:proyecto/models/historial_model.dart';
 import 'package:proyecto/models/metricas_model.dart';
-import 'package:proyecto/models/paquete_model.dart';
 import 'package:proyecto/models/personales_model.dart';
 import 'package:proyecto/models/horario_model.dart';
 import 'package:proyecto/models/subscripcion_model.dart';
@@ -15,14 +12,14 @@ import 'package:proyecto/models/subscripcion_model.dart';
 class Usuario {
   int id;
   int idpersonales;
-  int iddomicilio;
-  int idcuenta;
-  int idmetricas;
-  int tipousuario;
+  int? iddomicilio;
+  int? idcuenta;
+  int? idmetricas;
+  int? tipousuario;
   Personales personales;
-  Cuenta cuenta;
-  Metricas metricas;
-  Domicilio domicilio;
+  Cuenta? cuenta;
+  Metricas? metricas;
+  Domicilio? domicilio;
   Subscripcion? subscripcion;
   List<Horario>? horario;
   List<Clase>? clases;
@@ -52,9 +49,13 @@ class Usuario {
         idmetricas: json['idmetricas'],
         tipousuario: json['tipousuario'],
         personales: Personales.fromJson(json['personales']),
-        cuenta: Cuenta.fromJson(json['cuenta']),
-        metricas: Metricas.fromJson(json['metricas']),
-        domicilio: Domicilio.fromJson(json['domicilio']),
+        cuenta: json['cuenta'] == null ? null : Cuenta.fromJson(json['cuenta']),
+        metricas: json['metricas'] == null
+            ? null
+            : Metricas.fromJson(json['metricas']),
+        domicilio: json['domicilio'] == null
+            ? null
+            : Domicilio.fromJson(json['domicilio']),
         subscripcion: json['subscripcion'] == null
             ? null
             : Subscripcion.fromJson(json['subscripcion']),
@@ -83,9 +84,9 @@ class Usuario {
         'idmetricas': idmetricas,
         'tipousuario': tipousuario,
         'personales': personales.toJson(),
-        'cuenta': cuenta.toJson(),
-        'metricas': metricas.toJson(),
-        'domicilio': domicilio.toJson(),
+        'cuenta': cuenta?.toJson(),
+        'metricas': metricas?.toJson(),
+        'domicilio': domicilio?.toJson(),
         'horario': jsonEncode(horario),
       };
 }
