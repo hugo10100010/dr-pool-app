@@ -1,0 +1,15 @@
+pip install flask
+pip install flask flask-mysqldb
+pip install mysqlclient
+pip install Flask Flask-Cors Flask-JWT-Extended
+pip install python-dotenv
+pip install sqlalchemy
+pip install flask-sqlalchemy
+pip install Flask-Migrate
+pip install pymysql
+pip install marshmallow marshmallow-sqlalchemy
+pip install bcrypt
+start ms-settings:developers
+py setup.py
+py seed.py
+flask --debug --app app run --host=0.0.0.0

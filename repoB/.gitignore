@@ -1,0 +1,6 @@
+.env
+prueba.py
+schemas/__pycache__/
+models/__pycache__/
+migrations/__pycache__/
+__pycache__/
