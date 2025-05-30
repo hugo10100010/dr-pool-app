@@ -20,6 +20,8 @@ class Modificar extends StatelessWidget {
             service.modificarCasilla({
               "id": casilla.id,
               "horaini": val,
+              "horafin": casilla.horafin,
+              "dia": casilla.dia,
             });
           },
           type: EditableFieldType.dropdown,
@@ -44,7 +46,9 @@ class Modificar extends StatelessWidget {
             casilla.horafin = val;
             service.modificarCasilla({
               "id": casilla.id,
+              "horaini": casilla.horaini,
               "horafin": val,
+              "dia": casilla.dia
             });
           },
           type: EditableFieldType.dropdown,
@@ -69,7 +73,9 @@ class Modificar extends StatelessWidget {
             casilla.dia = int.parse(val);
             service.modificarCasilla({
               "id": casilla.id,
-              "dia": int.parse(val)
+              "horaini": casilla.horaini,
+              "horafin": casilla.horafin,
+              "dia": int.parse(val),
             });
           },
           type: EditableFieldType.dropdown,

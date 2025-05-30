@@ -110,6 +110,10 @@ class CarritoPage extends StatelessWidget {
                     "id":usuario.id,
                     "subscripcion": {
                       "idpaquete": paquete?.id,
+                      "estado": "Activa",
+                      "fechaini": DateTime.now().toIso8601String(),
+                      "fechafin": DateTime.now().add(const Duration(days:30)).toIso8601String(),
+                      "renovarauto": "false",
                     }
                   });
                   showDialog(

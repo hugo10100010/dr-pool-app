@@ -32,12 +32,12 @@ class Agregar extends StatelessWidget {
         final usuariosList = snapshot.data![0] as List<Usuario>;
         final casillasList = snapshot.data![1] as List<CasillaHorario>;
         final cursosList = snapshot.data![2] as List<Curso>;
-        
+
         final coachOptions = usuariosList
             .where((u) => u.tipousuario == 3)
             .map<DropdownOption<int>>((u) => DropdownOption<int>(
                   value: u.id,
-                  label: "${u.personales.nombre} ${u.personales.apellidop}",
+                  label: "${u.personales?.nombre} ${u.personales?.apellidop}",
                 ))
             .toList();
 
@@ -81,6 +81,15 @@ class Agregar extends StatelessWidget {
               "idcoach": int.parse(data['idcoach']),
               "idcasilla": int.parse(data['idcasilla']),
               "idcurso": int.parse(data['idcurso']),
+              "coach": {
+                "personales": usuariosList
+                    .where((e) => e.id == int.parse(data['idcoach']))
+                    .toList()[0]
+                    .personales
+                    ?.toJson()
+              },
+              "casillahorario": casillasList.where((e) => e.id == int.parse(data['idcasilla'])).toList()[0].toJson(),
+              "curso": cursosList.where((e) => e.id == int.parse(data['idcurso'])).toList()[0].toJson(),
             };
             final success = await ClaseServicio().agregarClase(payload);
             if (context.mounted) {

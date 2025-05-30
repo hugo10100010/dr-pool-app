@@ -37,11 +37,11 @@ class _PersonalesPageState extends State<personalesclientePage> {
   @override
   Widget build(BuildContext context) {
     final usuario = Provider.of<UsuarioProvider>(context).usuario!;
-    _nombreController.text = usuario.personales.nombre;
-    _apellidopController.text = usuario.personales.apellidop;
-    _apellidomController.text = usuario.personales.apellidom;
-    _emailController.text = usuario.personales.email;
-    _telefonoController.text = usuario.personales.telefono;
+    _nombreController.text = usuario.personales!.nombre;
+    _apellidopController.text = usuario.personales!.apellidop;
+    _apellidomController.text = usuario.personales!.apellidom;
+    _emailController.text = usuario.personales!.email;
+    _telefonoController.text = usuario.personales!.telefono;
 
     return Scaffold(
       appBar: AppBar(

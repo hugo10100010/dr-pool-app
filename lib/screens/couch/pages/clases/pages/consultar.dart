@@ -107,7 +107,7 @@ class _DropdownListExampleState extends State<DropdownListExample> {
                         ),
                         child: ListTile(
                           title: Text(
-                            "${updatableList[index].personales.nombre} ${updatableList[index].personales.apellidop} ${updatableList[index].personales.apellidom}",
+                            "${updatableList[index].personales?.nombre} ${updatableList[index].personales?.apellidop} ${updatableList[index].personales?.apellidom}",
                             style: TextStyle(
                                 color: Colors.red, fontWeight: FontWeight.bold),
                           ),

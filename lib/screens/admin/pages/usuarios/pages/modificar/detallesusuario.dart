@@ -23,7 +23,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.cuenta?.nombreusu = val;
               service.modificarUsuario({
-                "cuenta": {"nombreusu": val}
+                "id": usuario.id,
+                "idcuenta": usuario.idcuenta,
+                "cuenta": usuario.cuenta!.toJson()
               });
             },
           ),
@@ -36,7 +38,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.domicilio?.calle = val;
               service.modificarUsuario({
-                "domicilio": {"calle": val}
+                "id": usuario.id,
+                "iddomicilio": usuario.iddomicilio,
+                "domicilio": usuario.domicilio!.toJson()
               });
             },
           ),
@@ -47,7 +51,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "domicilio": {"numext": val}
+                "id": usuario.id,
+                "iddomicilio": usuario.iddomicilio,
+                "domicilio": usuario.domicilio!.toJson()
               });
             },
           ),
@@ -58,7 +64,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "domicilio": {"numint": val}
+                "id": usuario.id,
+                "iddomicilio": usuario.iddomicilio,
+                "domicilio": usuario.domicilio!.toJson()
               });
             },
           ),
@@ -69,7 +77,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "domicilio": {"asentamiento": val}
+                "id": usuario.id,
+                "iddomicilio": usuario.iddomicilio,
+                "domicilio": usuario.domicilio!.toJson()
               });
             },
           ),
@@ -80,7 +90,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.domicilio?.numext = int.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "domicilio": {"codigop": val}
+                "id": usuario.id,
+                "iddomicilio": usuario.iddomicilio,
+                "domicilio": usuario.domicilio!.toJson()
               });
             },
           ),
@@ -94,7 +106,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.metricas?.estatura = double.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "metricas": {"estatura": val}
+                "id": usuario.id,
+                "idmetricas": usuario.idmetricas,
+                "metricas": usuario.metricas!.toJson(),
               });
             },
           ),
@@ -105,7 +119,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.metricas?.peso = double.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "metricas": {"peso": val}
+                "id": usuario.id,
+                "idmetricas": usuario.idmetricas,
+                "metricas": usuario.metricas!.toJson(),
               });
             },
           ),
@@ -116,7 +132,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.metricas?.maxcardio = double.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "metricas": {"maxcardio": val}
+                "id": usuario.id,
+                "idmetricas": usuario.idmetricas,
+                "metricas": usuario.metricas!.toJson(),
               });
             },
           ),
@@ -127,7 +145,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.metricas?.maxpulso = int.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "metricas": {"maxpulso": val}
+                "id": usuario.id,
+                "idmetricas": usuario.idmetricas,
+                "metricas": usuario.metricas!.toJson(),
               });
             },
           ),
@@ -138,7 +158,9 @@ class Detallesusuariomodif extends StatelessWidget {
             onSubmit: (val) {
               usuario.metricas?.frecuenciasemanal = int.tryParse(val) ?? 0;
               service.modificarUsuario({
-                "metricas": {"frecuenciasemanal": val}
+                "id": usuario.id,
+                "idmetricas": usuario.idmetricas,
+                "metricas": usuario.metricas!.toJson(),
               });
             },
           ),

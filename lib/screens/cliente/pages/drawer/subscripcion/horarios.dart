@@ -218,7 +218,7 @@ class _HorariosPageState extends State<HorariosPage> {
                                                             TextAlign.center,
                                                       ),
                                                       Text(
-                                                        clase[0].coach.nombre,
+                                                        "${clase[0].coach.nombre} ${clase[0].coach.apellidop}",
                                                         style: TextStyle(
                                                           fontSize: 10,
                                                           color: selected[row]

@@ -19,13 +19,13 @@ class Consultar extends StatelessWidget {
         DataColumn(label: Text('Documento')),
       ],
       buildRow: (usuario) => DataRow(cells: [
-        DataCell(Text(usuario.personales.nombre ?? '')),
-        DataCell(Text(usuario.personales.apellidop ?? '')),
-        DataCell(Text(usuario.personales.apellidom ?? '')),
-        DataCell(Text(usuario.personales.email ?? '')),
-        DataCell(Text(usuario.personales.telefono ?? '')),
-        DataCell(Text(usuario.personales.tipodocumento ?? '')),
-        DataCell(Text(usuario.personales.documento ?? '')),
+        DataCell(Text(usuario.personales?.nombre ?? '')),
+        DataCell(Text(usuario.personales?.apellidop ?? '')),
+        DataCell(Text(usuario.personales?.apellidom ?? '')),
+        DataCell(Text(usuario.personales?.email ?? '')),
+        DataCell(Text(usuario.personales?.telefono ?? '')),
+        DataCell(Text(usuario.personales?.tipodocumento ?? '')),
+        DataCell(Text(usuario.personales?.documento ?? '')),
       ]),
       onRowTap: (usuario) {
         Navigator.pushNamed(context, AppRoutes.detallesusuario, arguments: {'usuario': usuario});

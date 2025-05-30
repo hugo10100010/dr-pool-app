@@ -23,75 +23,69 @@ class Modificar extends StatelessWidget {
       ],
       buildEditableFields: (usuario) => [
         GenericEditableField(
-          controller: TextEditingController(text: usuario.personales.nombre),
+          controller: TextEditingController(text: usuario.personales?.nombre),
           onSubmit: (val) {
-            usuario.personales.nombre = val;
+            usuario.personales?.nombre = val;
             service.modificarUsuario({
               "id": usuario.id,
-              "personales": {
-                "nombre": val
-              }
+              "idpersonales": usuario.idpersonales,
+              "personales": usuario.personales?.toJson(),
             });
           },
         ),
         GenericEditableField(
-          controller: TextEditingController(text: usuario.personales.apellidop),
+          controller: TextEditingController(text: usuario.personales?.apellidop),
           onSubmit: (val) {
-            usuario.personales.apellidop = val;
+            usuario.personales?.apellidop = val;
             service.modificarUsuario({
               "id": usuario.id,
-              "personales": {
-                "apellidop": val
-              }
+              "idpersonales": usuario.idpersonales,
+              "personales": usuario.personales?.toJson(),
             });
           },
         ),
         GenericEditableField(
-          controller: TextEditingController(text: usuario.personales.apellidom),
+          controller: TextEditingController(text: usuario.personales?.apellidom),
           onSubmit: (val) {
-            usuario.personales.apellidom = val;
+            usuario.personales?.apellidom = val;
             service.modificarUsuario({
               "id": usuario.id,
-              "personales": {
-                "apellidom": val
-              }
+              "idpersonales": usuario.idpersonales,
+              "personales": usuario.personales?.toJson(),
             });
           },
         ),
         GenericEditableField(
-          controller: TextEditingController(text: usuario.personales.email),
+          controller: TextEditingController(text: usuario.personales?.email),
           onSubmit: (val) {
-            usuario.personales.email = val;
+            usuario.personales?.email = val;
             service.modificarUsuario({
               "id": usuario.id,
-              "personales": {
-                "email": val
-              }
+              "idpersonales": usuario.idpersonales,
+              "personales": usuario.personales?.toJson(),
             });
           },
         ),
         GenericEditableField(
-          controller: TextEditingController(text: usuario.personales.telefono),
+          controller: TextEditingController(text: usuario.personales?.telefono),
           onSubmit: (val) {
-            usuario.personales.telefono = val;
+            usuario.personales?.telefono = val;
             service.modificarUsuario({
               "id": usuario.id,
-              "personales": {
-                "telefono": val
-              }
+              "idpersonales": usuario.idpersonales,
+              "personales": usuario.personales?.toJson(),
             });
           },
           type: EditableFieldType.int
         ),
         GenericEditableField(
-          controller: TextEditingController(text: usuario.personales.tipodocumento),
+          controller: TextEditingController(text: usuario.personales?.tipodocumento),
           onSubmit: (val) {
-            usuario.personales.tipodocumento = val;
+            usuario.personales?.tipodocumento = val;
             service.modificarUsuario({
               "id": usuario.id,
-              "personales": {
-                "tipodocumento": val
-              }
+              "idpersonales": usuario.idpersonales,
+              "personales": usuario.personales?.toJson(),
             });
           },
           type: EditableFieldType.dropdown,
@@ -101,14 +95,13 @@ class Modificar extends StatelessWidget {
           ]
         ),
         GenericEditableField(
-          controller: TextEditingController(text: usuario.personales.documento),
+          controller: TextEditingController(text: usuario.personales?.documento),
           onSubmit: (val) {
-            usuario.personales.documento = val;
+            usuario.personales?.documento = val;
             service.modificarUsuario({
               "id": usuario.id,
-              "personales": {
-                "documento": val
-              }
+              "idpersonales": usuario.idpersonales,
+              "personales": usuario.personales?.toJson(),
             });
           },
         ),

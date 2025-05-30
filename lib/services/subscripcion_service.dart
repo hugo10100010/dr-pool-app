@@ -35,13 +35,13 @@ class SubscripcionService {
     }
   }
 
-  Future<void> eliminarSubscripcion(int idsubscripcion) async {
+  Future<bool> eliminarSubscripcion(int idsubscripcion) async {
     final response = await http.delete(Uri.parse("${uriString}/api/subscripcion/eliminar/${idsubscripcion}"));
 
     if(response.statusCode==200) {
-      print("Se ha eliminado la subscripción con éxito.");
+      return true;
     } else {
-      print("Algo falló al eliminar la subscripción.");
+      return false;
     }
   }
 }

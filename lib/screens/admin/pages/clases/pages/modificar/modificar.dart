@@ -37,7 +37,7 @@ class Modificar extends StatelessWidget {
             .map<DropdownOption>(
               (u) => DropdownOption(
                 value: u.id,
-                label: "${u.personales.nombre} ${u.personales.apellidop}",
+                label: "${u.personales?.nombre} ${u.personales?.apellidop}",
               ),
             )
             .toList();
@@ -67,7 +67,14 @@ class Modificar extends StatelessWidget {
                 clase.idcoach = int.parse(val);
                 service.modificarClase({
                   "id": clase.id,
+                  "idcasilla": clase.idcasilla,
+                  "idcurso": clase.idcurso,
                   "idcoach": int.parse(val),
+                  "coach": {
+                    "personales": usuariosList.where((e) => e.id==int.parse(val)).toList()[0].personales?.toJson(),
+                  },
+                  "casillahorario": clase.casilla.toJson(),
+                  "curso": clase.curso.toJson(),
                 });
               },
               type: EditableFieldType.dropdown,
@@ -81,6 +88,13 @@ class Modificar extends StatelessWidget {
                 service.modificarClase({
                   "id": clase.id,
                   "idcasilla": int.parse(val),
+                  "idcurso": clase.idcurso,
+                  "idcoach": clase.idcoach,
+                  "coach": {
+                    "personales": clase.coach.toJson(),
+                  },
+                  "casillahorario": casillasList.where((e) => e.id==int.parse(val)).toList()[0].toJson(),
+                  "curso": clase.curso.toJson(),
                 });
               },
               type: EditableFieldType.dropdown,
@@ -92,7 +106,14 @@ class Modificar extends StatelessWidget {
                 clase.idcurso = int.parse(val);
                 service.modificarClase({
                   "id": clase.id,
+                  "idcasilla": clase.idcasilla,
                   "idcurso": int.parse(val),
+                  "idcoach": clase.idcoach,
+                  "coach": {
+                    "personales": clase.coach.toJson(),
+                  },
+                  "casillahorario": clase.casilla.toJson(),
+                  "curso": cursosList.where((e) => e.id==int.parse(val)).toList()[0].toJson(),
                 });
               },
               type: EditableFieldType.dropdown,

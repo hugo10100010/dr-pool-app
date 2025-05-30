@@ -1,10 +1,17 @@
-class Domicilio {
-  int id;
+import 'package:proyecto/helpers/syncable_interface.dart';
+
+class Domicilio implements Syncable{
   String? calle;
   int? numext;
   int? numint;
   String? asentamiento;
   int? codigop;
+  @override
+  String get tablename => 'domicilio';
+  @override
+  int id;
+  @override
+  int syncStatus;
 
   Domicilio({
     required this.id,
@@ -13,6 +20,7 @@ class Domicilio {
     required this.numint,
     required this.asentamiento,
     required this.codigop,
+    required this.syncStatus,
   });
 
   factory Domicilio.fromJson(Map<String, dynamic> json) => Domicilio(
@@ -21,7 +29,8 @@ class Domicilio {
         numext: json['numext'],
         numint: json['numint'],
         asentamiento: json['asentamiento'],
-        codigop: json['codigop'],
+        codigop: json['codigop'] is String ? int.parse(json['codigop']) : json['codigop'],
+        syncStatus: json['sync_status'] ?? 0,
       );
 
   Map<String,dynamic> toJson() => {
@@ -31,5 +40,6 @@ class Domicilio {
     "numint": numint,
     "asentamiento": asentamiento,
     "codigop": codigop,
+    "sync_status": syncStatus,
   };
 }

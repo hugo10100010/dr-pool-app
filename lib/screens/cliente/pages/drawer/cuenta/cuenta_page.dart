@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/usuario_service.dart';
 import 'package:proyecto/widgets/image_picker.dart';
@@ -116,7 +117,7 @@ class _CuentaPageState extends State<CuentaPage> {
                                 }
 
                                 bool success = await UsuarioService()
-                                    .modificarUsuario(data);
+                                    .modificarUsuario(Usuario.fromJson(data).toJson());
                                 if (success) {
                                   Provider.of<UsuarioProvider>(context,
                                           listen: false)

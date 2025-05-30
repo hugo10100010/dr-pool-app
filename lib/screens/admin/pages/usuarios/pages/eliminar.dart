@@ -20,15 +20,15 @@ class Eliminar extends StatelessWidget {
         'Documento'
       ],
       displayValues: (usuario) => [
-        usuario.personales.nombre ?? '',
-        usuario.personales.apellidop ?? '',
-        usuario.personales.apellidom ?? '',
-        usuario.personales.email ?? '',
-        usuario.personales.telefono ?? '',
-        usuario.personales.tipodocumento ?? '',
-        usuario.personales.documento ?? '',
+        usuario.personales?.nombre ?? '',
+        usuario.personales?.apellidop ?? '',
+        usuario.personales?.apellidom ?? '',
+        usuario.personales?.email ?? '',
+        usuario.personales?.telefono ?? '',
+        usuario.personales?.tipodocumento ?? '',
+        usuario.personales?.documento ?? '',
       ],
-      getDeleteLabel: (usuario) => usuario.personales.nombre,
+      getDeleteLabel: (usuario) => usuario.personales!.nombre,
       onDelete: (usuario) => service.eliminarUsuario(usuario.id),
     );
   }

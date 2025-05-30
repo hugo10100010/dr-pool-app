@@ -5,7 +5,7 @@ class GenericEliminar<T> extends StatelessWidget {
   final List<String> columnTitles;
   final List<String> Function(T item) displayValues;
   final String Function(T item) getDeleteLabel;
-  final Future<String> Function(T item) onDelete;
+  final Future<bool> Function(T item) onDelete;
 
   const GenericEliminar({
     required this.futureItems,
@@ -48,7 +48,7 @@ class GenericEliminar<T> extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () async {
-                              final message = await onDelete(item);
+                              final message = await onDelete(item).toString();
                               Navigator.pop(context, {"action": true, "message": message});
                             },
                             child: Text("Confirmar"),

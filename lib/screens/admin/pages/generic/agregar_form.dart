@@ -45,6 +45,7 @@ class _GenericAgregarFormState extends State<GenericAgregarForm> {
         for (var entry in _controllers.entries) entry.key: entry.value.text
       };
       widget.onSubmit(data);
+      _controllers.forEach((key, value) => value.clear());
     }
   }
 

@@ -35,13 +35,13 @@ class HistorialServicio {
     }
   }
 
-  Future<void> eliminarHistorial(int idhistorial) async {
+  Future<bool> eliminarHistorial(int idhistorial) async {
     final response = await http.delete(Uri.parse("${uriString}/api/historial/eliminar/${idhistorial}"));
 
     if(response.statusCode==200) {
-      print("Se ha eliminado el historial con éxito.");
+      return true;
     } else {
-      print("Algo falló al eliminar el historial");
+      return false;
     }
   }
 }
