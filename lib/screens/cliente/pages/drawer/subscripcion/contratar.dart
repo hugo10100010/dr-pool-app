@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto/models/paquete_model.dart';
 import 'package:proyecto/services/paquete_service.dart';
+import 'package:proyecto/helpers/isonline_func.dart';
 
 class ContratarPage extends StatefulWidget {
   @override
@@ -54,7 +55,9 @@ class _ContratarPageState extends State<ContratarPage> {
                     'Precio: \$${paqueteSeleccionado!.precio}',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                   ),
-                  SizedBox(height: 12,),
+                  SizedBox(
+                    height: 12,
+                  ),
                   Text(
                     'Beneficios:',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
@@ -86,18 +89,29 @@ class _ContratarPageState extends State<ContratarPage> {
                       width: 250,
                       height: 56,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (paqueteSeleccionado != null) {
-                            Navigator.pushNamed(
-                              context,
-                              '/horarios',
-                              arguments: {
-                                "id": paqueteSeleccionado!.id,
-                                "precio": paqueteSeleccionado!.precio.toString(),
-                                "clases": paqueteSeleccionado!.clases.toString(),
-                                "flexible": paqueteSeleccionado!.flexible.toString(),
-                              },
-                            );
+                            bool online = await isOnline();
+                            if (online) {
+                              Navigator.pushNamed(
+                                context,
+                                '/horarios',
+                                arguments: {
+                                  "id": paqueteSeleccionado!.id,
+                                  "precio":
+                                      paqueteSeleccionado!.precio.toString(),
+                                  "clases":
+                                      paqueteSeleccionado!.clases.toString(),
+                                  "flexible":
+                                      paqueteSeleccionado!.flexible.toString(),
+                                },
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('No hay conexión a internet...'),
+                              ));
+                            }
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(

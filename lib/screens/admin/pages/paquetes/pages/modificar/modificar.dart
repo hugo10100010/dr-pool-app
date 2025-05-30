@@ -24,6 +24,8 @@ class Modificar extends StatelessWidget {
             service.modificarPaquete({
               "id": paquete.id,
               "precio": val,
+              "clases": paquete.clases,
+              "flexible": paquete.flexible,
             });
           },
           type: EditableFieldType.double,
@@ -34,7 +36,9 @@ class Modificar extends StatelessWidget {
             paquete.clases = int.parse(val);
             service.modificarPaquete({
               "id": paquete.id,
+              "precio": paquete.precio.toString(),
               "clases": int.parse(val),
+              "flexible": paquete.flexible,
             });
           },
         ),
@@ -45,6 +49,8 @@ class Modificar extends StatelessWidget {
               paquete.flexible = bool.parse(val);
               service.modificarPaquete({
                 "id": paquete.id,
+                "precio": paquete.precio.toString(),
+                "clases": paquete.clases,
                 "flexible": bool.parse(val),
               });
             },

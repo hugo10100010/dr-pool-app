@@ -1,10 +1,17 @@
-class Metricas {
-  int id;
+import 'package:proyecto/helpers/syncable_interface.dart';
+
+class Metricas implements Syncable {
   double? estatura;
   double? peso;
   double? maxcardio;
   int? maxpulso;
   int? frecuenciasemanal;
+  @override
+  String get tablename => 'metricas';
+  @override
+  int id;
+  @override
+  int syncStatus;
 
   Metricas({
     required this.id,
@@ -13,15 +20,17 @@ class Metricas {
     this.maxcardio,
     this.maxpulso,
     this.frecuenciasemanal,
+    required this.syncStatus,
   });
 
   factory Metricas.fromJson(Map<String, dynamic> json) => Metricas(
         id: json['id'],
-        estatura: json['estatura'] != null ? double.parse(json['estatura']) : null,
-        peso: json['peso'] != null ? double.parse(json['peso']) : null,
-        maxcardio: json['maxcardio'] != null ? double.parse(json['maxcardio']) : null,
-        maxpulso: json['maxpulso'] != null ? json['maxpulso'] : null,
-        frecuenciasemanal: json['frecuenciasemanal'] != null ? json['frecuenciasemanal'] : null,
+        estatura: json['estatura'] == null ? null : json['estatura'] is String ? double.parse(json['estatura']) : json['estatura'],
+        peso: json['peso'] == null ? null : json['peso'] is String ? double.parse(json['peso']) : json['peso'],
+        maxcardio: json['maxcardio'] == null ? null : json['maxcardio'] is String ? double.parse(json['maxcardio']) : json['maxcardio'],
+        maxpulso: json['maxpulso'] == null ? null : json['maxpulso'],
+        frecuenciasemanal: json['frecuenciasemanal'] == null ? null : json['frecuenciasemanal'],
+        syncStatus: json['sync_status'] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,5 +40,6 @@ class Metricas {
     "maxcardio": maxcardio,
     "maxpulso": maxpulso,
     "frecuenciasemanal": frecuenciasemanal,
+    "sync_status": syncStatus,
   };
 }

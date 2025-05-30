@@ -1,7 +1,9 @@
+import 'dart:convert';
+
+import 'package:proyecto/helpers/syncable_interface.dart';
 import 'package:proyecto/models/paquete_model.dart';
 
-class Subscripcion {
-  int id;
+class Subscripcion implements Syncable {
   int idusuario;
   int? idpaquete;
   String estado;
@@ -9,6 +11,12 @@ class Subscripcion {
   DateTime fechafin;
   bool renovarauto;
   Paquete? paquete;
+  @override
+  String get tablename => 'subscripcion';
+  @override
+  int id;
+  @override
+  int syncStatus;
 
   Subscripcion({
     required this.id,
@@ -19,6 +27,7 @@ class Subscripcion {
     required this.fechafin,
     required this.renovarauto,
     this.paquete,
+    required this.syncStatus,
   });
 
   factory Subscripcion.fromJson(Map<String, dynamic> json) => Subscripcion(
@@ -28,7 +37,23 @@ class Subscripcion {
         estado: json['estado'],
         fechaini: DateTime.parse(json['fechaini']),
         fechafin: DateTime.parse(json['fechafin']),
-        renovarauto: json['renovarauto'],
-        paquete: json['paquete'] == null ? null : Paquete.fromJson(json['paquete']),
+        renovarauto: json['renovarauto'] is String ? bool.parse(json['renovarauto']) : json['renovarauto'],
+        paquete:
+            json['paquete'] == null ? null : json['paquete'] is String
+          ? Paquete.fromJson(jsonDecode(json['paquete']))
+          : Paquete.fromJson(json['paquete']),
+        syncStatus: json['sync_status'] ?? 0,
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "idusuario": idusuario,
+        "idpaquete": idpaquete,
+        "estado": estado,
+        "fechaini": fechaini.toIso8601String(),
+        "fechafin": fechafin.toIso8601String(),
+        "renovarauto": renovarauto ? "true" : "false",
+        "paquete": paquete == null ? null : jsonEncode(paquete?.toJson()),
+        "sync_status": syncStatus,
+      };
 }

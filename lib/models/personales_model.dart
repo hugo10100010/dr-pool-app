@@ -1,5 +1,6 @@
-class Personales {
-  int id;
+import 'package:proyecto/helpers/syncable_interface.dart';
+
+class Personales implements Syncable{
   String nombre;
   String apellidop;
   String apellidom;
@@ -7,6 +8,12 @@ class Personales {
   String telefono;
   String tipodocumento;
   String documento;
+  @override
+  String get tablename => 'personales';
+  @override
+  int id;
+  @override
+  int syncStatus;
 
   Personales({
     required this.id,
@@ -17,6 +24,7 @@ class Personales {
     required this.telefono,
     required this.tipodocumento,
     required this.documento,
+    required this.syncStatus,
   });
 
   factory Personales.fromJson(Map<String, dynamic> json) => Personales(
@@ -28,6 +36,7 @@ class Personales {
         telefono: json['telefono'],
         tipodocumento: json['tipodocumento'],
         documento: json['documento'],
+        syncStatus: json['sync_status'] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,5 +48,6 @@ class Personales {
         'telefono': telefono,
         'tipodocumento': tipodocumento,
         'documento': documento,
+        "sync_status": syncStatus,
       };
 }

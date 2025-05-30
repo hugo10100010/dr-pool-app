@@ -24,11 +24,11 @@ class UsuarioProvider extends ChangeNotifier{
 
   void actualizarPersonales(String? nombre, String? apellidop, String? apellidom, String? email, String? telefono) {
     if(usuario != null) {
-      nombre == null ? true : _usuario!.personales.nombre =nombre;
-      apellidop == null ? true : _usuario!.personales.apellidop = apellidop;
-      apellidom == null ? true : _usuario!.personales.apellidom = apellidom;
-      email == null ? true : _usuario!.personales.email = email;
-      telefono == null ? true : _usuario!.personales.telefono = telefono;
+      nombre == null ? true : _usuario!.personales?.nombre =nombre;
+      apellidop == null ? true : _usuario!.personales?.apellidop = apellidop;
+      apellidom == null ? true : _usuario!.personales?.apellidom = apellidom;
+      email == null ? true : _usuario!.personales?.email = email;
+      telefono == null ? true : _usuario!.personales?.telefono = telefono;
       notifyListeners();
     }
   }

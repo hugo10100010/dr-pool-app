@@ -35,13 +35,13 @@ class HorarioService {
     }
   }
 
-  Future<void> eliminarHorario(int idhorario) async {
+  Future<bool> eliminarHorario(int idhorario) async {
     final response = await http.delete(Uri.parse("${uriString}/api/horario/eliminar/${idhorario}"));
 
     if(response.statusCode==200) {
-      print("Se ha eliminado el horario con éxito.");
+      return true;
     } else {
-      print("Algo falló al eliminar el horario.");
+      return false;
     }
   }
 }

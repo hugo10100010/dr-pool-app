@@ -97,7 +97,7 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
           children: [
             UserAccountsDrawerHeader(
               accountName: usuario != null ? Text(usuario.cuenta!.nombreusu) : Text(""),
-              accountEmail: usuario != null ? Text(usuario.personales.email) : Text(""),
+              accountEmail: usuario != null ? Text(usuario.personales!.email) : Text(""),
               currentAccountPicture: usuario != null ? CircleAvatar(
                 backgroundImage: usuario.cuenta?.avatar != null ? MemoryImage(usuario.cuenta!.avatar!) : AssetImage('assets/avatar.gif') as ImageProvider,
               ) : null,

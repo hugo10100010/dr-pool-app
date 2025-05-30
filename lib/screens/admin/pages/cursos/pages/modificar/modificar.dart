@@ -19,6 +19,7 @@ class Modificar extends StatelessWidget {
             service.modificarCurso({
               "id": curso.id,
               "curso": val,
+              "descripcion": curso.descripcion,
             });
           },
           type: EditableFieldType.text,
@@ -29,6 +30,7 @@ class Modificar extends StatelessWidget {
             curso.descripcion = val;
             service.modificarCurso({
               "id": curso.id,
+              "curso": curso.curso,
               "descripcion": val,
             });
           },

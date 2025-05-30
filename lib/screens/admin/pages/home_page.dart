@@ -13,7 +13,7 @@ class AdminHome extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(child: Text("Bienvenido, ${usuario.personales.nombre}!")),
+      Center(child: Text("Bienvenido, ${usuario.personales?.nombre}!")),
       ],
     );
   }
