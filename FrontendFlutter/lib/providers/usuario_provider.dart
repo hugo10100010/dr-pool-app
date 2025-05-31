@@ -17,7 +17,7 @@ class UsuarioProvider extends ChangeNotifier{
   void actualizarCuenta(String? nombreusu, Uint8List? nuevoAvatar) {
     if(usuario != null) {
       nombreusu == null ? true : _usuario!.cuenta?.nombreusu = nombreusu;
-      nuevoAvatar == null ? true : _usuario!.cuenta?.avatar = nuevoAvatar;
+      //nuevoAvatar == null ? true : _usuario!.cuenta?.avatar = nuevoAvatar;
       notifyListeners();
     }
   }

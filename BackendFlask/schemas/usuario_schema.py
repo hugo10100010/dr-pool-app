@@ -18,7 +18,7 @@ class UsuarioSchema(SQLAlchemyAutoSchema):
         include_relationships = True
 
     personales = Nested(PersonalesSchema)
-    cuenta = Nested(CuentaSchema)
+    cuenta = Nested(CuentaSchema, exclude=('avatar',))
     metricas = Nested(MetricasSchema)
     domicilio = Nested(DomicilioSchema)
     subscripcion = Nested(SubscripcionSchema)

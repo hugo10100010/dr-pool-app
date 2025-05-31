@@ -5,6 +5,7 @@ import 'package:proyecto/screens/cliente/pages/horario/horario_page.dart';
 import 'package:proyecto/screens/cliente/pages/acercade/acercade_page.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
+import 'package:proyecto/helpers/avatar_manager.dart';
 
 class ClienteHomePage extends StatefulWidget {
   @override
@@ -53,16 +54,42 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
   Widget build(BuildContext context) {
     final usuario = Provider.of<UsuarioProvider>(context).usuario;
     final tabs = [
-      ListTile(leading: Icon(Icons.account_box),title: Text('Cuenta'),onTap: () => Navigator.pushNamed(context, AppRoutes.cuentacliente),),
-      ListTile(leading: Icon(Icons.person_add),title: Text('Datos personales'),onTap: ()=> Navigator.pushNamed(context, AppRoutes.personalescliente),),
-      ListTile(leading: Icon(Icons.home),title: Text('Datos domiciliados'),onTap: () => Navigator.pushNamed(context, AppRoutes.domiciliocliente),),
-      ListTile(leading: Icon(Icons.abc),title: Text('Metricas'),onTap: () => Navigator.pushNamed(context, AppRoutes.metricascliente),),
-      ListTile(leading: Icon(Icons.subscriptions),title: Text('Subscripción'),onTap: () => Navigator.pushNamed(context, AppRoutes.subscripcioncliente),),
-      ListTile(leading: Icon(Icons.turn_right),title: Text('Cerrar sesión'),onTap: () async {
-        final usuarioProvider = Provider.of<UsuarioProvider>(context,listen: false);
-        usuarioProvider.logout();
-        Navigator.pushReplacementNamed(context, AppRoutes.login);
-      },),
+      ListTile(
+        leading: Icon(Icons.account_box),
+        title: Text('Cuenta'),
+        onTap: () => Navigator.pushNamed(context, AppRoutes.cuentacliente),
+      ),
+      ListTile(
+        leading: Icon(Icons.person_add),
+        title: Text('Datos personales'),
+        onTap: () => Navigator.pushNamed(context, AppRoutes.personalescliente),
+      ),
+      ListTile(
+        leading: Icon(Icons.home),
+        title: Text('Datos domiciliados'),
+        onTap: () => Navigator.pushNamed(context, AppRoutes.domiciliocliente),
+      ),
+      ListTile(
+        leading: Icon(Icons.abc),
+        title: Text('Metricas'),
+        onTap: () => Navigator.pushNamed(context, AppRoutes.metricascliente),
+      ),
+      ListTile(
+        leading: Icon(Icons.subscriptions),
+        title: Text('Subscripción'),
+        onTap: () =>
+            Navigator.pushNamed(context, AppRoutes.subscripcioncliente),
+      ),
+      ListTile(
+        leading: Icon(Icons.turn_right),
+        title: Text('Cerrar sesión'),
+        onTap: () async {
+          final usuarioProvider =
+              Provider.of<UsuarioProvider>(context, listen: false);
+          usuarioProvider.logout();
+          Navigator.pushReplacementNamed(context, AppRoutes.login);
+        },
+      ),
     ];
 
     return Scaffold(
@@ -83,11 +110,29 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: usuario != null ? Text(usuario.cuenta!.nombreusu) : Text(""),
-              accountEmail: usuario != null ? Text(usuario.personales!.email) : Text(""),
-              currentAccountPicture: usuario != null ? CircleAvatar(
-                backgroundImage: usuario.cuenta?.avatar != null ? MemoryImage(usuario.cuenta!.avatar!) : AssetImage('assets/avatar.gif') as ImageProvider,
-              ) : null,
+              accountName:
+                  usuario != null ? Text(usuario.cuenta!.nombreusu) : Text(""),
+              accountEmail:
+                  usuario != null ? Text(usuario.personales!.email) : Text(""),
+              currentAccountPicture: usuario != null
+                  ? FutureBuilder(
+                      future: getAvatarPath(usuario.id),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("fallo al cargar"),
+                          );
+                        }
+                        final avatarPath = snapshot.data;
+                        return CircleAvatar(
+                          backgroundImage: getAvatar(avatarPath),
+                        );
+                      })
+                  : null,
             ),
             ...tabs
           ],

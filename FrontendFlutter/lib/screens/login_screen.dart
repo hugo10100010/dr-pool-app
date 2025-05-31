@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto/helpers/isonline_func.dart';
 import 'package:proyecto/helpers/session_manager.dart';
-import 'package:proyecto/helpers/sync_funcs.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/routes/app_routes.dart';
-import 'package:proyecto/services/connectivity_service.dart';
 import '../services/usuario_service.dart';
 
 class Login extends StatefulWidget {

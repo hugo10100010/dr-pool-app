@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/helpers/avatar_manager.dart';
 import 'package:proyecto/helpers/isonline_func.dart';
 import 'package:proyecto/helpers/session_manager.dart';
 import 'package:proyecto/helpers/sync_funcs.dart';
@@ -35,8 +36,7 @@ class _CouchHomePageState extends State<CouchHomePage> {
   }
 
   void _initializeSyncAfterToken() async {
-    await SessionManager()
-        .loadToken();
+    await SessionManager().loadToken();
     _initSync();
     ConnectivityService().startListeningForConnection(
         () async => debouncedSync(coachCheckAndSync));
@@ -125,11 +125,23 @@ class _CouchHomePageState extends State<CouchHomePage> {
               accountEmail:
                   usuario != null ? Text(usuario.personales!.email) : Text(""),
               currentAccountPicture: usuario != null
-                  ? CircleAvatar(
-                      backgroundImage: usuario.cuenta!.avatar != null
-                          ? MemoryImage(usuario.cuenta!.avatar!)
-                          : AssetImage('assets/avatar.gif') as ImageProvider,
-                    )
+                  ? FutureBuilder(
+                      future: getAvatarPath(usuario.id),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                        if (snapshot.hasError) {
+                          return Center(
+                            child: Text("fallo al cargar"),
+                          );
+                        }
+                        final avatarPath = snapshot.data;
+                        return CircleAvatar(
+                          backgroundImage: getAvatar(avatarPath),
+                        );
+                      })
                   : null,
             ),
             ...tabs

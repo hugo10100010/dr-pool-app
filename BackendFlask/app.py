@@ -658,10 +658,10 @@ def get_clases():
             "message": "Forbidden.",
         }), 403
     
-    if(rol==2):
-        schema = ClaseSchema(many=True,only=("id","idcoach","idcasilla","idcurso","casillahorario","curso","coach.personales.nombre","coach.personales.apellidop"))
-    else:
-        schema = ClaseSchema(many=True)
+    #if(rol==2):
+    #    schema = ClaseSchema(many=True,only=("id","idcoach","idcasilla","idcurso","casillahorario","curso","coach.personales.nombre","coach.personales.apellidop"))
+    #else:
+    schema = ClaseSchema(many=True)
     
     return jsonify({
         "success":True,
@@ -827,3 +827,48 @@ def get_avatar(username):
         )
     else:
         abort(404, description="Avatar not found.")
+
+import base64
+
+@app.route('/getavatar/<int:id>', methods=['GET'])
+def get_avatar_id(id):
+    cuenta = Cuenta.query.get_or_404(id)
+    if cuenta and cuenta.avatar:
+        encoded_avatar = base64.b64encode(cuenta.avatar).decode('utf-8')  # <-- critical
+        return jsonify({
+            "success": True,
+            "data": {
+                "avatar": encoded_avatar
+            },
+            "message": "OK"
+        }), 200
+    else:
+        abort(404, description="Avatar not found.")
+
+
+@app.route('/api/horario/agregar',methods=['POST'])
+@jwt_required()
+def agregar_horario():
+    identity = get_jwt_identity()
+    claims = get_jwt()
+    rol = claims.get("rol")
+
+    if(rol==1 or rol==2):
+        data = request.get_json()
+    else:
+        return jsonify({
+            "success": False,
+            "message": "Forbidden"
+        }),403
+    
+    horarionew = Horario(
+        idusuario = data['idusuario'],
+        idclase = data['idclase']
+    )
+    db.session.add(horarionew)
+    db.session.commit()
+    return jsonify({
+        "success": True,
+        "id": horarionew.id,
+        "message": "Horario agregado"
+    }),200

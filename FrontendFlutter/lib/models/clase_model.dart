@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:proyecto/helpers/syncable_interface.dart';
 import 'package:proyecto/models/casillahorario_model.dart';
 import 'package:proyecto/models/curso_model.dart';
