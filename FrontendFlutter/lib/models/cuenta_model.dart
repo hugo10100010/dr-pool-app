@@ -5,7 +5,7 @@ import 'package:proyecto/helpers/syncable_interface.dart';
 class Cuenta  implements Syncable{
   String nombreusu;
   String? password;
-  Uint8List? avatar;
+  //Uint8List? avatar;
 
   @override
   String get tablename => 'cuenta';
@@ -18,7 +18,7 @@ class Cuenta  implements Syncable{
     required this.id,
     required this.nombreusu,
     required this.password,
-    this.avatar,
+    //this.avatar,
     required this.syncStatus,
   });
 
@@ -26,7 +26,7 @@ class Cuenta  implements Syncable{
         id: json['id'],
         nombreusu: json['nombreusu'],
         password: json['password'],
-        avatar: json['avatar'] == null ? null : json['avatar'] is Uint8List ? json['avatar'] : base64Decode(json['avatar']),
+        //avatar: json['avatar'] == null ? null : json['avatar'] is Uint8List ? json['avatar'] : base64Decode(json['avatar']),
         syncStatus: json['sync_status'] ?? 0,
       );
 
@@ -35,7 +35,7 @@ class Cuenta  implements Syncable{
       'id': id,
       'nombreusu': nombreusu,
       'password': password,
-      'avatar': avatar == null ? null : base64Encode(avatar!),
+      //'avatar': avatar == null ? null : base64Encode(avatar!),
       'sync_status': syncStatus,
     };
   }

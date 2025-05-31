@@ -160,7 +160,7 @@ class _HorariosPageState extends State<HorariosPage> {
                                     ...List.generate(cols, (col) {
                                       var clase = clasesLista
                                           .where((element) =>
-                                              element.casilla.dia == col &&
+                                              element.casilla.dia-1 == col &&
                                               int.parse(element.casilla.horaini
                                                       .substring(0, 2)) ==
                                                   (row + 8))
@@ -298,7 +298,7 @@ class HorariosSeleccionadosPage extends StatelessWidget {
                   try {
                     final matchingClase = clasesList.firstWhere(
                       (e) =>
-                          e.casilla.dia == col &&
+                          e.casilla.dia-1 == col &&
                           int.parse(e.casilla.horaini.substring(0, 2)) ==
                               (row + 8),
                     );

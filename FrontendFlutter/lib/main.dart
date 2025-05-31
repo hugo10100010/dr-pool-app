@@ -1,19 +1,11 @@
-import 'dart:io';
-
+import 'database_initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'routes/app_routes.dart';
 import 'providers/usuario_provider.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 void main() {
-  if (Platform.isWindows || Platform.isLinux) {
-      print("     On desktop.");
-      sqfliteFfiInit();
-    } else {
-      print("     On mobile.");
-    }
-    databaseFactory = databaseFactoryFfi;
+  initDatabaseFactory();
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: (_) => UsuarioProvider())],
     child: MyApp(),

@@ -25,23 +25,35 @@ class ClaseServicio {
   Future<List<Clase>> getClases() async {
     try {
       final response = await AuthService.authorizedRequest(
-          Uri.parse("$baseUrl/api/clase/getall"));
+        Uri.parse("$baseUrl/api/clase/getall"),
+      );
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body)['data'];
-        final clases = data.map((json) => Clase.fromJson(json)).toList();
+        print("Response body: ${response.body}");
+        final decoded = json.decode(response.body);
 
-        // Update local DB cache
-        for (final clase in clases) {
-          await AppDatabase.insert<Clase>(clase);
+        if (decoded is Map<String, dynamic>) {
+          if (decoded.containsKey('data') && decoded['data'] is List) {
+            final List<dynamic> data = decoded['data'];
+            final clases = data.map((json) => Clase.fromJson(json)).toList();
+
+            for (final clase in clases) {
+              await AppDatabase.insert<Clase>(clase);
+            }
+
+            return clases;
+          } else {
+            throw Exception(
+                "Missing or invalid 'data' key: ${decoded['data']}");
+          }
+        } else {
+          throw Exception(
+              "Expected JSON object but got: ${decoded.runtimeType}");
         }
-
-        return clases;
       } else {
-        throw Exception('Server error');
+        throw Exception("Unexpected status code: ${response.statusCode}");
       }
     } catch (e) {
-      // Fallback to local cache if offline or failed
       print('Fetching clases from local DB due to: $e');
       return await AppDatabase.getAll<Clase>(
         tableName: 'clase',

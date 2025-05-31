@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/helpers/isonline_func.dart';
-import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/usuario_service.dart';
 import 'package:proyecto/widgets/image_picker.dart';
@@ -24,6 +26,18 @@ class _CuentaPageState extends State<CuentaPage> {
       avatarb64 = base64Data;
     }
   }
+
+  Future<String> saveAvatarToFile(Uint8List avatarBytes, String userId) async {
+  final dir = await getApplicationDocumentsDirectory();
+  final path = join(dir.path, 'avatars');
+  await Directory(path).create(recursive: true);
+
+  final filePath = join(path, '$userId.jpg');
+  final file = File(filePath);
+  await file.writeAsBytes(avatarBytes);
+
+  return filePath; // Save this to SQLite instead of the raw image
+}
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +129,7 @@ class _CuentaPageState extends State<CuentaPage> {
                                 }
                                 Uint8List bytes = base64Decode(avatarb64);
                                 if (bytes.isNotEmpty) {
+                                  await saveAvatarToFile(bytes, usuario.id.toString());
                                   cuenta["avatar"] = bytes;
                                 }
                                 if (cuenta.isNotEmpty) {

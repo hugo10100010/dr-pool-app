@@ -5,6 +5,7 @@ import 'package:proyecto/models/paquete_model.dart';
 import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/routes/app_routes.dart';
+import 'package:proyecto/services/horario_service.dart';
 import 'package:proyecto/services/usuario_service.dart';
 
 class CarritoPage extends StatelessWidget {
@@ -105,8 +106,8 @@ class CarritoPage extends StatelessWidget {
           ? Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
-                onPressed: () {
-                  UsuarioService().modificarUsuario({
+                onPressed: () async {
+                  await UsuarioService().modificarUsuario({
                     "id":usuario.id,
                     "subscripcion": {
                       "idpaquete": paquete?.id,
@@ -116,6 +117,12 @@ class CarritoPage extends StatelessWidget {
                       "renovarauto": "false",
                     }
                   });
+                  for (var clase in clases) {
+                    await HorarioService().agregarUsuario({
+                      "idusuario": usuario.id,
+                      "idclase": clase.id,
+                    });
+                  }
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
