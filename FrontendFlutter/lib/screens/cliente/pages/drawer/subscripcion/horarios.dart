@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:proyecto/models/clase_model.dart';
 import 'package:proyecto/models/paquete_model.dart';
 import 'package:proyecto/services/clase_servicio.dart';
@@ -273,8 +272,6 @@ class HorariosSeleccionadosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> seleccionados = [];
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Horarios Seleccionados'),

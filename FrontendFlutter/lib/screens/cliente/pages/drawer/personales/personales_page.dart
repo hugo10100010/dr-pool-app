@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/helpers/isonline_func.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/usuario_service.dart';
 
@@ -114,10 +115,16 @@ class _PersonalesPageState extends State<personalesclientePage> {
                 child: ElevatedButton.icon(
                   icon: Icon(editable ? Icons.lock_open : Icons.lock),
                   label: Text(editable ? 'Bloquear edición' : 'Editar'),
-                  onPressed: () {
-                    setState(() {
-                      editable = !editable;
-                    });
+                  onPressed: () async {
+                    bool online = await isOnline();
+                    if (online) {
+                      setState(() {
+                        editable = !editable;
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("No hay conexión a internet...")));
+                    }
                   },
                 ),
               ),
@@ -128,7 +135,7 @@ class _PersonalesPageState extends State<personalesclientePage> {
                         Map<String, dynamic> data = {
                           "id": usuario.id,
                         };
-                        Map<String,dynamic> personales = {};
+                        Map<String, dynamic> personales = { "id" : usuario.personales!.id};
                         if (_nombreController.text.isNotEmpty) {
                           personales["nombre"] = _nombreController.text;
                         }
@@ -144,7 +151,7 @@ class _PersonalesPageState extends State<personalesclientePage> {
                         if (_telefonoController.text.isNotEmpty) {
                           personales["telefono"] = _telefonoController.text;
                         }
-                        if(personales.isNotEmpty) {
+                        if (personales.isNotEmpty) {
                           data["personales"] = personales;
                         }
 

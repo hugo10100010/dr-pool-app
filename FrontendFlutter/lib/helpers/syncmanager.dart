@@ -7,6 +7,7 @@ class SyncManager {
     required T Function(Map<String, dynamic>) fromJson,
     required Future<bool> Function(T item) onUpload,
     required Future<bool> Function(int id) onDelete,
+    bool Function(T item)? filter,
   }) async {
     final unsynced = await AppDatabase.getAll<T>(
       tableName: tableName,
@@ -14,6 +15,8 @@ class SyncManager {
     );
 
     for (final item in unsynced.where((i) => i.syncStatus != 0)) {
+      if (filter != null && !filter(item)) continue;
+
       try {
         if (item.syncStatus == 1) {
           // Create or update on server
@@ -21,7 +24,7 @@ class SyncManager {
           if (success) {
             item.syncStatus = 0;
             await AppDatabase.update(item);
-            if(item.id<0) {
+            if (item.id < 0) {
               await AppDatabase.delete(tableName, item.id);
             }
           }

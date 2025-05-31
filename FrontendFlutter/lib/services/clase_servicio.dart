@@ -52,9 +52,14 @@ class ClaseServicio {
 
   Future<bool> agregarClase(Map<String, dynamic> clasedatos) async {
     try {
+      final payload = {
+        'idcoach': clasedatos['idcoach'],
+        'idcasilla': clasedatos['idcasilla'],
+        'idcurso': clasedatos['idcurso'],
+      };
       final response = await AuthService.authorizedRequest(
         Uri.parse("$baseUrl/api/clase/agregar"),
-        body: jsonEncode(clasedatos),
+        body: jsonEncode(payload),
         method: "POST",
       );
 

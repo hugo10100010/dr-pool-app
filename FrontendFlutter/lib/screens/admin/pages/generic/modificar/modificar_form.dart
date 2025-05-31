@@ -53,7 +53,7 @@ class GenericModificar<T> extends StatelessWidget {
                 final fieldControllers = buildEditableFields(item);
                 return DataRow(
                   cells: fieldControllers.map((field) {
-                    final selectedOption = (field.dropdownItems?.isNotEmpty ??
+                    /*final selectedOption = (field.dropdownItems?.isNotEmpty ??
                             false)
                         ? field.dropdownItems!.firstWhere(
                             (opt) =>
@@ -61,7 +61,7 @@ class GenericModificar<T> extends StatelessWidget {
                                 field.controller.text.trim().isNotEmpty,
                             orElse: () => field.dropdownItems!.first,
                           )
-                        : DropdownOption<dynamic>(value: "", label: "Default");
+                        : DropdownOption<dynamic>(value: "", label: "Default");*/
             
             // Provide a default value
             

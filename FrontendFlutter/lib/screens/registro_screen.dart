@@ -63,7 +63,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       "tipousuario": 2,
     };
-    var resultado = await UsuarioService().agregarUsuario(data);
+    var resultado = await UsuarioService().registrarUsuario(data);
     if (resultado) {
       Navigator.pop(context, "El usuario fue agregado.");
     } else {
@@ -74,7 +74,7 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Multi-step Form")),
+      appBar: AppBar(title: Text("Registro")),
       body: PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),

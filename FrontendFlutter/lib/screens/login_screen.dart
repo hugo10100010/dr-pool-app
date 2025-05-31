@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/helpers/isonline_func.dart';
+import 'package:proyecto/helpers/session_manager.dart';
+import 'package:proyecto/helpers/sync_funcs.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/routes/app_routes.dart';
+import 'package:proyecto/services/connectivity_service.dart';
 import '../services/usuario_service.dart';
 
 class Login extends StatefulWidget {
@@ -83,18 +89,34 @@ class _LoginState extends State<Login> {
                           "password": _passwordController.text
                         });
                         if (result["success"]) {
-                          Provider.of<UsuarioProvider>(context,listen: false).setUsuario(result['usuario']);
-                          if (result['rol'] == 1) {
-                            Navigator.pushNamed(context, AppRoutes.adminhome);
-                          }
-                          if(result['rol'] == 2) {
-                            Navigator.pushNamed(context, AppRoutes.clientehome);
-                          }
-                          if(result['rol'] == 3) {
-                            Navigator.pushNamed(context, AppRoutes.couchhome);
+                          Provider.of<UsuarioProvider>(context, listen: false)
+                              .setUsuario(result['usuario']);
+
+                          await SessionManager().loadToken();
+
+                          final token = await FlutterSecureStorage()
+                              .read(key: 'proyectom_access_token');
+                          if (token != null) {
+                            Map<String, dynamic> decodedToken =
+                                JwtDecoder.decode(token);
+                            int rol = decodedToken['rol'];
+                            if (rol == 1) {
+                              Navigator.pushNamed(context, AppRoutes.adminhome);
+                            } else if (rol == 2) {
+                              Navigator.pushNamed(
+                                  context, AppRoutes.clientehome);
+                            } else if (rol == 3) {
+                              Navigator.pushNamed(context, AppRoutes.couchhome);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Rol no reconocido")));
+                            }
+                          } else {
+                            print("No token");
                           }
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login no válido")));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Login no válido")));
                         }
                       },
                       child: Text('Ingresar'),

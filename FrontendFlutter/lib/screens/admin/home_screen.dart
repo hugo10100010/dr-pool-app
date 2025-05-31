@@ -1,8 +1,4 @@
-import 'dart:async';
-
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/helpers/isonline_func.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
@@ -97,9 +93,6 @@ class _AdminHomePageState extends State<AdminHomePage> {
         leading: Icon(Icons.turn_right),
         title: Text('Cerrar sesión'),
         onTap: () async {
-          final storage = FlutterSecureStorage();
-          await storage.delete(key: "proyectom_access_token");
-          await storage.delete(key: "proyectom_refresh_token");
           final usuarioProvider =
               Provider.of<UsuarioProvider>(context, listen: false);
           usuarioProvider.logout();

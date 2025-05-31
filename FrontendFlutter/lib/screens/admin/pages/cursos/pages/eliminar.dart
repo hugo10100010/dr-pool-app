@@ -15,8 +15,8 @@ class Eliminar extends StatelessWidget {
         'Descripcion',
       ],
       displayValues: (curso) => [
-        curso.curso ?? '',
-        curso.descripcion ?? '',
+        curso.curso,
+        curso.descripcion,
       ],
       getDeleteLabel: (curso) => curso.id.toString(),
       onDelete: (curso) => service.eliminarCurso(curso.id),

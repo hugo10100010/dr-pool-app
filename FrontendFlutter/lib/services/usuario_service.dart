@@ -38,6 +38,7 @@ class UsuarioService {
         );
 
         final usuario = Usuario.fromJson(data['data']['data']);
+        await AppDatabase.insert<Usuario>(usuario);
         return {
           "success": true,
           "rol": data['data']['data']['tipousuario'],
@@ -47,8 +48,6 @@ class UsuarioService {
     } catch (e) {
       print('Login failed online: $e');
     }
-
-    // 👇 Offline fallback
     final storage = FlutterSecureStorage();
     final storedUsername = await storage.read(key: 'username');
     final storedPassword = await storage.read(key: 'password');
@@ -64,8 +63,14 @@ class UsuarioService {
             "rol": cachedUser.tipousuario,
             "usuario": cachedUser,
           };
+        } else {
+          print("No user info");
         }
+      } else {
+        print("Invalid credentials");
       }
+    } else {
+      print("No credentials");
     }
 
     return {"success": false};
@@ -107,6 +112,34 @@ class UsuarioService {
         fromJson: (json) => Usuario.fromJson(json),
       );
     }
+  }
+
+  Future<bool> registrarUsuario(Map<String, dynamic> usuariodatos) async {
+    if (usuariodatos['personales'] is String) {
+      usuariodatos['personales'] = jsonDecode(usuariodatos['personales']);
+    }
+    if (usuariodatos['cuenta'] is String) {
+      usuariodatos['cuenta'] = jsonDecode(usuariodatos['cuenta']);
+    }
+    if (usuariodatos.containsKey('domicilio')) {
+      if (usuariodatos['domicilio'] is String) {
+        usuariodatos['domicilio'] = jsonDecode(usuariodatos['domicilio']);
+      }
+    }
+    try {
+      final response = await AuthService.authorizedRequest(
+        Uri.parse("$baseUrl/api/usuario/registrar"),
+        body: jsonEncode(usuariodatos),
+        method: "POST",
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (_) {
+      // Offline fallback
+    }
+    return false;
   }
 
   Future<bool> agregarUsuario(Map<String, dynamic> usuariodatos) async {

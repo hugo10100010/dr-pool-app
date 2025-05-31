@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyecto/models/casillahorario_model.dart';
-import 'package:proyecto/models/clase_model.dart';
 import 'package:proyecto/models/curso_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/casillahorario_service.dart';
@@ -126,9 +125,22 @@ class _SeleccionarCursoWidgetState extends State<SeleccionarCursoWidget> {
                   ClaseServicio().agregarClase({
                     "idcurso": selectCurso?.id,
                     "idcasilla": selectCasilla?.id,
-                    "idcoach": Provider.of<UsuarioProvider>(context, listen: false).usuario!.id,
+                    "idcoach":
+                        Provider.of<UsuarioProvider>(context, listen: false)
+                            .usuario!
+                            .id,
+                    "curso": selectCurso?.toJson(),
+                    "casillahorario": selectCasilla?.toJson(),
+                    "coach": {
+                      "personales":
+                          Provider.of<UsuarioProvider>(context, listen: false)
+                              .usuario!
+                              .personales
+                              ?.toJson()
+                    },
                   });
-                  await Provider.of<UsuarioProvider>(context,listen: false).actualizarClases();
+                  await Provider.of<UsuarioProvider>(context, listen: false)
+                      .actualizarClases();
                 },
                 child: Text("Agregar"))
           ],

@@ -26,7 +26,7 @@ class Cuenta  implements Syncable{
         id: json['id'],
         nombreusu: json['nombreusu'],
         password: json['password'],
-        avatar: json['avatar'] != null ? base64Decode(json['avatar']) : null,
+        avatar: json['avatar'] == null ? null : json['avatar'] is Uint8List ? json['avatar'] : base64Decode(json['avatar']),
         syncStatus: json['sync_status'] ?? 0,
       );
 

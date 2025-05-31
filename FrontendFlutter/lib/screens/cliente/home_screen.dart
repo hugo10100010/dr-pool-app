@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:proyecto/routes/app_routes.dart';
 import 'package:proyecto/screens/cliente/pages/inicio/inicio_page.dart';
 import 'package:proyecto/screens/cliente/pages/horario/horario_page.dart';
@@ -27,15 +26,6 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
       label: "Acerca de",
     ),
   ];
-  
-    int _selectedIndex = 0;
-
-    void _onSelectPage(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
-      Navigator.pop(context);
-    }
 
   List<Widget> tiles = [
     ListTile(
@@ -69,9 +59,6 @@ class _ClienteHomePageState extends State<ClienteHomePage> {
       ListTile(leading: Icon(Icons.abc),title: Text('Metricas'),onTap: () => Navigator.pushNamed(context, AppRoutes.metricascliente),),
       ListTile(leading: Icon(Icons.subscriptions),title: Text('Subscripción'),onTap: () => Navigator.pushNamed(context, AppRoutes.subscripcioncliente),),
       ListTile(leading: Icon(Icons.turn_right),title: Text('Cerrar sesión'),onTap: () async {
-        final storage = FlutterSecureStorage();
-        await storage.delete(key: "proyectom_access_token");
-        await storage.delete(key: "proyectom_refresh_token");
         final usuarioProvider = Provider.of<UsuarioProvider>(context,listen: false);
         usuarioProvider.logout();
         Navigator.pushReplacementNamed(context, AppRoutes.login);
