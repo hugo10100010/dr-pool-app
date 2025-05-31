@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyecto/models/paquete_model.dart';
-import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 
 class SubscripcionPage extends StatefulWidget {
@@ -38,11 +36,11 @@ class _SubscripcionPageState extends State<SubscripcionPage> {
                   width: double.infinity,
                   padding: EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: usuario!.subscripcion!.paquete == null
+                    color: usuario.subscripcion!.paquete == null
                         ? Colors.grey
-                        : usuario!.subscripcion!.estado != "Activa"
+                        : usuario.subscripcion!.estado != "Activa"
                             ? Colors.grey
-                            : usuario!.subscripcion!.paquete!.clases == 2
+                            : usuario.subscripcion!.paquete!.clases == 2
                                 ? Colors.green
                                 : usuario.subscripcion!.paquete!.clases == 3
                                     ? Colors.amber

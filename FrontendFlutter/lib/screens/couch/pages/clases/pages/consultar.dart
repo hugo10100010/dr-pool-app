@@ -65,7 +65,7 @@ class _DropdownListExampleState extends State<DropdownListExample> {
             .where(
               (e) =>
                   e.horario?.any(
-                      (h) {print(h.idclase); print(selectedClase ?? ''); return h.idclase == (selectedClase ?? 0);}) ??
+                      (h) { return h.idclase == (selectedClase ?? 0);}) ??
                   false,
             )
             .toList();

@@ -35,11 +35,11 @@ class CarritoPage extends StatelessWidget {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     ListTile(
-                      title: Text("Paquete ${paquete!.id}" ?? ''),
+                      title: Text("Paquete ${paquete!.id}"),
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("\$${paquete!.precio.toString()}" ?? ''),
+                          Text("\$${paquete!.precio.toString()}"),
                           SizedBox(height: 4),
                           Text('Beneficios:',
                               style: TextStyle(fontWeight: FontWeight.bold)),

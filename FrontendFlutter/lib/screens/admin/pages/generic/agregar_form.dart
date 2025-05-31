@@ -104,8 +104,7 @@ class _GenericAgregarFormState extends State<GenericAgregarForm> {
                                               opt.value.toString() ==
                                               selectedValue,
                                           orElse: () => options.first
-                                              as DropdownOption<
-                                                  dynamic>, // ✳️ Force cast
+                                              as DropdownOption<dynamic>,
                                         )
                                         .value
                                     : null,

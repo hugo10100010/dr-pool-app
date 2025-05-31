@@ -62,6 +62,11 @@ def hello_world():
 def ping():
     return jsonify({"message": "pong"}), 200
 
+@app.errorhandler(Exception)
+def handle_exception(e):
+    print(">>> Excepción global:", repr(e))
+    return jsonify({"success": False, "error": str(e)}), 500
+
 @app.route("/api/login", methods=['POST'])
 def login():
     data = request.get_json()
@@ -615,7 +620,7 @@ def agregar_clase():
     rol = claims.get("rol")
 
     if(rol==1 or rol==3):
-        data = request.get_json()
+        data = request.json
     else:
         return jsonify({
             "success": False,

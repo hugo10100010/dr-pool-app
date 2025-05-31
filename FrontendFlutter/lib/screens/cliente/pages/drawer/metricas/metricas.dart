@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/helpers/isonline_func.dart';
 import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/usuario_service.dart';
@@ -23,7 +24,6 @@ class _MetricasFormState extends State<MetricasForm> {
   final _formKey = GlobalKey<FormState>();
 
   bool editando = false;
-  late Map<String, dynamic> _originalData;
 
   @override
   void initState() {
@@ -38,11 +38,16 @@ class _MetricasFormState extends State<MetricasForm> {
   @override
   Widget build(BuildContext context) {
     Usuario usuario = Provider.of<UsuarioProvider>(context).usuario!;
-    TextEditingController _estaturaController = TextEditingController(text: usuario.metricas?.estatura?.toString() ?? '');
-    TextEditingController _pesoController = TextEditingController(text: usuario.metricas?.peso?.toString() ?? '');
-    TextEditingController _maxCardioController = TextEditingController(text: usuario.metricas?.maxcardio?.toString() ?? '');
-    TextEditingController _maxPulsoController = TextEditingController(text: usuario.metricas?.maxpulso?.toString() ?? '');
-    TextEditingController _frecuenciaSemanalController = TextEditingController(text: usuario.metricas?.frecuenciasemanal?.toString() ?? '');
+    TextEditingController _estaturaController = TextEditingController(
+        text: usuario.metricas?.estatura?.toString() ?? '');
+    TextEditingController _pesoController =
+        TextEditingController(text: usuario.metricas?.peso?.toString() ?? '');
+    TextEditingController _maxCardioController = TextEditingController(
+        text: usuario.metricas?.maxcardio?.toString() ?? '');
+    TextEditingController _maxPulsoController = TextEditingController(
+        text: usuario.metricas?.maxpulso?.toString() ?? '');
+    TextEditingController _frecuenciaSemanalController = TextEditingController(
+        text: usuario.metricas?.frecuenciasemanal?.toString() ?? '');
     return Form(
       key: _formKey,
       child: ListView(
@@ -53,10 +58,16 @@ class _MetricasFormState extends State<MetricasForm> {
             child: ElevatedButton.icon(
               icon: Icon(editando ? Icons.lock_open : Icons.lock),
               label: Text(editando ? 'Bloquear edición' : 'Editar'),
-              onPressed: () {
-                setState(() {
-                  editando = !editando;
-                });
+              onPressed: () async {
+                bool online = await isOnline();
+                if (online) {
+                  setState(() {
+                    editando = !editando;
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("No hay conexión a internet...")));
+                }
               },
             ),
           ),
@@ -73,7 +84,9 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
-          SizedBox(height: 12,),
+          SizedBox(
+            height: 12,
+          ),
           TextFormField(
             controller: _pesoController,
             decoration: const InputDecoration(labelText: 'Peso (kg)'),
@@ -86,7 +99,9 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
-          SizedBox(height: 12,),
+          SizedBox(
+            height: 12,
+          ),
           TextFormField(
             controller: _maxCardioController,
             decoration: const InputDecoration(labelText: 'Max Cardio'),
@@ -99,7 +114,9 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
-          SizedBox(height: 12,),
+          SizedBox(
+            height: 12,
+          ),
           TextFormField(
             controller: _maxPulsoController,
             decoration: const InputDecoration(labelText: 'Max Pulso'),
@@ -111,7 +128,9 @@ class _MetricasFormState extends State<MetricasForm> {
               return null;
             },
           ),
-          SizedBox(height: 12,),
+          SizedBox(
+            height: 12,
+          ),
           TextFormField(
             controller: _frecuenciaSemanalController,
             decoration: const InputDecoration(labelText: 'Frecuencia Semanal'),
@@ -135,30 +154,35 @@ class _MetricasFormState extends State<MetricasForm> {
                           Map<String, dynamic> data = {
                             "id": usuario.id,
                           };
-                          Map<String,dynamic> metricas = {};
+                          Map<String, dynamic> metricas = {"id": usuario.metricas!.id};
 
                           if (_estaturaController.text.isNotEmpty) {
-                            metricas["estatura"] = double.parse(_estaturaController.text);
+                            metricas["estatura"] =
+                                double.parse(_estaturaController.text);
                           }
                           if (_pesoController.text.isNotEmpty) {
-                            metricas["peso"] = double.parse(_pesoController.text);
+                            metricas["peso"] =
+                                double.parse(_pesoController.text);
                           }
                           if (_maxCardioController.text.isNotEmpty) {
-                            metricas["maxcardio"] = double.parse(_maxCardioController.text);
+                            metricas["maxcardio"] =
+                                double.parse(_maxCardioController.text);
                           }
                           if (_maxPulsoController.text.isNotEmpty) {
-                            metricas["maxpulso"] = int.parse(_maxPulsoController.text);
+                            metricas["maxpulso"] =
+                                int.parse(_maxPulsoController.text);
                           }
                           if (_frecuenciaSemanalController.text.isNotEmpty) {
-                            metricas["frecuenciasemanal"] = int.parse(_frecuenciaSemanalController.text);
+                            metricas["frecuenciasemanal"] =
+                                int.parse(_frecuenciaSemanalController.text);
                           }
-                          if(metricas.isNotEmpty) {
+                          if (metricas.isNotEmpty) {
                             data["metricas"] = metricas;
                           }
                           bool success =
                               await UsuarioService().modificarUsuario(data);
                           if (success) {
-                            Provider.of<UsuarioProvider>(context,listen: false)
+                            Provider.of<UsuarioProvider>(context, listen: false)
                                 .actualizarMetricas(
                               metricas["estatura"],
                               metricas["peso"],
@@ -171,8 +195,8 @@ class _MetricasFormState extends State<MetricasForm> {
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Error al guardar')),
-                          );
+                              SnackBar(content: Text('Error al guardar')),
+                            );
                           }
                         }
                       : null,

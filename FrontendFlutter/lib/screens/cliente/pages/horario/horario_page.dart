@@ -17,8 +17,8 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
       return Center(child: Text("Nada que ver aquí..."),);
     }
 
-    usuario!.horario!
-        .sort((a, b) => a.clase!.casilla.dia.compareTo(a.clase!.casilla.dia));
+    usuario.horario!
+        .sort((a, b) => a.clase.casilla.dia.compareTo(a.clase.casilla.dia));
 
     return DefaultTabController(
       length: dias.length,
@@ -79,10 +79,10 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
             child: TabBarView(
               children: dias.map((dia) {
                 final clasesDelDia =
-                    usuario.horario!.where((e) => e.clase?.casilla.dia == dia).toList();
+                    usuario.horario!.where((e) => e.clase.casilla.dia == dia).toList();
                 return ListView.builder(
                   itemCount:
-                      usuario.horario!.where((e) => e.clase?.casilla.dia == dia).length,
+                      usuario.horario!.where((e) => e.clase.casilla.dia == dia).length,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -95,7 +95,7 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            clasesDelDia[index].clase!.casilla.horaini,
+                            clasesDelDia[index].clase.casilla.horaini,
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            clasesDelDia[index].clase!.curso.curso,
+                            clasesDelDia[index].clase.curso.curso,
                             style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.w600,
@@ -113,7 +113,7 @@ class _HorarioState extends State<Horario> with SingleTickerProviderStateMixin {
                           ),
                           SizedBox(height: 4),
                           Text(
-                            "${clasesDelDia[index].clase!.coach.nombre} ${clasesDelDia[index].clase!.coach.apellidop} ${clasesDelDia[index].clase!.coach.apellidom}",
+                            "${clasesDelDia[index].clase.coach.nombre} ${clasesDelDia[index].clase.coach.apellidop} ${clasesDelDia[index].clase.coach.apellidom}",
                             style: TextStyle(
                               color: Colors.black54,
                               fontSize: 14,

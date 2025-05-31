@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/helpers/isonline_func.dart';
 import 'package:proyecto/models/usuario_model.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/usuario_service.dart';
@@ -85,10 +86,15 @@ class _CuentaPageState extends State<CuentaPage> {
                         child: ElevatedButton.icon(
                           icon: Icon(editando ? Icons.lock_open : Icons.lock),
                           label: Text(editando ? 'Bloquear edición' : 'Editar'),
-                          onPressed: () {
-                            setState(() {
-                              editando = !editando;
-                            });
+                          onPressed: () async {
+                            bool online = await isOnline();
+                            if (online) {
+                              setState(() {
+                                editando = !editando;
+                              });
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("No hay conexión a internet...")));
+                            }
                           },
                         ),
                       ),
@@ -100,24 +106,23 @@ class _CuentaPageState extends State<CuentaPage> {
                                   "id": usuario?.id,
                                 };
 
-                                Map<String, dynamic> cuenta = {};
-
+                                Map<String, dynamic> cuenta = {
+                                  "id": usuario!.idcuenta
+                                };
                                 if (_nombreUsuController.text.isNotEmpty) {
                                   cuenta["nombreusu"] =
                                       _nombreUsuController.text;
                                 }
-
                                 Uint8List bytes = base64Decode(avatarb64);
                                 if (bytes.isNotEmpty) {
                                   cuenta["avatar"] = bytes;
                                 }
-
                                 if (cuenta.isNotEmpty) {
                                   data["cuenta"] = cuenta;
                                 }
 
                                 bool success = await UsuarioService()
-                                    .modificarUsuario(Usuario.fromJson(data).toJson());
+                                    .modificarUsuario(data);
                                 if (success) {
                                   Provider.of<UsuarioProvider>(context,
                                           listen: false)

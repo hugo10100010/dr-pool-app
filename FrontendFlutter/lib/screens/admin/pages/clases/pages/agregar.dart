@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:proyecto/models/casillahorario_model.dart';
 import 'package:proyecto/models/curso_model.dart';

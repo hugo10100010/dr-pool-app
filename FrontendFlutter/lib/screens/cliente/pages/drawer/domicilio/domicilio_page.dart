@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:proyecto/helpers/isonline_func.dart';
 import 'package:proyecto/providers/usuario_provider.dart';
 import 'package:proyecto/services/usuario_service.dart';
 
@@ -91,10 +92,16 @@ class _DomicilioPageState extends State<DomicilioPage> {
                 child: ElevatedButton.icon(
                   icon: Icon(editable ? Icons.lock_open : Icons.lock),
                   label: Text(editable ? 'Bloquear edición' : 'Editar'),
-                  onPressed: () {
-                    setState(() {
-                      editable = !editable;
-                    });
+                  onPressed: () async {
+                    bool online = await isOnline();
+                    if (online) {
+                      setState(() {
+                        editable = !editable;
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("No hay conexión a internet...")));
+                    }
                   },
                 ),
               ),
@@ -107,7 +114,7 @@ class _DomicilioPageState extends State<DomicilioPage> {
                             "id": usuario.id,
                           };
 
-                          Map<String, dynamic> domicilio = {};
+                          Map<String, dynamic> domicilio = {"id": usuario.domicilio!.id};
 
                           if (_calleController.text.isNotEmpty) {
                             domicilio["calle"] = _calleController.text;

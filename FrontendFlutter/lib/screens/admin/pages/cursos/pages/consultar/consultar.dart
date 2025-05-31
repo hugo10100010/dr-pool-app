@@ -13,8 +13,8 @@ class Consultar extends StatelessWidget {
         DataColumn(label: Text('Descripcion')),
       ],
       buildRow: (curso) => DataRow(cells: [
-        DataCell(Text(curso.curso ?? '')),
-        DataCell(Text(curso.descripcion ?? '')),
+        DataCell(Text(curso.curso)),
+        DataCell(Text(curso.descripcion)),
       ]),
       onRowTap: (curso) {},
     );

@@ -14,9 +14,9 @@ class Consultar extends StatelessWidget {
         DataColumn(label: Text('Dia')),
       ],
       buildRow: (casilla) => DataRow(cells: [
-        DataCell(Text(casilla.horaini ?? '')),
-        DataCell(Text(casilla.horafin ?? '')),
-        DataCell(Text("${casilla.dia == 1 ? "Lunes" : casilla.dia == 2 ? "Martes" : casilla.dia == 3 ? "Miercoles" : casilla.dia == 4 ? "Jueves" : casilla.dia == 5 ? "Viernes" : casilla.dia == 6 ? "Sabado" : casilla.dia == 7 ? "Domingo" : "NO"}" ?? '')),
+        DataCell(Text(casilla.horaini)),
+        DataCell(Text(casilla.horafin)),
+        DataCell(Text("${casilla.dia == 1 ? "Lunes" : casilla.dia == 2 ? "Martes" : casilla.dia == 3 ? "Miercoles" : casilla.dia == 4 ? "Jueves" : casilla.dia == 5 ? "Viernes" : casilla.dia == 6 ? "Sabado" : casilla.dia == 7 ? "Domingo" : "NO"}")),
       ]),
       onRowTap: (casilla) {
         

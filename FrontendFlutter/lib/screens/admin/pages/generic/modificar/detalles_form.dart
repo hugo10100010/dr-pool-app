@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:proyecto/screens/admin/pages/generic/modificar/editablefield.dart';
-import './editablefield.dart';
 
 class GenericDetallesModificables extends StatefulWidget {
   final List<String> tabTitles;

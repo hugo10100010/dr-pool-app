@@ -14,9 +14,9 @@ class Consultar extends StatelessWidget {
         DataColumn(label: Text('Flexible')),
       ],
       buildRow: (paquete) => DataRow(cells: [
-        DataCell(Text(paquete.precio.toString() ?? '')),
-        DataCell(Text(paquete.clases.toString() ?? '')),
-        DataCell(Text(paquete.flexible ? 'Si' : 'No' ?? '')),
+        DataCell(Text(paquete.precio.toString())),
+        DataCell(Text(paquete.clases.toString())),
+        DataCell(Text(paquete.flexible ? 'Si' : 'No')),
       ]),
       onRowTap: (paquete) {
         

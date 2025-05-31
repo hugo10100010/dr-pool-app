@@ -24,7 +24,7 @@ class HorarioClases extends StatelessWidget {
         child: Text("Nada que ver aquí..."),
       );
     }
-    usuario!.clases!
+    usuario.clases!
         .sort((a, b) => a.casilla.horaini.compareTo(b.casilla.horaini));
 
     return DefaultTabController(
